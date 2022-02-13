@@ -8,3 +8,5 @@ const customerSchema = new Schema(
     full_name : String, 
     addresses: [{ address: String }]
 });
+
+export default customerSchema;
