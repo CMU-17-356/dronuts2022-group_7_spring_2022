@@ -1,12 +1,21 @@
 import React from 'react';
-import {Container, Navbar, Nav, NavItem} from 'react-bootstrap'
+import {Container, Navbar, Nav} from 'react-bootstrap'
 
 
 function CustomNavbar() {
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+      <Navbar.Brand href="#home">
+          <img
+            alt=""
+            src="./dronutlogo.png"
+            width="30"
+            height="30"
+            className="d-inline-block align-top"
+          />{' '}
+          Dronuts
+        </Navbar.Brand>
         <Nav className="me-auto">
           <Nav.Link href="#home">Home</Nav.Link>
           <Nav.Link href="#pending">Pending Orders</Nav.Link>
