@@ -9,4 +9,4 @@ const employeeSchema = new Schema(
     position : String
 });
 
-export default employeeSchema;
+export default mongoose.model('Employee', employeeSchema);

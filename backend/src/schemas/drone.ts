@@ -8,4 +8,4 @@ const droneSchema = new Schema(
    status : String // Could also be an enumerated type, with statuses ranging between “recharging”, “delivering”, “returning”, etc.
 });
 
-export default droneSchema;
+export default mongoose.model('Drone', droneSchema);
