@@ -8,7 +8,7 @@ function Menu() {
       <Grid.Container gap={2} justify="center" height="100px">
           <Grid xs={6}><Card shadow width="100%" ><Button auto type="success">Add to Cart</Button></Card></Grid>
           <Grid xs={6}><Card shadow width="100%" ><Button auto type="success">Add to Cart</Button></Card></Grid>
-          <Grid xs={6}><Card shadow width="100%" ><Button auto type="success">Add to Cart</Button></Card></Grid>
+          <Grid xs={6}><Card shadow width="100%" ><Button auto type="success">Add to Cart</Button></Card> c</Grid>
       </Grid.Container>
     </div>
 
