@@ -20,3 +20,11 @@ app.post('/addTodo', (req, res) => {
 app.listen(port, () => {
   console.log(`Todo-App listening on localhost:${port}`);
 });
+
+const mongoose = require('mongoose');
+
+main().catch(err => console.log(err));
+
+async function main() {
+  await mongoose.connect('mongodb://localhost:27017/test');
+}
