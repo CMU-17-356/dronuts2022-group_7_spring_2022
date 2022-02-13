@@ -9,4 +9,5 @@ const customerSchema = new Schema(
     addresses: [{ address: String }]
 });
 
-export default customerSchema;
+
+export default mongoose.model('Customer', customerSchema);
