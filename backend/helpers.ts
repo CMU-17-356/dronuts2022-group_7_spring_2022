@@ -1,6 +1,3 @@
-export interface Todo {
-  id: Number;
-  task: String;
-  due: String;
-  completed: Boolean;
-}
+import customerSchema from './src/schemas/customer';
+
+export Customer = 
