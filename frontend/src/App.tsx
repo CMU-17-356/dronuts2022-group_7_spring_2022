@@ -1,14 +1,18 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import {Container, Navbar, Nav} from 'react-bootstrap'
 import CustomNavbar from "./Components/CustomNavbar";
+import Menu from "./Components/Menu";
+
 
 
 
 function App() {
   return (
-    <CustomNavbar></CustomNavbar>
+    <div>
+      <CustomNavbar/>
+      <Menu/>
+    </div>
   );
 }
 
