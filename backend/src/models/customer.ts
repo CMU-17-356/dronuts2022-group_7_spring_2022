@@ -3,7 +3,7 @@ const { Schema } = mongoose;
 
 interface Customer {
     username : string; 
-    password : string; // Salted, Hashed Password., 
+    password : string;
     full_name : string; 
     addresses: Array<string>;
 }; 
@@ -11,8 +11,8 @@ interface Customer {
 
 const customerSchema = new Schema<Customer>(
 {
-    username : String, 
-    password : String, // Salted, Hashed Password., 
+    username : { type: String, required: true }, 
+    password : { type: String, required: true },
     full_name : String, 
     addresses: [{ address: String }]
 });
