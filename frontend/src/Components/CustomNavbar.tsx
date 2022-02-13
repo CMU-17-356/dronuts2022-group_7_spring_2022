@@ -9,7 +9,7 @@ function CustomNavbar() {
         <Navbar.Brand href="#home">
           <img
             alt=""
-            src="./dronutlogo.png"
+            src="./favicon-32x32.png"
             width="30"
             height="30"
             className="d-inline-block align-top"
