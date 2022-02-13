@@ -1,13 +1,21 @@
 import mongoose from 'mongoose';
 const { Schema } = mongoose;
 
+interface Donut {
+    name : string;
+    description : string;
+    image : string; // path to donut images saved
+    price : number; 
+    quantity : number; //  number of donuts in inventory
+}; 
+
 const donutSchema = new Schema(
     {
         name :  String, 
         description: String, 
         image : String, // path to donut images saved
-        price: Schema.Types.Decimal128, 
+        price: Number, 
         quantity: Number, //  number of donuts in inventory
      });
 
-export default donutSchema;
+export default mongoose.model<Donut>('Donut', donutSchema);
