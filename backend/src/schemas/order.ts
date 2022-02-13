@@ -10,7 +10,7 @@ const orderSchema = new Schema(
                 quantity: Number// integer represents the quantity of donuts that is been ordered
      
              }
-        ]
+        ],
         cost : Schema.Types.Decimal128,
         drone_id : String,
         time_placed : Date,
@@ -18,4 +18,4 @@ const orderSchema = new Schema(
         time_delivered : Date,
      });
 
-export default orderSchema;
+export default mongoose.model('Order', orderSchema);
