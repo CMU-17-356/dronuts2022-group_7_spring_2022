@@ -9,5 +9,4 @@ const customerSchema = new Schema(
     addresses: [{ address: String }]
 });
 
-
 export default mongoose.model('Customer', customerSchema);
