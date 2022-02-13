@@ -1,3 +1,3 @@
-import customerSchema from './src/schemas/customer';
+import mongoose from 'mongoose';
+import Customer from './src/models/customer';
 
-export Customer = 
