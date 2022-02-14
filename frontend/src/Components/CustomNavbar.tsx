@@ -1,5 +1,6 @@
 import React from 'react';
 import {Container, Navbar, Nav} from 'react-bootstrap'
+import logo from './favicon-32x32.png';
 
 
 function CustomNavbar() {
@@ -7,13 +8,14 @@ function CustomNavbar() {
     <Navbar bg="dark" variant="dark">
       <Container>
         <Navbar.Brand href="#home">
-          <img
+         <img src={logo} alt="Logo" />
+          {/* <img
             alt=""
             src="./favicon-32x32.png"
             width="30"
             height="30"
             className="d-inline-block align-top"
-          />{' '}
+          />{' '} */}
           Dronuts
         </Navbar.Brand>
         <Nav className="me-auto">
