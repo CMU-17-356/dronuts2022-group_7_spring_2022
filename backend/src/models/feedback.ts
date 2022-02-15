@@ -1,7 +1,14 @@
 import mongoose from 'mongoose';
-const { Schema } = mongoose;
+import { Schema, Types } from 'mongoose';
 
-const feedbackSchema = new Schema(
+interface FeedbackInterface {
+    customer_id : Types.ObjectId; 
+    order_id : Types.ObjectId;
+    rating : number; 
+    feedback: string;
+}; 
+
+const feedbackSchema = new Schema<FeedbackInterface>(
     {
         customer_id : Schema.Types.ObjectId,
         order_id : Schema.Types.ObjectId,
@@ -9,4 +16,4 @@ const feedbackSchema = new Schema(
         feedback : String 
      });
 
-export default feedbackSchema;
+export default mongoose.model<FeedbackInterface>('Feedback', feedbackSchema);

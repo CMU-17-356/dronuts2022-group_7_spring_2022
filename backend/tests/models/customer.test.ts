@@ -1,29 +1,59 @@
-<<<<<<< HEAD
-import { expect } from 'chai';
-import { Customer } from '../../helpers';
+import * as testDB from '../utility';
 
-describe('customer', function() {
-    it('should be invalid if name is empty', function(done) {
-        var c = new Customer();
- 
-        c.validate(function(e) {
-            expect(err.errors.name).to.exist;
-=======
-import { Customer } from '../../helpers';
-import { expect } from "chai";
-import{ CallbackError, Error } from 'mongoose';
+import { CustomerModel, CustomerInterface } from '../../src/models/customer';
 
+beforeAll(async () => {
+  await testDB.connect();
+});
 
+afterEach(async () => {
+  await testDB.clearDatabase();
+});
 
-describe('meme', function() {
-    it('should be invalid if name is empty', function(done) {
-        var m = new Customer();
- 
-        m.validate(function(err: CallbackError) {
+afterAll(async () => {
+  await testDB.closeDatabase();
+});
 
-            expect(err).to.not.be.null;
->>>>>>> a822e16b7ab739ce22d2a078f4752332485f9d28
-            done();
-        });
-    });
+describe('Customer test', function () {
+  it('should take on assigned values', () => {
+    const m = new CustomerModel();
+    m.username = 'Test UserName';
+    m.password = 'Password';
+    m.full_name = "John Snow"
+    m.addresses = ["123 Forbes Ave", "321 Murray Ave"]
+    expect(m.username).toEqual('Test UserName');
+    expect(m.password).toEqual('Password');
+    expect(m.full_name).toEqual('John Snow');
+    expect(m.addresses).toContain("123 Forbes Ave");
+    expect(m.addresses).toContain("321 Murray Ave");
+
+  });
+
+  it('can be created correctly', async () => {
+    // expect that two assertions will be made
+    expect.assertions(3);
+    // create new post model instance
+    const customer: CustomerInterface = new CustomerModel();
+    // set some test properties
+    customer.username = 'Test UserName';
+    customer.password = 'Password';
+    customer.full_name = "John Snow"
+    customer.addresses = ["123 Forbes Ave", "321 Murray Ave"]
+    // save test post to in-memory db
+    await customer.save();
+    // find inserted post by title
+    const CustomerInDb: CustomerInterface | null = await CustomerModel.findOne({
+        username: 'Test UserName',
+    }).exec();
+    console.log('Customer found from memory-db', CustomerInDb);
+    // check that title is expected
+    expect(CustomerInDb).toBeDefined();
+    if (CustomerInDb) {
+        expect(customer.username).toEqual('Test UserName');
+        expect(customer.password).toEqual('Password');
+        expect(customer.full_name).toEqual('John Snow');
+        expect(customer.addresses).toContain("123 Forbes Ave");
+        expect(customer.addresses).toContain("321 Murray Ave");
+    }
+  });
 });
