@@ -19,8 +19,9 @@ describe('Customer test', function () {
     const m = new CustomerModel();
     m.username = 'Test UserName';
     m.password = 'Password';
-    m.full_name = "John Snow"
-    m.addresses = ["123 Forbes Ave", "321 Murray Ave"]
+    m.full_name = "John Snow";
+    m.addresses = ["123 Forbes Ave", "321 Murray Ave"];
+    console.log(m.addresses);
     expect(m.username).toEqual('Test UserName');
     expect(m.password).toEqual('Password');
     expect(m.full_name).toEqual('John Snow');
@@ -31,14 +32,14 @@ describe('Customer test', function () {
 
   it('can be created correctly', async () => {
     // expect that two assertions will be made
-    expect.assertions(3);
+    // expect.assertions(6);
     // create new post model instance
     const customer: CustomerInterface = new CustomerModel();
     // set some test properties
     customer.username = 'Test UserName';
     customer.password = 'Password';
-    customer.full_name = "John Snow"
-    customer.addresses = ["123 Forbes Ave", "321 Murray Ave"]
+    customer.full_name = "John Snow";
+    customer.addresses = ["123 Forbes Ave", "321 Murray Ave"];
     // save test post to in-memory db
     await customer.save();
     // find inserted post by title
