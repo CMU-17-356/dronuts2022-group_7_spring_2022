@@ -9,7 +9,7 @@ interface Donut {
     quantity : number; //  number of donuts in inventory
 }; 
 
-const donutSchema = new Schema(
+const donutSchema = new Schema<Donut>(
     {
         name : { type: String, required: true }, 
         description: String, 
