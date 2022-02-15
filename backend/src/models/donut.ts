@@ -11,7 +11,7 @@ interface Donut {
 
 const donutSchema = new Schema(
     {
-        name :  String, 
+        name : { type: String, required: true }, 
         description: String, 
         image : String, // path to donut images saved
         price: Number, 

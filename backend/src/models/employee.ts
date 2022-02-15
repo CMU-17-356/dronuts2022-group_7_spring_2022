@@ -16,4 +16,4 @@ const employeeSchema = new Schema(
     position : String
 });
 
-export default mongoose.model('Employee', employeeSchema);
+export default mongoose.model<Employee>('Employee', employeeSchema);
