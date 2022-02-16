@@ -1,0 +1,15 @@
+.orders-list {
+    height: 300px;
+    width: 70%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+}
+
+#pending-orders {
+    height: 300px;
+    width:  70%;
+}
+
+#past-orders {
+    height: 70%;
+}
