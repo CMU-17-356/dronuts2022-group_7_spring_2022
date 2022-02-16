@@ -12,9 +12,9 @@ function CustomNavbar() {
           Dronuts
         </Navbar.Brand>
         <Nav className="me-auto">
-          <Nav.Link href="#home">Home</Nav.Link>
-          <Nav.Link href="#pending">Pending Orders</Nav.Link>
-          <Nav.Link href="#checkout">Checkout</Nav.Link>
+          <Nav.Link href="/">Menu</Nav.Link>
+          <Nav.Link href="/pending">Pending Orders</Nav.Link>
+          <Nav.Link href="/checkout">Checkout</Nav.Link>
         </Nav>
       </Container>
     </Navbar>
