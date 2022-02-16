@@ -14,7 +14,7 @@ const customerSchema = new Schema<CustomerInterface>(
     username : { type: String, required: true }, 
     password : { type: String, required: true },
     full_name : String, 
-    addresses: [{ address: String }]
+    addresses: [String]
 });
 
 
