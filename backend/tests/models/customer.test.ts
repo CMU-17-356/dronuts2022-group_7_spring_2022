@@ -44,7 +44,7 @@ describe('Customer test', function () {
     await customer.save();
     // find inserted post by title
     const CustomerInDb: CustomerInterface | null = await CustomerModel.findOne({
-        username: 'Test UserName',
+        username: 'Test UserName'
     }).exec();
     console.log('Customer found from memory-db', CustomerInDb);
     // check that title is expected
