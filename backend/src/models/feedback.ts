@@ -1,9 +1,9 @@
-import mongoose from 'mongoose';
-import { Schema, Types } from 'mongoose';
+import mongoose, { Schema, Model, Document } from 'mongoose';
 
-interface FeedbackInterface {
-    customer_id : Types.ObjectId; 
-    order_id : Types.ObjectId;
+export interface FeedbackInterface extends Document
+{
+    customer_id : Schema.Types.ObjectId; 
+    order_id : Schema.Types.ObjectId;
     rating : number; 
     feedback: string;
 }; 
@@ -16,4 +16,4 @@ const feedbackSchema = new Schema<FeedbackInterface>(
         feedback : String 
      });
 
-export default mongoose.model<FeedbackInterface>('Feedback', feedbackSchema);
+export const FeedbackModel: Model<FeedbackInterface> = mongoose.model<FeedbackInterface>('Feedback', feedbackSchema);

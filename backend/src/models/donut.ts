@@ -1,7 +1,7 @@
-import mongoose from 'mongoose';
-const { Schema } = mongoose;
+import mongoose, { Schema, Model, Document } from 'mongoose';
 
-interface Donut {
+export interface DonutInterface extends Document
+{
     name : string;
     description : string;
     image : string; // path to donut images saved
@@ -9,7 +9,7 @@ interface Donut {
     quantity : number; //  number of donuts in inventory
 }; 
 
-const donutSchema = new Schema<Donut>(
+const donutSchema = new Schema<DonutInterface>(
     {
         name : { type: String, required: true }, 
         description: String, 
@@ -18,4 +18,4 @@ const donutSchema = new Schema<Donut>(
         quantity: Number, //  number of donuts in inventory
      });
 
-export default mongoose.model<Donut>('Donut', donutSchema);
+export const DonutModel: Model<DonutInterface> = mongoose.model<DonutInterface>('Donut', donutSchema);

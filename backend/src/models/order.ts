@@ -1,23 +1,23 @@
-import mongoose from 'mongoose';
-import { Schema, Types } from 'mongoose';
+import mongoose, { Schema, Model, Document } from 'mongoose';
 
 interface donut_count {
-    donut_id: Types.ObjectId,
+    donut_id: Schema.Types.ObjectId,
     quantity: Number
 }
 
-interface OrderInterface {
-    customer_id : Types.ObjectId; 
+export interface OrderInterface extends Document
+{
+    customer_id : Schema.Types.ObjectId; 
     donuts : Array<donut_count>;
     cost : number; 
-    drone_id: Types.ObjectId;
+    drone_id: Schema.Types.ObjectId;
     time_placed: Date;
     time_picked: Date;
     time_delivered: Date;
 }; 
 
 const orderSchema = new Schema<OrderInterface>(
-    {
+{
         customer_id : Schema.Types.ObjectId,
         donuts : [
         {
@@ -29,6 +29,6 @@ const orderSchema = new Schema<OrderInterface>(
         time_placed : Date,
         time_picked : Date,
         time_delivered : Date,
-     });
+});
 
-export default mongoose.model<OrderInterface>('Order', orderSchema);
+export const OrderModel: Model<OrderInterface> = mongoose.model<OrderInterface>('Order', orderSchema);

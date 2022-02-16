@@ -1,12 +1,6 @@
-<<<<<<< HEAD
-import { Customer } from '../../helpers';
-import { expect } from "chai";
-import{ CallbackError, Error } from 'mongoose';
-=======
 import * as testDB from '../utility';
 
 import { CustomerModel, CustomerInterface } from '../../src/models/customer';
->>>>>>> d8829d878a39604f4f9d6547577ca6c0623e2c51
 
 beforeAll(async () => {
   await testDB.connect();
@@ -16,18 +10,6 @@ afterEach(async () => {
   await testDB.clearDatabase();
 });
 
-<<<<<<< HEAD
-describe('customer', function() {
-    it('should be invalid if name is empty', function(done) {
-        var m = new Customer();
- 
-        m.validate(function(err: CallbackError) {
-
-            expect(err).to.not.be.null;
-            done();
-        });
-    });
-=======
 afterAll(async () => {
   await testDB.closeDatabase();
 });
@@ -62,7 +44,7 @@ describe('Customer test', function () {
     await customer.save();
     // find inserted post by title
     const CustomerInDb: CustomerInterface | null = await CustomerModel.findOne({
-        username: 'Test UserName',
+        username: 'Test UserName'
     }).exec();
     console.log('Customer found from memory-db', CustomerInDb);
     // check that title is expected
@@ -75,5 +57,4 @@ describe('Customer test', function () {
         expect(customer.addresses).toContain("321 Murray Ave");
     }
   });
->>>>>>> d8829d878a39604f4f9d6547577ca6c0623e2c51
 });
