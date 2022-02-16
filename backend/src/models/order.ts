@@ -10,7 +10,7 @@ export interface OrderInterface extends Document{
     customer_id : Types.ObjectId; 
     donuts : Array<donut_count>;
     cost : number; 
-    drone_id: Schema.Types.ObjectId;
+    drone_id: Types.ObjectId;
     time_placed: Date;
     time_picked: Date;
     time_delivered: Date;
