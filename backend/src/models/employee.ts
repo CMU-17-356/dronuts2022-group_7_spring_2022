@@ -1,14 +1,15 @@
 import mongoose from 'mongoose';
+import { Employee } from '../../helpers';
 const { Schema } = mongoose;
 
-interface Employee {
+interface EmployeeInterface {
     username : string; 
     password : string;
     full_name : string; 
     position: string;
 }; 
 
-const employeeSchema = new Schema(
+const employeeSchema = new Schema<EmployeeInterface>(
 {
     username : { type: String, required: true }, 
     password : { type: String, required: true },
@@ -16,4 +17,4 @@ const employeeSchema = new Schema(
     position : String
 });
 
-export default mongoose.model('Employee', employeeSchema);
+export default mongoose.model<EmployeeInterface>('Employee', employeeSchema);

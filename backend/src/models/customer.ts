@@ -1,7 +1,6 @@
-import mongoose from 'mongoose';
-const { Schema } = mongoose;
+import mongoose, { Schema, Model, Document } from 'mongoose';
 
-interface Customer {
+export interface CustomerInterface extends Document {
     username : string; 
     password : string;
     full_name : string; 
@@ -9,7 +8,7 @@ interface Customer {
 }; 
 
 
-const customerSchema = new Schema<Customer>(
+const customerSchema = new Schema<CustomerInterface>(
 {
     username : { type: String, required: true }, 
     password : { type: String, required: true },
@@ -18,4 +17,4 @@ const customerSchema = new Schema<Customer>(
 });
 
 
-export default mongoose.model<Customer>('Customer', customerSchema);
+export const CustomerModel: Model<CustomerInterface> = mongoose.model('Customer', customerSchema);

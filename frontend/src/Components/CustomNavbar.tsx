@@ -1,6 +1,6 @@
 import React from 'react';
 import {Container, Navbar, Nav} from 'react-bootstrap'
-import logo from './favicon-32x32.png';
+import logo from '../image/favicon-32x32.png';
 
 
 function CustomNavbar() {
@@ -9,13 +9,6 @@ function CustomNavbar() {
       <Container>
         <Navbar.Brand href="#home">
          <img src={logo} alt="Logo" />
-          {/* <img
-            alt=""
-            src="./favicon-32x32.png"
-            width="30"
-            height="30"
-            className="d-inline-block align-top"
-          />{' '} */}
           Dronuts
         </Navbar.Brand>
         <Nav className="me-auto">
@@ -25,22 +18,6 @@ function CustomNavbar() {
         </Nav>
       </Container>
     </Navbar>
-
-//     <Navbar>
-//   <Navbar.Header>
-//     <Navbar.Brand>
-//       <a href="#home">Brand</a>
-//     </Navbar.Brand>
-//     <Navbar.Toggle />
-//   </Navbar.Header>
-//   <Navbar.Collapse>
-//     <Navbar.Text>
-//       Signed in as: <Navbar.Link href="#">Mark Otto</Navbar.Link>
-//     </Navbar.Text>
-//     <Navbar.Text>Have a great day!</Navbar.Text>
-//   </Navbar.Collapse>
-// </Navbar>
-    
   );
 }
 
