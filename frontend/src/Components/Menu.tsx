@@ -36,9 +36,6 @@ function Menu() {
     </Grid.Container>
         
     </div>
-
-
-    
   );
 }
 
