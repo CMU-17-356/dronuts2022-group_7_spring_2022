@@ -20,18 +20,20 @@ function PendingOrderCard() {
         <div className="orders-list">
           <OrderCard/>
           <OrderCard/>
+          <OrderCard/>
+          <OrderCard/>
         </div>
       </Card>
 
-      <Card shadow width="100%">
-      <div className="past-orders">
-        <Divider />
-          <Collapse title="Past Orders (Recent)" className='past-orders'> 
+      <Card>
+        <Text h4>Past Orders (Recent)</Text>
+        <Divider/>
+        <div className="orders-list">
             <PastOrderCard/>
             <PastOrderCard/>
-          </Collapse>
+            <PastOrderCard/>
         </div>
-    </Card>
+      </Card>
     </div>
   );
 }
