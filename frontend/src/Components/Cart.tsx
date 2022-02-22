@@ -5,27 +5,26 @@ import { donutData } from '../data/dummydata';
 
 
 
-function Menu() {
+function Cart() {
   return (
     <div>
-      <Grid.Container gap={1} justify="center" height="100px">
+      <Grid.Container gap={1} justify="center" height="300px" width="100%">
       {donutData.map((data, key) => {
           return (
             <div key={key}>
-              
-                <Grid xs={20}>
+                <Grid md={24}>
                 <Card shadow width="100%" >
                   {/* <img src={require(`${data.image}`)} alt="Donut Pic" /> */}
                   <Text p b>
                     {data.name}
                   </Text>
                   <Text p>
-                    {data.description}
-                  </Text>
-                  <Text p b>
                     Price: {data.price}
                   </Text>
-                  <Button auto type="success">Add to Cart</Button>
+                  <Text p>
+                    Quantity: 1
+                  </Text>
+                  <Button auto type="error">Remove</Button>
                 </Card>
                 <Spacer h={2}/>
                 </Grid>
@@ -34,9 +33,21 @@ function Menu() {
           );
         })}
     </Grid.Container>
+    <Grid.Container gap={1.5}>
+      <Grid xs={12} justify="center"></Grid>
+      <Card>
+        <Text h4 my={0}>Total: $10.35</Text>
+        <Card.Footer>
+          <Button auto type="success">Place Order</Button>
+        </Card.Footer>
+      </Card>
+    </Grid.Container>
         
     </div>
+
+
+    
   );
 }
 
-export default Menu;
+export default Cart;

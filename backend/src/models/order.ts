@@ -1,12 +1,12 @@
-import mongoose from 'mongoose';
-import { Schema, Types } from 'mongoose';
+import mongoose, { Schema, Model, Document, Types } from 'mongoose';
 
-interface donut_count {
+
+export interface donut_count {
     donut_id: Types.ObjectId,
     quantity: Number
 }
 
-interface OrderInterface {
+export interface OrderInterface extends Document{
     customer_id : Types.ObjectId; 
     donuts : Array<donut_count>;
     cost : number; 
@@ -17,20 +17,19 @@ interface OrderInterface {
 }; 
 
 const orderSchema = new Schema<OrderInterface>(
-    {
+{
         customer_id : Schema.Types.ObjectId,
         donuts : [
-         {
+        {
             donut_id: Schema.Types.ObjectId, // String refers to donut objects
             quantity: Number// integer represents the quantity of donuts that is been ordered
-     
-             }
+            }
         ],
-        cost : Schema.Types.Decimal128,
+        cost : Number,
         drone_id : Schema.Types.ObjectId,
         time_placed : Date,
         time_picked : Date,
         time_delivered : Date,
-     });
+});
 
-export default mongoose.model<OrderInterface>('Order', orderSchema);
+export const OrderModel: Model<OrderInterface> = mongoose.model<OrderInterface>('Order', orderSchema);

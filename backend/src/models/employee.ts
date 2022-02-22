@@ -1,8 +1,7 @@
-import mongoose from 'mongoose';
-import { Employee } from '../../helpers';
-const { Schema } = mongoose;
+import mongoose, { Schema, Model, Document } from 'mongoose';
 
-interface EmployeeInterface {
+export interface EmployeeInterface extends Document
+{
     username : string; 
     password : string;
     full_name : string; 
@@ -17,4 +16,4 @@ const employeeSchema = new Schema<EmployeeInterface>(
     position : String
 });
 
-export default mongoose.model<EmployeeInterface>('Employee', employeeSchema);
+export const EmployeeModel: Model<EmployeeInterface> = mongoose.model<EmployeeInterface>('Employee', employeeSchema);

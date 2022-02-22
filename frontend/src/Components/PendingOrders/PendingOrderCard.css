@@ -1,0 +1,12 @@
+.orders-list {
+    height: 300px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    justify-content: center;
+}
+
+#past-orders-list {
+    height: 100px;
+    justify-content: center;
+}
+
