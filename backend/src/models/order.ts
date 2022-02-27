@@ -1,4 +1,4 @@
-import mongoose, { Schema, Model, Document, Query, connect, model, Types } from 'mongoose';
+import mongoose, { Schema, Model, Document, Query, Types } from 'mongoose';
 
 
 export interface order_count {
@@ -48,6 +48,24 @@ orderSchema.query.byDrone_id = function(drone_id: Types.ObjectId): Query<any, Do
 
 orderSchema.query.byDonut_id = function(donut_id: Types.ObjectId): Query<any, Document<OrderInterface>> & orderQueryHelpers {
     return this.find({ donut_id: donut_id });
+};
+
+interface employeeQueryHelpers {
+    byUsername(username: String): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers;
+    byFull_name(full_name: String): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers;
+    byPosition(position: String): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers;
+}
+
+employeeSchema.query.byUsername = function(username: String): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers {
+    return this.find({ username: username });
+};
+
+employeeSchema.query.byFull_name = function(full_name: String): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers {
+    return this.find({ full_name: full_name });
+};
+
+employeeSchema.query.byPosition = function(position: String): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers {
+    return this.find({ position: position });
 };
 
 export const OrderModel: Model<OrderInterface> = mongoose.model<OrderInterface>('Order', orderSchema);
