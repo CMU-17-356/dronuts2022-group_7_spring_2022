@@ -19,23 +19,23 @@ const donutSchema = new Schema<DonutInterface>(
      });
 
 
-interface donutQueryHelpers {
-    byName(name: string): Query<any, Document<DonutInterface>> & donutQueryHelpers;
-    byDescription(description: string): Query<any, Document<DonutInterface>> & donutQueryHelpers;
-    byPriceRange(upper: number, lower: number): Query<any, Document<DonutInterface>> & donutQueryHelpers;
-}
+// interface donutQueryHelpers {
+//     byName(name: string): Query<any, Document<DonutInterface>> & donutQueryHelpers;
+//     byDescription(description: string): Query<any, Document<DonutInterface>> & donutQueryHelpers;
+//     byPriceRange(upper: number, lower: number): Query<any, Document<DonutInterface>> & donutQueryHelpers;
+// }
 
-donutSchema.query.byName = function(name: string): Query<any, Document<DonutInterface>> & donutQueryHelpers {
-    return this.find({ name: name });
-};
+// donutSchema.query.byName = function(name: string): Query<any, Document<DonutInterface>> & donutQueryHelpers {
+//     return this.find({ name: name });
+// };
 
-donutSchema.query.byDescription = function(description: string): Query<any, Document<DonutInterface>> & donutQueryHelpers {
-    return this.find({ description: description });
-};
+// donutSchema.query.byDescription = function(description: string): Query<any, Document<DonutInterface>> & donutQueryHelpers {
+//     return this.find({ description: description });
+// };
 
-donutSchema.query.byPriceRange = function(upper: number, lower: number): Query<any, Document<DonutInterface>> & donutQueryHelpers {
-    return this.find({ price: { $gte: lower, $lte: upper } });
-};
+// donutSchema.query.byPriceRange = function(upper: number, lower: number): Query<any, Document<DonutInterface>> & donutQueryHelpers {
+//     return this.find({ price: { $gte: lower, $lte: upper } });
+// };
 
 
 

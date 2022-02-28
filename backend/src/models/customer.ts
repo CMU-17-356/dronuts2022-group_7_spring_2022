@@ -1,4 +1,4 @@
-import mongoose, { Schema, Model, Document } from 'mongoose';
+import mongoose, { Schema, Model, Document, Query } from 'mongoose';
 
 export interface CustomerInterface extends Document
 {
@@ -8,7 +8,6 @@ export interface CustomerInterface extends Document
     addresses: Array<string>;
 }; 
 
-
 const customerSchema = new Schema<CustomerInterface>(
 {
     username : { type: String, required: true }, 
@@ -17,5 +16,22 @@ const customerSchema = new Schema<CustomerInterface>(
     addresses: [String]
 });
 
+// interface customerQueryHelpers {
+//     byUsername(username: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers;
+//     byFull_name(full_name: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers;
+//     byAddress(position: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers;
+// }
+
+// customerSchema.query.byUsername = function(username: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers {
+//     return this.find({ username: username });
+// };
+
+// customerSchema.query.byFull_name = function(full_name: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers {
+//     return this.find({ full_name: full_name });
+// };
+
+// customerSchema.query.byAddress = function(address: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers {
+//     return this.find({ addresses: address });
+// };
 
 export const CustomerModel: Model<CustomerInterface> = mongoose.model('Customer', customerSchema);
