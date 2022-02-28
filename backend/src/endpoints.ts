@@ -1,5 +1,3 @@
-import { DonutModel, DonutInterface} from './models/donut';
-
 import mongoose, { Schema, Model, Document } from 'mongoose';
 
 
