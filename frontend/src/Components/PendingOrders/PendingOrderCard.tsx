@@ -7,13 +7,16 @@ import PastOrderCard from './PastOrderCard';
 
 import axios from 'axios';
 
+let pastOrders: Array<number> = new Array<number>();
+
 const OrderRow = () => (
   <div>
     <OrderCard/>
   </div>);
 
 function PendingOrderCard() {
-    axios.get(`pending`).then(response => useState({ users: response.data, done: true }))
+    axios.get(`/pending`).then(response => useState({pastOrders: response.data, done: true }))
+    console.log(pastOrders);
 
   return (
     
