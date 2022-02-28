@@ -1,9 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import OrderCard from './OrderCard'
 import { FixedSizeList as List } from 'react-window';
 import {Grid, Text, Card, Divider, Collapse} from '@geist-ui/core'
 import './PendingOrderCard.css';
 import PastOrderCard from './PastOrderCard';
+
+import axios from 'axios';
 
 const OrderRow = () => (
   <div>
@@ -11,6 +13,8 @@ const OrderRow = () => (
   </div>);
 
 function PendingOrderCard() {
+    axios.get(`pending`).then(response => useState({ users: response.data, done: true }))
+
   return (
     
     <div className="pending-orders-page">
