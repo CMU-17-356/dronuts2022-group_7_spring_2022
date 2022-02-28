@@ -16,9 +16,17 @@ app.get('/donuts', async (req, res) => {
   donut.quantity = 0;
   // save test post to in-memory db
   await donut.save();
-  const donuts = DonutModel.find().exec();
-  res.send(donuts);
-  console.log(donuts);
+  const donuts = DonutModel.find({name:'Cursed Donut'}).exec(function (err, result) {
+    if (err) {
+      res.status(404).send(err);
+    }
+      
+    else {
+      res.status(200).send(result);
+      console.log(result);
+    } 
+  });
+ 
 });
 
 app.listen(port, () => {
