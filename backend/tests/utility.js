@@ -39,50 +39,86 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var body_parser_1 = __importDefault(require("body-parser"));
-var donut_1 = require("./models/donut");
-var app = (0, express_1.default)();
-var port = 3001;
-app.use(body_parser_1.default.urlencoded({ extended: false }));
-app.use(body_parser_1.default.json());
-app.get('/donuts', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var donut, donuts;
+exports.clearDatabase = exports.closeDatabase = exports.connect = void 0;
+var mongoose_1 = __importDefault(require("mongoose"));
+var mongodb_memory_server_1 = require("mongodb-memory-server");
+// const mongooseOpts = {
+//     useNewUrlParser: true,
+//     autoReconnect: true,
+//     reconnectTries: Number.MAX_VALUE,
+//     reconnectInterval: 1000,
+//     poolSize: 10,
+// };
+// const mongod = new MongoMemoryServer(mongooseOpts);
+var testDB = new mongodb_memory_server_1.MongoMemoryServer();
+/**
+ * Connect to mock memory db.
+ */
+var connect = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var uri;
     return __generator(this, function (_a) {
         switch (_a.label) {
-            case 0:
-                donut = new donut_1.DonutModel();
-                donut.name = 'Cursed Donut';
-                donut.description = "Insert cursed caption";
-                donut.image = "image";
-                donut.price = 0;
-                donut.quantity = 0;
-                // save test post to in-memory db
-                return [4 /*yield*/, donut.save()];
+            case 0: return [4 /*yield*/, testDB.start()];
             case 1:
-                // save test post to in-memory db
                 _a.sent();
-                donuts = donut_1.DonutModel.find().exec();
-                res.send(donuts);
-                console.log(donuts);
+                return [4 /*yield*/, testDB.getUri()];
+            case 2:
+                uri = _a.sent();
+                return [4 /*yield*/, mongoose_1.default.connect(uri)];
+            case 3:
+                _a.sent();
                 return [2 /*return*/];
         }
     });
-}); });
-app.listen(port, function () {
-    console.log('Dronuts-App listening on localhost:${port}');
-});
-var mongoose = require('mongoose');
-main().catch(function (err) { return console.log(err); });
-function main() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, mongoose.connect('mongodb://localhost:27017/test')];
-                case 1:
-                    _a.sent();
-                    return [2 /*return*/];
-            }
-        });
+}); };
+exports.connect = connect;
+/**
+ * Close db connection
+ */
+var closeDatabase = function () { return __awaiter(void 0, void 0, void 0, function () {
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0: return [4 /*yield*/, mongoose_1.default.connection.dropDatabase()];
+            case 1:
+                _a.sent();
+                return [4 /*yield*/, mongoose_1.default.connection.close()];
+            case 2:
+                _a.sent();
+                return [4 /*yield*/, testDB.stop()];
+            case 3:
+                _a.sent();
+                return [2 /*return*/];
+        }
     });
-}
+}); };
+exports.closeDatabase = closeDatabase;
+/**
+ * Delete db collections
+ */
+var clearDatabase = function () { return __awaiter(void 0, void 0, void 0, function () {
+    var collections, _a, _b, _i, key, collection;
+    return __generator(this, function (_c) {
+        switch (_c.label) {
+            case 0:
+                collections = mongoose_1.default.connection.collections;
+                _a = [];
+                for (_b in collections)
+                    _a.push(_b);
+                _i = 0;
+                _c.label = 1;
+            case 1:
+                if (!(_i < _a.length)) return [3 /*break*/, 4];
+                key = _a[_i];
+                collection = collections[key];
+                return [4 /*yield*/, collection.deleteMany({})];
+            case 2:
+                _c.sent();
+                _c.label = 3;
+            case 3:
+                _i++;
+                return [3 /*break*/, 1];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.clearDatabase = clearDatabase;

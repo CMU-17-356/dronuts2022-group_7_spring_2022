@@ -1,5 +1,5 @@
 import React from 'react';
-import {Grid, Card, Button, Text, Spacer} from '@geist-ui/core'
+import {Grid, Card, Button, Text, Spacer, Input} from '@geist-ui/core'
 import { donutData } from '../data/dummydata';
 
 
@@ -25,6 +25,11 @@ function Menu() {
                   <Text p b>
                     Price: {data.price}
                   </Text>
+                  <Grid.Container gap={2} height="100px" justify="center">
+                    <Grid><Button auto type="secondary">-</Button></Grid>
+                    <Grid><Input width="50px" value='0'/></Grid>
+                    <Grid><Button auto type="secondary">+</Button></Grid>
+                  </Grid.Container>
                   <Button auto type="success">Add to Cart</Button>
                 </Card>
                 <Spacer h={2}/>
