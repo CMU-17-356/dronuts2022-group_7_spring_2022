@@ -16,22 +16,22 @@ const customerSchema = new Schema<CustomerInterface>(
     addresses: [String]
 });
 
-interface customerQueryHelpers {
-    byUsername(username: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers;
-    byFull_name(full_name: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers;
-    byAddress(position: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers;
-}
+// interface customerQueryHelpers {
+//     byUsername(username: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers;
+//     byFull_name(full_name: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers;
+//     byAddress(position: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers;
+// }
 
-customerSchema.query.byUsername = function(username: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers {
-    return this.find({ username: username });
-};
+// customerSchema.query.byUsername = function(username: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers {
+//     return this.find({ username: username });
+// };
 
-customerSchema.query.byFull_name = function(full_name: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers {
-    return this.find({ full_name: full_name });
-};
+// customerSchema.query.byFull_name = function(full_name: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers {
+//     return this.find({ full_name: full_name });
+// };
 
-customerSchema.query.byAddress = function(address: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers {
-    return this.find({ addresses: address });
-};
+// customerSchema.query.byAddress = function(address: string): Query<any, Document<CustomerInterface>> & customerQueryHelpers {
+//     return this.find({ addresses: address });
+// };
 
 export const CustomerModel: Model<CustomerInterface> = mongoose.model('Customer', customerSchema);

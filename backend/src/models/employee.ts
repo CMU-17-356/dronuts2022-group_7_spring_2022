@@ -16,22 +16,22 @@ const employeeSchema = new Schema<EmployeeInterface>(
     position : String
 });
 
-interface employeeQueryHelpers {
-    byUsername(username: string): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers;
-    byFull_name(full_name: string): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers;
-    byPosition(position: string): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers;
-}
+// interface employeeQueryHelpers {
+//     byUsername(username: string): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers;
+//     byFull_name(full_name: string): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers;
+//     byPosition(position: string): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers;
+// }
 
-employeeSchema.query.byUsername = function(username: string): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers {
-    return this.find({ username: username });
-};
+// employeeSchema.query.byUsername = function(username: string): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers {
+//     return this.find({ username: username });
+// };
 
-employeeSchema.query.byFull_name = function(full_name: string): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers {
-    return this.find({ full_name: full_name });
-};
+// employeeSchema.query.byFull_name = function(full_name: string): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers {
+//     return this.find({ full_name: full_name });
+// };
 
-employeeSchema.query.byPosition = function(position: string): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers {
-    return this.find({ position: position });
-};
+// employeeSchema.query.byPosition = function(position: string): Query<any, Document<EmployeeInterface>> & employeeQueryHelpers {
+//     return this.find({ position: position });
+// };
 
 export const EmployeeModel: Model<EmployeeInterface> = mongoose.model<EmployeeInterface>('Employee', employeeSchema);

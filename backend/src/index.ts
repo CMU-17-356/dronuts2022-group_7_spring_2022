@@ -1,15 +1,24 @@
-import express from 'express';
+import express, { response } from 'express';
 import bodyParser from 'body-parser';
-import { DonutModel } from './models/donut';
+import { DonutModel, DonutInterface } from './models/donut';
 const app = express();
 const port = 3001;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/donuts', (req, res) => {
-  const donuts = DonutModel.find().lean()
-  console.log(donuts)
+app.get('/donuts', async (req, res) => {
+  const donut: DonutInterface = new DonutModel();
+  donut.name = 'Cursed Donut';
+  donut.description = "Insert cursed caption";
+  donut.image = "image";
+  donut.price = 0;
+  donut.quantity = 0;
+  // save test post to in-memory db
+  await donut.save();
+  const donuts = DonutModel.find().exec();
+  res.send(donuts);
+  console.log(donuts);
 });
 
 app.listen(port, () => {
