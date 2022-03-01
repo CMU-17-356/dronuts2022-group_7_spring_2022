@@ -12,12 +12,22 @@ function Menu() {
      return response;
   };
 
-  var quantity: Array<number> = new Array<number>(0);
+  const [quantity, setQuantity] = useState<Array<number>>([]);
 
-  function updateData(result: Array<any>) {
+  const updateData = (result: Array<any>) => {
     setData(result);
     var length = result.length;
-    var quantity = useState<Array<number>>(new Array<number>(length).fill(0));
+    setQuantity(new Array<number>(length).fill(0));
+  }
+
+  const updateQuantityByKey = (key: number, value: string) => {
+    var num = parseInt(value);
+    if (isNaN(num) || num < 0) {
+      quantity[key] = 0;
+    }
+    else {
+      quantity[key] = num;
+    }
   }
 
   useEffect(() => {
@@ -51,9 +61,9 @@ function Menu() {
                     Price: {data.price}
                   </Text>
                   <Grid.Container gap={2} height="100px" justify="center">
-                    <Grid><Button auto type="secondary" onClick={() => updateQuantity(key, (quantity[key]-1).toString())}>-</Button></Grid>
-                    <Grid><FormControl width="50px" value={quantity[key]} onChange={(event) => updateQuantity(key, event.target.value)}/></Grid>
-                    <Grid><Button auto type="secondary"onClick={() => updateQuantity(key, (quantity[key]+1).toString())}>+</Button></Grid>
+                    <Grid><Button auto type="secondary" onClick={() => updateQuantityByKey(key, (quantity[key]-1).toString())}>-</Button></Grid>
+                    <Grid><FormControl width="50px" value={quantity[key]} onChange={(event) => updateQuantityByKey(key, event.target.value)}/></Grid>
+                    <Grid><Button auto type="secondary"onClick={() => updateQuantityByKey(key, (quantity[key]+1).toString())}>+</Button></Grid>
                   </Grid.Container>
                   <Button auto type="success">Add to Cart</Button>
                 </Card>
