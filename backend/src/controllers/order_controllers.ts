@@ -100,12 +100,25 @@ export let AddQuantityById = (req: Request, res: Response) => {
 };
 
 export let AddItemById = (req: Request, res: Response) => {
-  let order_update = OrderModel.findOneAndUpdate({ _id:req.params.id},  { $push : 
-    { donut_id: req.body.donut_id, quantity : req.body.quantity }}, (err: any, result: any) => {
+  let order_update = OrderModel.findOneAndUpdate({ _id:req.params.id},  { $push : {donuts: { donut_id: req.body.donut_id, quantity : req.body.quantity } }
+    }, (err: any, result: any) => {
     if (err) {
       res.status(400).send(err);
     } else {
+      console.log("adding donut")
       res.status(200).send("Successfully Added Donut " + req.body.donut_id + " to order " + req.params.id);
+    }
+  });
+};
+
+export let RemoveItemById = (req: Request, res: Response) => {
+  let order_update = OrderModel.findOneAndUpdate({ _id:req.params.id},  { $pull : {donuts: { donut_id: req.body.donut_id} }
+    }, (err: any, result: any) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      console.log("adding donut")
+      res.status(200).send("Successfully Remove Donut " + req.body.donut_id + " from order " + req.params.id);
     }
   });
 };

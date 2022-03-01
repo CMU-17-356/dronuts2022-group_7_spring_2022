@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteOrderById = exports.createOrder = exports.AddItemById = exports.AddQuantityById = exports.upsertOrderById = exports.listPastOrders = exports.listPendingOrders = exports.listIncompleteOrders = exports.getOrderById = exports.listAllOrders = void 0;
+exports.deleteOrderById = exports.createOrder = exports.RemoveItemById = exports.AddItemById = exports.AddQuantityById = exports.upsertOrderById = exports.listPastOrders = exports.listPendingOrders = exports.listIncompleteOrders = exports.getOrderById = exports.listAllOrders = void 0;
 var order_1 = require("../models/order");
 var listAllOrders = function (req, res) {
     var orders = order_1.OrderModel.find({}, function (err, result) {
@@ -141,16 +141,31 @@ var AddQuantityById = function (req, res) {
 };
 exports.AddQuantityById = AddQuantityById;
 var AddItemById = function (req, res) {
-    var order_update = order_1.OrderModel.findOneAndUpdate({ _id: req.params.id }, { $push: { donut_id: req.body.donut_id, quantity: req.body.quantity } }, function (err, result) {
+    var order_update = order_1.OrderModel.findOneAndUpdate({ _id: req.params.id }, { $push: { donuts: { donut_id: req.body.donut_id, quantity: req.body.quantity } }
+    }, function (err, result) {
         if (err) {
             res.status(400).send(err);
         }
         else {
+            console.log("adding donut");
             res.status(200).send("Successfully Added Donut " + req.body.donut_id + " to order " + req.params.id);
         }
     });
 };
 exports.AddItemById = AddItemById;
+var RemoveItemById = function (req, res) {
+    var order_update = order_1.OrderModel.findOneAndUpdate({ _id: req.params.id }, { $pull: { donuts: { donut_id: req.body.donut_id } }
+    }, function (err, result) {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            console.log("adding donut");
+            res.status(200).send("Successfully Added Donut " + req.body.donut_id + " to order " + req.params.id);
+        }
+    });
+};
+exports.RemoveItemById = RemoveItemById;
 var createOrder = function (req, res) {
     var donut = new order_1.OrderModel(req.body);
     donut.save(function (err, result) { return __awaiter(void 0, void 0, void 0, function () {

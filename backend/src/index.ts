@@ -78,6 +78,10 @@ app.post('/orders/:id', order_controllers.upsertOrderById
 app.delete('/orders/:id', order_controllers.deleteOrderById
 );
 
+app.delete('/orders/remove_item/:id', order_controllers.RemoveItemById
+);
+
+
 app.listen(port, () => {
   console.log('Dronuts-App listening on localhost:{port}');
 });
