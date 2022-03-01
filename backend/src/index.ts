@@ -8,7 +8,7 @@ const port = 3001;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-app.get('/donuts', async (req, res) => {
+app.get('/test', async (req, res) => {
   const donut: DonutInterface = new DonutModel();
   donut.name = 'Cursed Donut';
   donut.description = "Insert cursed caption";
@@ -28,6 +28,14 @@ app.get('/donuts', async (req, res) => {
     } 
   });
 });
+
+// Donut Controllers
+
+// Customer Controllers
+
+// Employee Controllers
+
+// Orders
 
 app.listen(port, () => {
   console.log('Dronuts-App listening on localhost:${port}');

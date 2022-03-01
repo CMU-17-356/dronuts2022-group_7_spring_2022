@@ -1,8 +1,8 @@
 import * as mongoose from "mongoose";
 import { Request, Response } from "express";
-import { DonutModel, DonutInterface } from './models/donut';
+import { DonutModel, DonutInterface } from '../models/donut';
 
-export let listAllDonut = (req: Request, res: Response) => {
+export let listAllDonuts = (req: Request, res: Response) => {
     let donut = DonutModel.find({}, (err: any, result: any) => {
       if (err) {
         res.send(err);
@@ -11,7 +11,6 @@ export let listAllDonut = (req: Request, res: Response) => {
       }
     });
 };
-
 
 export let upsertDonut = (req: Request, res: Response) => {
     let filter = { _id:req.params.id};

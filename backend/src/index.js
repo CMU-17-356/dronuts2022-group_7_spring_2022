@@ -41,12 +41,13 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
+var mongoose_1 = __importDefault(require("mongoose"));
 var donut_1 = require("./models/donut");
 var app = (0, express_1.default)();
 var port = 3001;
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(body_parser_1.default.json());
-app.get('/donuts', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+app.get('/test', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var donut, donuts;
     return __generator(this, function (_a) {
         switch (_a.label) {
@@ -75,16 +76,19 @@ app.get('/donuts', function (req, res) { return __awaiter(void 0, void 0, void 0
         }
     });
 }); });
+// Donut Controllers
+// Customer Controllers
+// Employee Controllers
+// Orders
 app.listen(port, function () {
     console.log('Dronuts-App listening on localhost:${port}');
 });
-var mongoose = require('mongoose');
 main().catch(function (err) { return console.log(err); });
 function main() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, mongoose.connect('mongodb://localhost:27017/test')];
+                case 0: return [4 /*yield*/, mongoose_1.default.connect('mongodb://localhost:27017/test')];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];
