@@ -110,7 +110,7 @@ exports.upsertOrderById = upsertOrderById;
 var AddItemOrderById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var order_update;
     return __generator(this, function (_a) {
-        order_update = order_1.OrderModel.updateOne({ _id: req.params.id }, { $push: { donuts: { "donut_id": req.body.donut_id, "quantity": req.body.quantity } } }, { new: true, upsert: true }, function (err, result) {
+        order_update = order_1.OrderModel.findOneAndUpdate({ _id: req.params.id, "donuts.donut_id": req.body.donut_id }, { $inc: { 'donuts.$.quantity': req.body.quantity } }, function (err, result) {
             if (err) {
                 res.status(400).send(err);
             }
