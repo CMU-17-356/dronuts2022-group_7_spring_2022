@@ -1,4 +1,23 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
+    Object.defineProperty(o, "default", { enumerable: true, value: v });
+}) : function(o, v) {
+    o["default"] = v;
+});
+var __importStar = (this && this.__importStar) || function (mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
+    __setModuleDefault(result, mod);
+    return result;
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -41,50 +60,42 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
-var donut_1 = require("./models/donut");
+var mongoose_1 = __importDefault(require("mongoose"));
+var donut_controllers = __importStar(require("./donut_controllers"));
 var app = (0, express_1.default)();
 var port = 3001;
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(body_parser_1.default.json());
-app.get('/donuts', function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var donut, donuts;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                donut = new donut_1.DonutModel();
-                donut.name = 'Cursed Donut';
-                donut.description = "Insert cursed caption";
-                donut.image = "image";
-                donut.price = 0;
-                donut.quantity = 0;
-                // save test post to in-memory db
-                return [4 /*yield*/, donut.save()];
-            case 1:
-                // save test post to in-memory db
-                _a.sent();
-                donuts = donut_1.DonutModel.find({ name: 'Cursed Donut' }).exec(function (err, result) {
-                    if (err) {
-                        res.status(404).send(err);
-                    }
-                    else {
-                        res.status(200).send(result);
-                        console.log(result);
-                    }
-                });
-                return [2 /*return*/];
-        }
-    });
-}); });
+app.get('/donuts', donut_controllers.listAllDonut
+// {
+//   // const donut: DonutInterface = new DonutModel();
+//   // donut.name = 'Cursed Donut';
+//   // donut.description = "Insert cursed caption";
+//   // donut.image = "image";
+//   // donut.price = 0;
+//   // donut.quantity = 0;
+//   // // save test post to in-memory db
+//   // await donut.save();
+//   const donuts = DonutModel.find().exec(function (err, result) {
+//     if (err) {
+//       res.status(404).send(err);
+//     }
+//     else {
+//       res.status(200).send(result);
+//       console.log(result);
+//     } 
+//   });
+// }
+);
 app.listen(port, function () {
-    console.log('Dronuts-App listening on localhost:${port}');
+    console.log('Dronuts-App listening on localhost:{port}');
 });
-var mongoose = require('mongoose');
 main().catch(function (err) { return console.log(err); });
 function main() {
     return __awaiter(this, void 0, void 0, function () {
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, mongoose.connect('mongodb://localhost:27017/test')];
+                case 0: return [4 /*yield*/, mongoose_1.default.connect('mongodb://localhost:27017/test')];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];

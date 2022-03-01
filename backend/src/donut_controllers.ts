@@ -12,6 +12,16 @@ export let listAllDonut = (req: Request, res: Response) => {
     });
 };
 
+export let getDonutById = (req: Request, res: Response) => {
+  let donut = DonutModel.findOne({_id: req.params.id}, (err: any, result: any) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
+};
+
 
 export let upsertDonut = (req: Request, res: Response) => {
     let filter = { _id:req.params.id};
