@@ -27,7 +27,7 @@ var orderSchema = new mongoose_1.Schema({
     donuts: [
         {
             donut_id: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'Donut' },
-            quantity: { type: Number, required: true } // integer represents the quantity of orders that is been ordered
+            quantity: { type: Number, required: true, min: 0 } // integer represents the quantity of orders that is been ordered
         }
     ],
     cost: Number,

@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteOrderById = exports.createOrder = exports.AddItemOrderById = exports.upsertOrderById = exports.listPastOrders = exports.listPendingOrders = exports.listIncompleteOrders = exports.getOrderById = exports.listAllOrders = void 0;
+exports.deleteOrderById = exports.createOrder = exports.AddItemById = exports.AddQuantityById = exports.upsertOrderById = exports.listPastOrders = exports.listPendingOrders = exports.listIncompleteOrders = exports.getOrderById = exports.listAllOrders = void 0;
 var order_1 = require("../models/order");
 var listAllOrders = function (req, res) {
     var orders = order_1.OrderModel.find({}, function (err, result) {
@@ -107,21 +107,50 @@ var upsertOrderById = function (req, res) {
     });
 };
 exports.upsertOrderById = upsertOrderById;
-var AddItemOrderById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var order_update;
-    return __generator(this, function (_a) {
-        order_update = order_1.OrderModel.findOneAndUpdate({ _id: req.params.id, "donuts.donut_id": req.body.donut_id }, { $inc: { 'donuts.$.quantity': req.body.quantity } }, function (err, result) {
-            if (err) {
-                res.status(400).send(err);
-            }
-            else {
-                res.status(200).send("Successfully Added Donut " + req.body.donut_id + " to order " + req.params.id);
-            }
-        });
-        return [2 /*return*/];
+var AddQuantityById = function (req, res) {
+    var order_update = order_1.OrderModel.findOneAndUpdate({ _id: req.params.id, "donuts.donut_id": req.body.donut_id }, { $inc: { 'donuts.$.quantity': req.body.quantity } }, function (err, result) {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).send("Successfully Added" + req.body.quantity + " to Donut " + req.body.donut_id + "  in order " + req.params.id);
+        }
     });
-}); };
-exports.AddItemOrderById = AddItemOrderById;
+    // let updated_object = await OrderModel.findOne({ _id:req.params.id});
+    // let updated_donuts: any = updated_object?.donuts;
+    // console.log(updated_donuts);
+    // let final_cost = 0;
+    // for (let i = 0; i < updated_donuts.length; i++){
+    //   let donut_id  = updated_donuts[i].donut_id;
+    //   console.log(donut_id);
+    //   let donut = await DonutModel.findOne({_id : donut_id})
+    //   console.log(donut)
+    //   let donut_price :any  = donut?.price
+    //   console.log(donut_price)
+    //   console.log(updated_donuts[i].quantity)
+    //   final_cost = final_cost + donut_price * updated_donuts[i].quantity;
+    //   }
+    // console.log("price calculated");
+    // let cost_update = OrderModel.findOneAndUpdate({ _id:req.params.id}, { cost: final_cost }, {new: true, upsert: true}, (err: any, result: any) => {
+    //   if (err) {
+    //     res.status(400).send(err);
+    //   } else {
+    //     res.status(200).send("Successfully Added Donut " + req.body.donut_id + " to order " + req.params.id);
+    //   }
+    // });
+};
+exports.AddQuantityById = AddQuantityById;
+var AddItemById = function (req, res) {
+    var order_update = order_1.OrderModel.findOneAndUpdate({ _id: req.params.id }, { $push: { donut_id: req.body.donut_id, quantity: req.body.quantity } }, function (err, result) {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).send("Successfully Added Donut " + req.body.donut_id + " to order " + req.params.id);
+        }
+    });
+};
+exports.AddItemById = AddItemById;
 var createOrder = function (req, res) {
     var donut = new order_1.OrderModel(req.body);
     donut.save(function (err, result) { return __awaiter(void 0, void 0, void 0, function () {

@@ -57,7 +57,10 @@ app.get('/orders/past', order_controllers.listPastOrders
 app.put('/orders/', order_controllers.createOrder
 );
 
-app.put('/orders/add_item/:id', order_controllers.AddItemOrderById
+app.put('/orders/add_quantity/:id', order_controllers.AddQuantityById
+);
+
+app.put('/orders/add_item/:id', order_controllers.AddItemById
 );
 
 app.post('/orders/', order_controllers.createOrder

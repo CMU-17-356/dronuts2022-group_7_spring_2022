@@ -22,7 +22,7 @@ const orderSchema = new Schema<OrderInterface>(
         donuts : [
         {
             donut_id: {type: Schema.Types.ObjectId, required: true, ref: 'Donut'}, // String refers to order objects
-            quantity: {type: Number, required: true} // integer represents the quantity of orders that is been ordered
+            quantity: {type: Number, required: true, min: 0} // integer represents the quantity of orders that is been ordered
             }
         ],
         cost : Number,
