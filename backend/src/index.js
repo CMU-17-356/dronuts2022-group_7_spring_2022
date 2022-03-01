@@ -61,7 +61,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var mongoose_1 = __importDefault(require("mongoose"));
-var donut_controllers = __importStar(require("./donut_controllers"));
+var donut_controllers = __importStar(require("./controllers/donut_controllers"));
 var app = (0, express_1.default)();
 var port = 3001;
 app.use(body_parser_1.default.urlencoded({ extended: false }));
@@ -73,6 +73,10 @@ app.put('/donuts/', donut_controllers.createDonut);
 app.put('/donuts/:id', donut_controllers.upsertDonutById);
 app.delete('/donuts/:id', donut_controllers.deleteDonutById);
 app.delete('/donuts', donut_controllers.deleteDonutByName);
+// Donut Controllers
+// Customer Controllers
+// Employee Controllers
+// Orders
 app.listen(port, function () {
     console.log('Dronuts-App listening on localhost:{port}');
 });

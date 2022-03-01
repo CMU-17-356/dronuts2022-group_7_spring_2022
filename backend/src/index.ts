@@ -2,7 +2,8 @@ import express, { response } from 'express';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import { DonutModel, DonutInterface } from './models/donut';
-import * as donut_controllers from './donut_controllers';
+import * as donut_controllers from './controllers/donut_controllers';
+import * as order_controllers from './controllers/order_controllers';
 
 const app = express();
 const port = 3001;
@@ -10,8 +11,8 @@ const port = 3001;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-//donut CRUD methods
-app.get('/donuts', donut_controllers.listAllDonut
+// Donut Controllers
+app.get('/donuts', donut_controllers.listAllDonuts
 );
 
 app.get('/donuts/:id', donut_controllers.getDonutById
@@ -30,6 +31,41 @@ app.delete('/donuts/:id', donut_controllers.deleteDonutById
 );
 
 app.delete('/donuts', donut_controllers.deleteDonutByName
+);
+
+// Customer Controllers
+
+// Employee Controllers
+
+// Orders
+app.get('/orders', order_controllers.listAllOrders
+);
+
+app.get('/orders/incomplete', order_controllers.listIncompleteOrders
+);
+
+app.get('/orders/pending', order_controllers.listPendingOrders
+);
+
+app.get('/orders/past', order_controllers.listPastOrders
+);
+
+app.put('/orders/', order_controllers.createOrder
+);
+
+app.post('/orders/', order_controllers.createOrder
+);
+
+app.put('/orders/:id', order_controllers.upsertOrderById
+);
+
+app.post('/orders/:id', order_controllers.upsertOrderById
+);
+
+app.post('/orders/:id', order_controllers.upsertOrderById
+);
+
+app.delete('/orders/:id', order_controllers.deleteOrderById
 );
 
 app.listen(port, () => {

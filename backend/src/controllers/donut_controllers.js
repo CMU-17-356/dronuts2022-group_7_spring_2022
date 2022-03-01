@@ -37,7 +37,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.deleteDonutByName = exports.deleteDonutById = exports.createDonut = exports.upsertDonutById = exports.getDonutById = exports.listAllDonut = void 0;
-var donut_1 = require("./models/donut");
+var donut_1 = require("../models/donut");
 var listAllDonut = function (req, res) {
     var donut = donut_1.DonutModel.find({}, function (err, result) {
         if (err) {
