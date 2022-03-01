@@ -10,9 +10,24 @@ const port = 3001;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
+//donut CRUD methods
 app.get('/donuts', donut_controllers.listAllDonut
 );
 
+app.get('/donuts/:id', donut_controllers.getDonutById
+);
+
+app.put('/donuts/', donut_controllers.createDonut
+);
+
+app.put('/donuts/:id', donut_controllers.upsertDonutById
+);
+
+app.delete('/donuts/:id', donut_controllers.deleteDonutById
+);
+
+app.delete('/donuts', donut_controllers.deleteDonutByName
+);
 
 app.listen(port, () => {
   console.log('Dronuts-App listening on localhost:{port}');

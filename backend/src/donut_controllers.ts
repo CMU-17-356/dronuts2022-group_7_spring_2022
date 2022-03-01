@@ -23,16 +23,25 @@ export let getDonutById = (req: Request, res: Response) => {
 };
 
 
-export let upsertDonut = (req: Request, res: Response) => {
-    let filter = { _id:req.params.id};
-    let update = req.body;
-    let donut = DonutModel.findOneAndUpdate(filter, update, {new: true}, (err: any, result: any) => {
+export let upsertDonutById = (req: Request, res: Response) => {
+    let donut = DonutModel.findOneAndUpdate({ _id:req.params.id}, req.body, {new: true, upsert: true}, (err: any, result: any) => {
       if (err) {
         res.send(err);
       } else {
-        res.send(result);
+        res.status(200).send("Successfully Upserted Donut with _id "+ result._id );
       }
     });
+};
+
+export let createDonut = (req: Request, res: Response) => {
+  let donut = new DonutModel(req.body);
+  donut.save(async (err: any, result: any) => {
+    if (err) {
+      res.send(err);
+    } else {
+      res.status(200).send("Successfully Created Donut with _id "+ result._id );
+    }
+  });
 };
 
 export let deleteDonutById = (req: Request, res: Response) => {
@@ -40,11 +49,22 @@ export let deleteDonutById = (req: Request, res: Response) => {
       if (err) {
         res.send(err);
       } else {
-        res.send("Successfully Deleted Book");
+        console.log(req.body);
+        res.status(200).send("Successfully Deleted Donut" );
       }
     });
 };
 
+export let deleteDonutByName = (req: Request, res: Response) => {
+  let donut = DonutModel.deleteOne({name: req.body.name }, (err: any) => {
+    if (err) {
+      res.send(err);
+    } else {
+      console.log(req.body);
+      res.status(200).send("Successfully Deleted Book");
+    }
+  });
+};
 
 
 

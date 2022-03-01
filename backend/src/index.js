@@ -66,27 +66,13 @@ var app = (0, express_1.default)();
 var port = 3001;
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(body_parser_1.default.json());
-app.get('/donuts', donut_controllers.listAllDonut
-// {
-//   // const donut: DonutInterface = new DonutModel();
-//   // donut.name = 'Cursed Donut';
-//   // donut.description = "Insert cursed caption";
-//   // donut.image = "image";
-//   // donut.price = 0;
-//   // donut.quantity = 0;
-//   // // save test post to in-memory db
-//   // await donut.save();
-//   const donuts = DonutModel.find().exec(function (err, result) {
-//     if (err) {
-//       res.status(404).send(err);
-//     }
-//     else {
-//       res.status(200).send(result);
-//       console.log(result);
-//     } 
-//   });
-// }
-);
+//donut CRUD methods
+app.get('/donuts', donut_controllers.listAllDonut);
+app.get('/donuts/:id', donut_controllers.getDonutById);
+app.put('/donuts/', donut_controllers.createDonut);
+app.put('/donuts/:id', donut_controllers.upsertDonutById);
+app.delete('/donuts/:id', donut_controllers.deleteDonutById);
+app.delete('/donuts', donut_controllers.deleteDonutByName);
 app.listen(port, function () {
     console.log('Dronuts-App listening on localhost:{port}');
 });
