@@ -1,5 +1,6 @@
 import express, { response } from 'express';
 import bodyParser from 'body-parser';
+import mongoose from 'mongoose';
 import { DonutModel, DonutInterface } from './models/donut';
 const app = express();
 const port = 3001;
@@ -26,14 +27,11 @@ app.get('/donuts', async (req, res) => {
       console.log(result);
     } 
   });
- 
 });
 
 app.listen(port, () => {
   console.log('Dronuts-App listening on localhost:${port}');
 });
-
-const mongoose = require('mongoose');
 
 main().catch(err => console.log(err));
 
