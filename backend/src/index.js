@@ -79,10 +79,12 @@ app.delete('/donuts', donut_controllers.deleteDonutByName);
 // Employee Controllers
 // Orders
 app.get('/orders', order_controllers.listAllOrders);
+app.get('/orders/:id', order_controllers.getOrderById);
 app.get('/orders/incomplete', order_controllers.listIncompleteOrders);
 app.get('/orders/pending', order_controllers.listPendingOrders);
 app.get('/orders/past', order_controllers.listPastOrders);
 app.put('/orders/', order_controllers.createOrder);
+app.put('/orders/add_item/:id', order_controllers.AddItemOrderById);
 app.post('/orders/', order_controllers.createOrder);
 app.put('/orders/:id', order_controllers.upsertOrderById);
 app.post('/orders/:id', order_controllers.upsertOrderById);
