@@ -6,6 +6,7 @@ In order to get ready to write productive code, complete the following steps dur
 Run a mongodb instance
 ```
 mongoimport --db test --collection donut --type json --file /src/data/donuts.json --jsonArray
+mongoimport --db test --collection orders --type json --file /src/data/orders.json --jsonArray
 npx tsc
 node src/index.js
 ```
