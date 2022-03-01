@@ -14,15 +14,18 @@ import {
 } from "react-router-dom";
 import DeliveryStatus from './Components/DeliveryStatus';
 
-var permissions = ""
+// var permissions = ""
 
 function App() {
   return (
     <Router>
       <div>
-        <CustomNavbar permissions = {permissions}/>
+        {/* <CustomNavbar permissions = {permissions}/> */}
+        <CustomNavbar/>
       <Routes>
-          {permissions == "Employee" ? <Route path="/pending" element= {<PendingOrderCard/>} /> : <Route path="/checkout" element= {<Cart/>} />}
+          {/* {permissions == "Employee" ? <Route path="/pending" element= {<PendingOrderCard/>} /> : <Route path="/checkout" element= {<Cart/>} />} */}
+          <Route path="/pending" element= {<PendingOrderCard/>} />
+          <Route path="/checkout" element= {<Cart/>} />
           <Route path="/" element= {<Menu/>} />
           <Route path="/delivery_status" element= {<DeliveryStatus/>} />
       </Routes> 
