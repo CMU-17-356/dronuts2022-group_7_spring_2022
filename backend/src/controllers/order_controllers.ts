@@ -66,7 +66,8 @@ export let upsertOrderById = (req: Request, res: Response) => {
 };
 
 export let AddItemOrderById = async (req: Request, res: Response) => {
-  let order_update = OrderModel.updateOne({ _id:req.params.id}, {$push : {donuts: {"donut_id": req.body.donut_id, "quantity": req.body.quantity }}}, {new: true, upsert: true}, (err: any, result: any) => {
+  let order_update = OrderModel.findOneAndUpdate({ _id:req.params.id, "donuts.donut_id": req.body.donut_id},  { $inc : 
+    { 'donuts.$.quantity' : req.body.quantity }}, (err: any, result: any) => {
     if (err) {
       res.status(400).send(err);
     } else {
