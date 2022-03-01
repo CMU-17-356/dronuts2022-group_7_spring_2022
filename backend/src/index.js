@@ -62,9 +62,15 @@ app.get('/donuts', function (req, res) { return __awaiter(void 0, void 0, void 0
             case 1:
                 // save test post to in-memory db
                 _a.sent();
-                donuts = donut_1.DonutModel.find().exec();
-                res.send(donuts);
-                console.log(donuts);
+                donuts = donut_1.DonutModel.find({ name: 'Cursed Donut' }).exec(function (err, result) {
+                    if (err) {
+                        res.status(404).send(err);
+                    }
+                    else {
+                        res.status(200).send(result);
+                        console.log(result);
+                    }
+                });
                 return [2 /*return*/];
         }
     });
