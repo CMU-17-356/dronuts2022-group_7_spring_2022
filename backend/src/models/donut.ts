@@ -14,8 +14,8 @@ const donutSchema = new Schema<DonutInterface>(
         name : { type: String, required: true }, 
         description: String, 
         image : String, // path to donut images saved
-        price: Number, 
-        quantity: Number, //  number of donuts in inventory
+        price: { type: Number, required: true }, 
+        quantity: { type: Number, required: true }, //  number of donuts in inventory
      });
 
 

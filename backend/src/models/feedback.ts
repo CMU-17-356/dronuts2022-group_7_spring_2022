@@ -9,9 +9,9 @@ export interface FeedbackInterface extends Document {
 
 const feedbackSchema = new Schema<FeedbackInterface>(
     {
-        customer_id : Schema.Types.ObjectId,
-        order_id : Schema.Types.ObjectId,
-        rating : Number, // out of 5
+        customer_id : {type: Schema.Types.ObjectId, required: true, ref: 'Customer'},
+        order_id : {type: Schema.Types.ObjectId, required: true, ref: 'Order'},
+        rating : {type: Number, min: 0, max: 5, required: true}, // out of 5
         feedback : String 
      });
 
