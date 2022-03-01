@@ -84,12 +84,14 @@ app.get('/orders/incomplete', order_controllers.listIncompleteOrders);
 app.get('/orders/pending', order_controllers.listPendingOrders);
 app.get('/orders/past', order_controllers.listPastOrders);
 app.put('/orders/', order_controllers.createOrder);
-app.put('/orders/add_item/:id', order_controllers.AddItemOrderById);
+app.put('/orders/add_quantity/:id', order_controllers.AddQuantityById);
+app.put('/orders/add_item/:id', order_controllers.AddItemById);
 app.post('/orders/', order_controllers.createOrder);
 app.put('/orders/:id', order_controllers.upsertOrderById);
 app.post('/orders/:id', order_controllers.upsertOrderById);
 app.post('/orders/:id', order_controllers.upsertOrderById);
 app.delete('/orders/:id', order_controllers.deleteOrderById);
+app.delete('/orders/remove_item/:id', order_controllers.RemoveItemById);
 app.listen(port, function () {
     console.log('Dronuts-App listening on localhost:{port}');
 });
