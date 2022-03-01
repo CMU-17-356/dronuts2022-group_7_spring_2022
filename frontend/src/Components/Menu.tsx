@@ -18,8 +18,6 @@ function Menu() {
     <div>
       <Grid.Container gap={1} justify="center" height="100px">
       {donutData.map((data, key) => {
-        {console.log("penis")}
-        {console.log(data)}
         const updateQuantity = (value: string) => {
           const num = parseInt(value)
           if (isNaN(num) || num < 0) {
