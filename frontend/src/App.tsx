@@ -31,7 +31,7 @@ function App() {
         } else { 
           setPermission(employee_string);
         }
-      }}>Switch to {currPermission === employee_string ? employee_string : customer_string} view</Button>
+      }}>Switch to {currPermission === employee_string ? customer_string : employee_string} view</Button>
       <Routes>
           {currPermission === employee_string ? <Route path="/pending" element= {<PendingOrderCard/>} /> : <Route path="/checkout" element= {<Cart/>} />}
           <Route path="/" element= {<Menu/>} />
