@@ -2,29 +2,38 @@ import React, { useState, useEffect } from 'react';
 import {Grid, Card, Button, Text, Spacer, Input} from '@geist-ui/core'
 // import { donutData } from '../data/dummydata';
 import { FormControl } from 'react-bootstrap';
+import { updateDefaultClause } from 'typescript';
 
 function Menu() {
   const [donutData, setData] = useState<Array<any>>([]);
    const fetchData = async () => {
      const response = await fetch('/donuts').then(response => response.json())
-    .then(result => {console.log('hello', result); setData(result)});
+    .then(result => {updateData(result)});
      return response;
   };
+
+  var quantity: Array<number> = new Array<number>(0);
+
+  function updateData(result: Array<any>) {
+    setData(result);
+    var length = result.length;
+    var quantity = useState<Array<number>>(new Array<number>(length).fill(0));
+  }
+
   useEffect(() => {
     fetchData();
     }, []);
-  const [quantity, setQuantity] = useState<number>(0);
   return (
     <div>
       <Grid.Container gap={1} justify="center" height="100px">
       {donutData.map((data, key) => {
-        const updateQuantity = (value: string) => {
+        const updateQuantity = (key:number, value: string) => {
           const num = parseInt(value)
           if (isNaN(num) || num < 0) {
-            setQuantity(0);
+            quantity[key] = 0;
           }
           else {
-            setQuantity(num);
+            quantity[key] = num;
           }
         }
           return (
@@ -42,9 +51,9 @@ function Menu() {
                     Price: {data.price}
                   </Text>
                   <Grid.Container gap={2} height="100px" justify="center">
-                    <Grid><Button auto type="secondary" onClick={() => updateQuantity((quantity-1).toString())}>-</Button></Grid>
-                    <Grid><FormControl width="50px" value={quantity} onChange={(event) => updateQuantity(event.target.value)}/></Grid>
-                    <Grid><Button auto type="secondary"onClick={() => updateQuantity((quantity+1).toString())}>+</Button></Grid>
+                    <Grid><Button auto type="secondary" onClick={() => updateQuantity(key, (quantity[key]-1).toString())}>-</Button></Grid>
+                    <Grid><FormControl width="50px" value={quantity[key]} onChange={(event) => updateQuantity(key, event.target.value)}/></Grid>
+                    <Grid><Button auto type="secondary"onClick={() => updateQuantity(key, (quantity[key]+1).toString())}>+</Button></Grid>
                   </Grid.Container>
                   <Button auto type="success">Add to Cart</Button>
                 </Card>
