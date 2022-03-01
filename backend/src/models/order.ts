@@ -27,7 +27,7 @@ const orderSchema = new Schema<OrderInterface>(
         ],
         cost : Number,
         drone_id : {type: Schema.Types.ObjectId, required: true, ref: 'Drone'},
-        time_placed :  { type: Date, default: Date.now() },
+        time_placed :  { type: Date},
         time_picked : Date,
         time_delivered : Date,
 });
