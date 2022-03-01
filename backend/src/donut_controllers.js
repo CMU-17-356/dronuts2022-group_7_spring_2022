@@ -1,23 +1,4 @@
 "use strict";
-var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
-}) : (function(o, m, k, k2) {
-    if (k2 === undefined) k2 = k;
-    o[k2] = m[k];
-}));
-var __setModuleDefault = (this && this.__setModuleDefault) || (Object.create ? (function(o, v) {
-    Object.defineProperty(o, "default", { enumerable: true, value: v });
-}) : function(o, v) {
-    o["default"] = v;
-});
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (k !== "default" && Object.prototype.hasOwnProperty.call(mod, k)) __createBinding(result, mod, k);
-    __setModuleDefault(result, mod);
-    return result;
-};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -54,38 +35,78 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-var express_1 = __importDefault(require("express"));
-var body_parser_1 = __importDefault(require("body-parser"));
-var mongoose_1 = __importDefault(require("mongoose"));
-var donut_controllers = __importStar(require("./donut_controllers"));
-var app = (0, express_1.default)();
-var port = 3001;
-app.use(body_parser_1.default.urlencoded({ extended: false }));
-app.use(body_parser_1.default.json());
-//donut CRUD methods
-app.get('/donuts', donut_controllers.listAllDonut);
-app.get('/donuts/:id', donut_controllers.getDonutById);
-app.put('/donuts/', donut_controllers.createDonut);
-app.put('/donuts/:id', donut_controllers.upsertDonutById);
-app.delete('/donuts/:id', donut_controllers.deleteDonutById);
-app.delete('/donuts', donut_controllers.deleteDonutByName);
-app.listen(port, function () {
-    console.log('Dronuts-App listening on localhost:{port}');
-});
-main().catch(function (err) { return console.log(err); });
-function main() {
-    return __awaiter(this, void 0, void 0, function () {
-        return __generator(this, function (_a) {
-            switch (_a.label) {
-                case 0: return [4 /*yield*/, mongoose_1.default.connect('mongodb://localhost:27017/test')];
-                case 1:
-                    _a.sent();
-                    return [2 /*return*/];
-            }
-        });
+exports.deleteDonutByName = exports.deleteDonutById = exports.createDonut = exports.upsertDonutById = exports.getDonutById = exports.listAllDonut = void 0;
+var donut_1 = require("./models/donut");
+var listAllDonut = function (req, res) {
+    var donut = donut_1.DonutModel.find({}, function (err, result) {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            res.send(result);
+        }
     });
-}
+};
+exports.listAllDonut = listAllDonut;
+var getDonutById = function (req, res) {
+    var donut = donut_1.DonutModel.findOne({ _id: req.params.id }, function (err, result) {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            res.send(result);
+        }
+    });
+};
+exports.getDonutById = getDonutById;
+var upsertDonutById = function (req, res) {
+    var donut = donut_1.DonutModel.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, upsert: true }, function (err, result) {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            res.status(200).send("Successfully Upserted Donut with _id " + result._id);
+        }
+    });
+};
+exports.upsertDonutById = upsertDonutById;
+var createDonut = function (req, res) {
+    var donut = new donut_1.DonutModel(req.body);
+    donut.save(function (err, result) { return __awaiter(void 0, void 0, void 0, function () {
+        return __generator(this, function (_a) {
+            if (err) {
+                res.send(err);
+            }
+            else {
+                res.status(200).send("Successfully Created Donut with _id " + result._id);
+            }
+            return [2 /*return*/];
+        });
+    }); });
+};
+exports.createDonut = createDonut;
+var deleteDonutById = function (req, res) {
+    var donut = donut_1.DonutModel.deleteOne({ _id: req.params.id }, function (err) {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            console.log(req.body);
+            res.status(200).send("Successfully Deleted Donut");
+        }
+    });
+};
+exports.deleteDonutById = deleteDonutById;
+var deleteDonutByName = function (req, res) {
+    var donut = donut_1.DonutModel.deleteOne({ name: req.body.name }, function (err) {
+        if (err) {
+            res.send(err);
+        }
+        else {
+            console.log(req.body);
+            res.status(200).send("Successfully Deleted Book");
+        }
+    });
+};
+exports.deleteDonutByName = deleteDonutByName;
