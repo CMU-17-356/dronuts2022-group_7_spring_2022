@@ -27,7 +27,6 @@
     "eslint-plugin-react": "^7.28.0",
     "jest": "^27.5.1",
     "mocha": "^9.2.0",
-    "mongo-seeding": "^3.7.1",
     "mongodb-memory-server": "^8.3.0",
     "sinon": "^13.0.1",
     "ts-jest": "^27.1.3",

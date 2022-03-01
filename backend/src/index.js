@@ -79,7 +79,7 @@ app.delete('/donuts', donut_controllers.deleteDonutByName);
 // Employee Controllers
 // Orders
 app.get('/orders', order_controllers.listAllOrders);
-app.get('/orders/:id', order_controllers.getOrderById);
+app.get('/orders/by_id/:id', order_controllers.getOrderById);
 app.get('/orders/incomplete', order_controllers.listIncompleteOrders);
 app.get('/orders/pending', order_controllers.listPendingOrders);
 app.get('/orders/past', order_controllers.listPastOrders);
