@@ -32,9 +32,9 @@ var orderSchema = new mongoose_1.Schema({
     ],
     cost: Number,
     drone_id: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'Drone' },
-    time_placed: { type: Date },
-    time_picked: Date,
-    time_delivered: Date,
+    time_placed: mongoose_1.Schema.Types.Date,
+    time_picked: mongoose_1.Schema.Types.Date,
+    time_delivered: mongoose_1.Schema.Types.Date,
 });
 // interface orderQueryHelpers {
 //     byCustomer_id(customer_id: Types.ObjectId): Query<any, Document<OrderInterface>> & orderQueryHelpers;

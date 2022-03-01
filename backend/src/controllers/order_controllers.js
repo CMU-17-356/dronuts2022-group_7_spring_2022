@@ -36,8 +36,9 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteOrderById = exports.createOrder = exports.upsertOrderById = exports.listPastOrders = exports.listPendingOrders = exports.listIncompleteOrders = exports.getOrderById = exports.listAllOrders = void 0;
+exports.deleteOrderById = exports.createOrder = exports.AddItemOrderById = exports.upsertOrderById = exports.listPastOrders = exports.listPendingOrders = exports.listIncompleteOrders = exports.getOrderById = exports.listAllOrders = void 0;
 var order_1 = require("../models/order");
+var donut_1 = require("../models/donut");
 var listAllOrders = function (req, res) {
     var orders = order_1.OrderModel.find({}, function (err, result) {
         if (err) {
@@ -107,6 +108,50 @@ var upsertOrderById = function (req, res) {
     });
 };
 exports.upsertOrderById = upsertOrderById;
+var AddItemOrderById = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var order_update, updated_object, updated_donuts, final_cost, i, donut, cost_update;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                order_update = order_1.OrderModel.updateOne({ _id: req.params.id }, { $push: { donuts: { "donut_id": req.body.donut_id, "quantity": req.body.quantity } } }, { new: true, upsert: true }, function (err, result) {
+                    if (err) {
+                        res.status(400).send(err);
+                    }
+                    else {
+                        res.status(200).send("Successfully Added Donut " + req.body.donut_id + " to order " + req.params.id);
+                    }
+                });
+                return [4 /*yield*/, order_1.OrderModel.findOne({ _id: req.params.id })];
+            case 1:
+                updated_object = _a.sent();
+                updated_donuts = updated_object === null || updated_object === void 0 ? void 0 : updated_object.donuts;
+                final_cost = 0;
+                i = 0;
+                _a.label = 2;
+            case 2:
+                if (!(i < updated_donuts.length)) return [3 /*break*/, 5];
+                return [4 /*yield*/, donut_1.DonutModel.findById(updated_donuts[i].donut_id)];
+            case 3:
+                donut = _a.sent();
+                final_cost = final_cost + donut.cost * updated_donuts[i].quantity;
+                _a.label = 4;
+            case 4:
+                i++;
+                return [3 /*break*/, 2];
+            case 5:
+                cost_update = order_1.OrderModel.updateOne({ _id: req.params.id }, { price: final_cost }, { new: true, upsert: true }, function (err, result) {
+                    if (err) {
+                        res.status(400).send(err);
+                    }
+                    else {
+                        res.status(200).send("Successfully Added Donut " + req.body.donut_id + " to order " + req.params.id);
+                    }
+                });
+                return [2 /*return*/];
+        }
+    });
+}); };
+exports.AddItemOrderById = AddItemOrderById;
 var createOrder = function (req, res) {
     var donut = new order_1.OrderModel(req.body);
     donut.save(function (err, result) { return __awaiter(void 0, void 0, void 0, function () {
