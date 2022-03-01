@@ -42,7 +42,7 @@ app.delete('/donuts', donut_controllers.deleteDonutByName
 app.get('/orders', order_controllers.listAllOrders
 );
 
-app.get('/orders/:id', order_controllers.getOrderById
+app.get('/orders/by_id/:id', order_controllers.getOrderById
 );
 
 app.get('/orders/incomplete', order_controllers.listIncompleteOrders
