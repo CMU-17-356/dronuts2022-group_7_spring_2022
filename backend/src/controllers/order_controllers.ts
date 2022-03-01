@@ -74,25 +74,28 @@ export let AddItemOrderById = async (req: Request, res: Response) => {
     }
   });
    
-  let updated_object = await OrderModel.findOne({ _id:req.params.id});
-
-  let updated_donuts: any = updated_object?.donuts;
-
-  let final_cost = 0;
-  for (let i = 0; i < updated_donuts.length; i++){
-    let donut :any = await DonutModel.findById(updated_donuts[i].donut_id)
-    final_cost = final_cost + donut.cost * updated_donuts[i].quantity;
-    }
- 
-  let cost_update = OrderModel.updateOne({ _id:req.params.id}, { price: final_cost }, {new: true, upsert: true}, (err: any, result: any) => {
-    if (err) {
-      res.status(400).send(err);
-    } else {
-      res.status(200).send("Successfully Added Donut " + req.body.donut_id + " to order " + req.params.id);
-    }
-  });
-
-
+  // let updated_object = await OrderModel.findOne({ _id:req.params.id});
+  // let updated_donuts: any = updated_object?.donuts;
+  // console.log(updated_donuts);
+  // let final_cost = 0;
+  // for (let i = 0; i < updated_donuts.length; i++){
+  //   let donut_id  = updated_donuts[i].donut_id;
+  //   console.log(donut_id);
+  //   let donut = await DonutModel.findOne({_id : donut_id})
+  //   console.log(donut)
+  //   let donut_price :any  = donut?.price
+  //   console.log(donut_price)
+  //   console.log(updated_donuts[i].quantity)
+  //   final_cost = final_cost + donut_price * updated_donuts[i].quantity;
+  //   }
+  // console.log("price calculated");
+  // let cost_update = OrderModel.findOneAndUpdate({ _id:req.params.id}, { cost: final_cost }, {new: true, upsert: true}, (err: any, result: any) => {
+  //   if (err) {
+  //     res.status(400).send(err);
+  //   } else {
+  //     res.status(200).send("Successfully Added Donut " + req.body.donut_id + " to order " + req.params.id);
+  //   }
+  // });
 };
 
 
