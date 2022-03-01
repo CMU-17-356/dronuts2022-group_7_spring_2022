@@ -1,5 +1,5 @@
 import React from 'react';
-import {Container, Navbar, Nav} from 'react-bootstrap'
+import {Container, Navbar, Nav, Button} from 'react-bootstrap'
 import logo from '../image/favicon-32x32.png';
 
 interface Props {
@@ -20,6 +20,7 @@ function CustomNavbar(props: Props) {
           {(props.permissions == "Employee") ? <Nav.Link href="/pending">Pending Orders</Nav.Link> : <Nav.Link href="/checkout">Checkout</Nav.Link>}
           <Nav.Link href="/delivery_status">Delivery Status</Nav.Link>
         </Nav>
+        {(props.permissions == "Employee")? <Button>View as Customer</Button>: <Button>View as Employee</Button>}
       </Container>
     </Navbar>
   );
