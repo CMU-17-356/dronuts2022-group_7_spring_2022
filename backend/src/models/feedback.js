@@ -23,9 +23,9 @@ exports.FeedbackModel = void 0;
 var mongoose_1 = __importStar(require("mongoose"));
 ;
 var feedbackSchema = new mongoose_1.Schema({
-    customer_id: mongoose_1.Schema.Types.ObjectId,
-    order_id: mongoose_1.Schema.Types.ObjectId,
-    rating: Number,
+    customer_id: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'Customer' },
+    order_id: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'Order' },
+    rating: { type: Number, min: 0, max: 5, required: true },
     feedback: String
 });
 exports.FeedbackModel = mongoose_1.default.model('Feedback', feedbackSchema);
