@@ -10,8 +10,8 @@ export interface DroneInterface extends Document
 const droneSchema = new Schema<DroneInterface>(
 {
    orders : [ { object_id: {type: Schema.Types.ObjectId, required: true, ref: 'Order'} } ], // Reference to other ORDER objects
-   battery : Number, // Out of 1.0
-   status : String // Could also be an enumerated type, with statuses ranging between “recharging”, “delivering”, “returning”, etc.
+   battery : {type:Number, min: 0, max: 1}, // Out of 1.0
+   status : {type:String, enum:["recharging", "delivering", "returning"]} // Could also be an enumerated type, with statuses ranging between “recharging”, “delivering”, “returning”, etc.
 });
 
 // interface droneQueryHelpers {

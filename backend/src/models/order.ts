@@ -1,4 +1,4 @@
-import mongoose, { Schema, Model, Document, Query, Types } from 'mongoose';
+import mongoose, { Schema, Model, Document, Query, Types, Date } from 'mongoose';
 
 
 export interface order_count {
@@ -21,13 +21,13 @@ const orderSchema = new Schema<OrderInterface>(
         customer_id : Schema.Types.ObjectId,
         donuts : [
         {
-            donut_id: Schema.Types.ObjectId, // String refers to order objects
-            quantity: Number// integer represents the quantity of orders that is been ordered
+            donut_id: {type: Schema.Types.ObjectId, required: true, ref: 'Donut'}, // String refers to order objects
+            quantity: {type: Number, required: true} // integer represents the quantity of orders that is been ordered
             }
         ],
         cost : Number,
-        drone_id : Schema.Types.ObjectId,
-        time_placed : Date,
+        drone_id : {type: Schema.Types.ObjectId, required: true, ref: 'Drone'},
+        time_placed :  { type: Date},
         time_picked : Date,
         time_delivered : Date,
 });

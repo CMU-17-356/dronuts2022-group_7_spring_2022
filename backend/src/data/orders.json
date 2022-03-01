@@ -1,0 +1,15 @@
+{	"_id": 1,
+    "donuts": [
+    {
+        "id" : 1,
+        "quantity": 2
+    },
+    {
+        "id" : 3,
+        "quantity": 4	
+    }
+    ],
+    "drone_id": 1,
+    "cost": 20.7
+
+}

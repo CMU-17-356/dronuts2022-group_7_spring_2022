@@ -20,6 +20,9 @@ app.get('/donuts/:id', donut_controllers.getDonutById
 app.put('/donuts/', donut_controllers.createDonut
 );
 
+app.post('/donuts/', donut_controllers.createDonut
+);
+
 app.put('/donuts/:id', donut_controllers.upsertDonutById
 );
 
