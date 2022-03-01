@@ -15,7 +15,7 @@ const OrderRow = () => (
   </div>);
 
 function PendingOrderCard() {
-    axios.get(`/pending`).then(response => useState({pastOrders: response.data, done: true }))
+    // axios.get(`/pending`).then(response => useState({pastOrders: response.data, done: true }))
     console.log(pastOrders);
 
   return (

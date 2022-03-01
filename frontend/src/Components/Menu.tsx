@@ -1,17 +1,23 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {Grid, Card, Button, Text, Spacer, Input} from '@geist-ui/core'
-import { donutData } from '../data/dummydata';
+// import { donutData } from '../data/dummydata';
 import { FormControl } from 'react-bootstrap';
 
-
-
-
 function Menu() {
+  const [donutData, setData] = useState<Array<any>>([]);
+   const fetchData = async () => {
+     const response = await fetch('/donuts').then(response => response.json())
+    .then(result => {console.log('hello', result); setData(result)});
+     return response;
+  };
+  useEffect(() => {
+    fetchData();
+    }, []);
+  const [quantity, setQuantity] = useState<number>(0);
   return (
     <div>
       <Grid.Container gap={1} justify="center" height="100px">
       {donutData.map((data, key) => {
-        const [quantity, setQuantity] = useState<number>(0);
         const updateQuantity = (value: string) => {
           const num = parseInt(value)
           if (isNaN(num) || num < 0) {
