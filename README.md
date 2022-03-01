@@ -4,17 +4,17 @@ In order to get ready to write productive code, complete the following steps dur
 
 ### Back-End Setup
 Run a mongodb instance
-'''
+```
 mongoimport --db test --collection donut --type json --file /src/data/donuts.json --jsonArray
 npx tsc
 node src/index.js
-'''
+```
 
 ### Front - End Setup
-'''
+```
 npm install
 npm start
-'''
+```
 
 ### Repository Setup
 1. Create a new team and GitHub repository for your project using [GitHub classroom](https://classroom.github.com/g/PtX0YpR0).
