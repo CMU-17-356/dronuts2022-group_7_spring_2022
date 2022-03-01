@@ -1,4 +1,4 @@
-import mongoose, { Schema, Model, Document, Query, Types, Date } from 'mongoose';
+import mongoose, { Schema, Model, Document, Query, Types } from 'mongoose';
 
 
 export interface order_count {
@@ -27,9 +27,9 @@ const orderSchema = new Schema<OrderInterface>(
         ],
         cost : Number,
         drone_id : {type: Schema.Types.ObjectId, required: true, ref: 'Drone'},
-        time_placed :  { type: Date},
-        time_picked : Date,
-        time_delivered : Date,
+        time_placed :  Schema.Types.Date,
+        time_picked : Schema.Types.Date,
+        time_delivered : Schema.Types.Date,
 });
 
 // interface orderQueryHelpers {

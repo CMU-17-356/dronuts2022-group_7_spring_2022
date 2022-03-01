@@ -26,8 +26,8 @@ var donutSchema = new mongoose_1.Schema({
     name: { type: String, required: true },
     description: String,
     image: String,
-    price: Number,
-    quantity: Number, //  number of donuts in inventory
+    price: { type: Number, required: true },
+    quantity: { type: Number, required: true }, //  number of donuts in inventory
 });
 // interface donutQueryHelpers {
 //     byName(name: string): Query<any, Document<DonutInterface>> & donutQueryHelpers;
