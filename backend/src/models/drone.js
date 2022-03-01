@@ -24,8 +24,8 @@ var mongoose_1 = __importStar(require("mongoose"));
 ;
 var droneSchema = new mongoose_1.Schema({
     orders: [{ object_id: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'Order' } }],
-    battery: Number,
-    status: String // Could also be an enumerated type, with statuses ranging between “recharging”, “delivering”, “returning”, etc.
+    battery: { type: Number, min: 0, max: 1 },
+    status: { type: String, enum: ["recharging", "delivering", "returning"] } // Could also be an enumerated type, with statuses ranging between “recharging”, “delivering”, “returning”, etc.
 });
 // interface droneQueryHelpers {
 //    byOrders(orders: Schema.Types.ObjectId): Query<any, Document<DroneInterface>> & droneQueryHelpers;

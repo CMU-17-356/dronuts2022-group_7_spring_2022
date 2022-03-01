@@ -26,13 +26,13 @@ var orderSchema = new mongoose_1.Schema({
     customer_id: mongoose_1.Schema.Types.ObjectId,
     donuts: [
         {
-            donut_id: mongoose_1.Schema.Types.ObjectId,
-            quantity: Number // integer represents the quantity of orders that is been ordered
+            donut_id: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'Donut' },
+            quantity: { type: Number, required: true } // integer represents the quantity of orders that is been ordered
         }
     ],
     cost: Number,
-    drone_id: mongoose_1.Schema.Types.ObjectId,
-    time_placed: Date,
+    drone_id: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'Drone' },
+    time_placed: { type: Date },
     time_picked: Date,
     time_delivered: Date,
 });

@@ -1,8 +1,19 @@
 import { Request, Response } from "express";
 import { OrderModel, OrderInterface } from '../models/order';
+import { DonutModel, DonutInterface } from '../models/donut';
 
 export let listAllOrders = (req: Request, res: Response) => {
   let orders = OrderModel.find({}, (err: any, result: any) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(200).send(result);
+    }
+  });
+};
+
+export let getOrderById = (req: Request, res: Response) => {
+  let donut = OrderModel.findOne({_id: req.params.id}, (err: any, result: any) => {
     if (err) {
       res.status(400).send(err);
     } else {
@@ -53,6 +64,39 @@ export let upsertOrderById = (req: Request, res: Response) => {
     }
   });
 };
+
+export let AddItemOrderById = async (req: Request, res: Response) => {
+  let order_update = OrderModel.updateOne({ _id:req.params.id}, {$push : {donuts: {"donut_id": req.body.donut_id, "quantity": req.body.quantity }}}, {new: true, upsert: true}, (err: any, result: any) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(200).send("Successfully Added Donut " + req.body.donut_id + " to order " + req.params.id);
+    }
+  });
+   
+  let updated_object = await OrderModel.findOne({ _id:req.params.id});
+
+  let updated_donuts: any = updated_object?.donuts;
+
+  let final_cost = 0;
+  for (let i = 0; i < updated_donuts.length; i++){
+    let donut :any = await DonutModel.findById(updated_donuts[i].donut_id)
+    final_cost = final_cost + donut.cost * updated_donuts[i].quantity;
+    }
+ 
+  let cost_update = OrderModel.updateOne({ _id:req.params.id}, { price: final_cost }, {new: true, upsert: true}, (err: any, result: any) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(200).send("Successfully Added Donut " + req.body.donut_id + " to order " + req.params.id);
+    }
+  });
+
+
+};
+
+
+
 
 export let createOrder = (req: Request, res: Response) => {
   let donut = new OrderModel(req.body);

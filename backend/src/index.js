@@ -62,21 +62,33 @@ var express_1 = __importDefault(require("express"));
 var body_parser_1 = __importDefault(require("body-parser"));
 var mongoose_1 = __importDefault(require("mongoose"));
 var donut_controllers = __importStar(require("./controllers/donut_controllers"));
+var order_controllers = __importStar(require("./controllers/order_controllers"));
 var app = (0, express_1.default)();
 var port = 3001;
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(body_parser_1.default.json());
-//donut CRUD methods
-app.get('/donuts', donut_controllers.listAllDonut);
+// Donut Controllers
+app.get('/donuts', donut_controllers.listAllDonuts);
 app.get('/donuts/:id', donut_controllers.getDonutById);
 app.put('/donuts/', donut_controllers.createDonut);
+app.post('/donuts/', donut_controllers.createDonut);
 app.put('/donuts/:id', donut_controllers.upsertDonutById);
 app.delete('/donuts/:id', donut_controllers.deleteDonutById);
 app.delete('/donuts', donut_controllers.deleteDonutByName);
-// Donut Controllers
 // Customer Controllers
 // Employee Controllers
 // Orders
+app.get('/orders', order_controllers.listAllOrders);
+app.get('/orders/:id', order_controllers.getOrderById);
+app.get('/orders/incomplete', order_controllers.listIncompleteOrders);
+app.get('/orders/pending', order_controllers.listPendingOrders);
+app.get('/orders/past', order_controllers.listPastOrders);
+app.put('/orders/', order_controllers.createOrder);
+app.post('/orders/', order_controllers.createOrder);
+app.put('/orders/:id', order_controllers.upsertOrderById);
+app.post('/orders/:id', order_controllers.upsertOrderById);
+app.post('/orders/:id', order_controllers.upsertOrderById);
+app.delete('/orders/:id', order_controllers.deleteOrderById);
 app.listen(port, function () {
     console.log('Dronuts-App listening on localhost:{port}');
 });

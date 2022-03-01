@@ -36,26 +36,26 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteDonutByName = exports.deleteDonutById = exports.createDonut = exports.upsertDonutById = exports.getDonutById = exports.listAllDonut = void 0;
+exports.deleteDonutByName = exports.deleteDonutById = exports.createDonut = exports.upsertDonutById = exports.getDonutById = exports.listAllDonuts = void 0;
 var donut_1 = require("../models/donut");
-var listAllDonut = function (req, res) {
+var listAllDonuts = function (req, res) {
     var donut = donut_1.DonutModel.find({}, function (err, result) {
         if (err) {
-            res.send(err);
+            res.status(400).send(err);
         }
         else {
-            res.send(result);
+            res.status(200).send(result);
         }
     });
 };
-exports.listAllDonut = listAllDonut;
+exports.listAllDonuts = listAllDonuts;
 var getDonutById = function (req, res) {
     var donut = donut_1.DonutModel.findOne({ _id: req.params.id }, function (err, result) {
         if (err) {
-            res.send(err);
+            res.status(400).send(err);
         }
         else {
-            res.send(result);
+            res.status(200).send(result);
         }
     });
 };
@@ -63,7 +63,7 @@ exports.getDonutById = getDonutById;
 var upsertDonutById = function (req, res) {
     var donut = donut_1.DonutModel.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true, upsert: true }, function (err, result) {
         if (err) {
-            res.send(err);
+            res.status(400).send(err);
         }
         else {
             res.status(200).send("Successfully Upserted Donut with _id " + result._id);
@@ -76,7 +76,7 @@ var createDonut = function (req, res) {
     donut.save(function (err, result) { return __awaiter(void 0, void 0, void 0, function () {
         return __generator(this, function (_a) {
             if (err) {
-                res.send(err);
+                res.status(400).send(err);
             }
             else {
                 res.status(200).send("Successfully Created Donut with _id " + result._id);
@@ -89,7 +89,7 @@ exports.createDonut = createDonut;
 var deleteDonutById = function (req, res) {
     var donut = donut_1.DonutModel.deleteOne({ _id: req.params.id }, function (err) {
         if (err) {
-            res.send(err);
+            res.status(400).send(err);
         }
         else {
             console.log(req.body);
@@ -101,7 +101,7 @@ exports.deleteDonutById = deleteDonutById;
 var deleteDonutByName = function (req, res) {
     var donut = donut_1.DonutModel.deleteOne({ name: req.body.name }, function (err) {
         if (err) {
-            res.send(err);
+            res.status(400).send(err);
         }
         else {
             console.log(req.body);
