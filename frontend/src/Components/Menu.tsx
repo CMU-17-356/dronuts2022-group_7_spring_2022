@@ -15,9 +15,9 @@ function Menu() {
   const [quantity, setQuantity] = useState<Array<number>>([]);
 
   const updateData = (result: Array<any>) => {
-    setData(result);
     var length = result.length;
     setQuantity(new Array<number>(length).fill(0));
+    setData(result);
   }
 
   const updateQuantityByKey = (key: number, value: string) => {
