@@ -46,7 +46,7 @@ function Menu() {
           //iterate quantity using post operation
           var raw = JSON.stringify({"donut_id":"621e88c90db3439bca66cbf2","quantity":num});
 
-          fetch("http://localhost:3001/orders/add_item/" + currentOrderId, {
+          fetch("/orders/add_item/" + currentOrderId, {
             method: 'PUT',
             headers: myHeaders,
             body: raw,

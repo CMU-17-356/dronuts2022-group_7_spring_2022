@@ -3,48 +3,48 @@ import {Grid, Card, Button, Text, Spacer} from '@geist-ui/core'
 // import { donutData } from '../data/dummydata';
 import axios from 'axios';
 
-
-
-
 function Cart() {
-  const [orderData, setOrderData] = useState<Array<any>>([]);
-  const [donutData, setDonutData] = useState<Array<any>>([]);
+  const [cartData, setCartData] = useState<Array<any>>([]);
+  const [orderData, setOrderData] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);
 
 
-  const fetchOrderData = async () => {
+  const fetchCartData = async () => {
     await axios.get("/orders").then(response => {
-      setDonutData(response.data[0].donuts);
-      console.log(orderData);
+      setCartData(response.data[0].donuts);
+      setOrderData(response.data[0]);
+      console.log(response.data);
     });
     
     setLoading(false);
-  //   const response = await fetch('/orders').then(response => response.json())
-  //  .then(result => {console.log('orders', result); setOrderData(result); setDonutData(orderData[0].donuts);
-  //  setLoading(false) });
-    
-    // return response;
-  };
-  const fetchDonutData = async () => {
-  //   const response = await fetch('/donuts').then(response => response.json())
-  //  .then(result => {console.log('hello', result); setDonutData(result)});
-  //   return response;
-    // console.log(orderData[0].donuts);
-    
   };
     
-  // }
   useEffect(() => { 
-    console.log("fuck");
-    fetchOrderData();
-    //fetchDonutData();
+    fetchCartData();
     }, []);
     
-    // cartData = orderData[0].donuts
-    // console.log(orderData[0].donuts);
 
   if (isLoading) {
     return <div className="App">Loading...</div>;
+  }
+
+  const removeDonut = (donut_id: string) => {
+    setLoading(true);
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify({"donut_id":donut_id});
+
+    fetch("/orders/remove_item/" + orderData._id, {
+      method: 'DELETE',
+      headers: myHeaders,
+      body: raw,
+      redirect: 'follow'
+    })
+      .then(response => response.text())
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+    setLoading(false);
   }
   
   return (
@@ -54,7 +54,7 @@ function Cart() {
       {/* {console.log(orderData);
        console.log(donutData);} */}
       {/* {setDonutData(orderData[0].donuts)}; */}
-      {donutData.map((data, key) => {
+      {cartData.map((data, key) => {
           return (
             <div key={key}>
                 <Grid md={24}>
@@ -69,7 +69,7 @@ function Cart() {
                   <Text p>
                     Quantity: {data.quantity}
                   </Text>
-                  <Button auto type="error">Remove</Button>
+                  <Button auto type="error" onClick={() => removeDonut(data.donut_id)}>Remove</Button>
                 </Card>
                 <Spacer h={2}/>
                 </Grid>
