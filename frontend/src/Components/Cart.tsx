@@ -61,7 +61,7 @@ function Cart() {
                 <Card shadow width="800px" >
                   {/* <img src={require(`${data.image}`)} alt="Donut Pic" /> */}
                   <Text p b>
-                    Gushing beautiful donut
+                    beautiful donut
                   </Text>
                   <Text p>
                     Price: $420.69
