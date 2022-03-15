@@ -6,7 +6,7 @@ import * as donut_controllers from './controllers/donut_controllers';
 import * as order_controllers from './controllers/order_controllers';
 
 const app = express();
-const port = 3001;
+const port = 8080;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());

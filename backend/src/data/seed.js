@@ -18,7 +18,7 @@ const seedProducts = [
         'donuts': [
             {
                 'donut_id' : "621e88a016dc040f2fee3183",
-                'quantity': 5
+                'quantity': 1
             },
             {
                 'donut_id' : "621e88c90db3439bca66cbf2",
