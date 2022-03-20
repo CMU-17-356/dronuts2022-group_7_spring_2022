@@ -41,11 +41,12 @@ function Menu() {
     <div>
       <Grid.Container gap={1} justify="center" height="100px">
       {donutData.map((data, key) => {
-        const updateDatabaseQuantity = (order: string, value: string) => {
-          const currentOrder = orderData[0];
+        const updateDatabaseQuantity = () => {
+          //const currentOrder = orderData[0];
           const currentOrderId = orderData[0]._id;
-          const num = parseInt(value)
+          const num = donutQuantity[key];
           //iterate quantity using post operation
+          // data.id
           var raw = JSON.stringify({"donut_id":"621e88c90db3439bca66cbf2","quantity":num});
 
           fetch("/orders/add_item/" + currentOrderId, {
@@ -75,9 +76,9 @@ function Menu() {
                   <Grid.Container gap={2} height="100px" justify="center">
                     <Grid><Button auto type="secondary" onClick={() => updateQuantityByKey(key, (donutQuantity[key]-1).toString())}>-</Button></Grid>
                     <Grid><FormControl width="50px" value={donutQuantity[key]} onChange={(event) => updateQuantityByKey(key, event.target.value)}/></Grid>
-                    <Grid><Button auto type="secondary"onClick={() => updateQuantityByKey(key, (donutQuantity[key]+1).toString())}>+</Button></Grid>
+                    <Grid><Button auto type="secondary" onClick={() => updateQuantityByKey(key, (donutQuantity[key]+1).toString())}>+</Button></Grid>
                   </Grid.Container>
-                  <Button auto type="success">Add to Cart</Button>
+                  <Button auto type="success" onClick={() => updateDatabaseQuantity()}>Add to Cart</Button>
                 </Card>
                 <Spacer h={2}/>
                 </Grid>
