@@ -8,10 +8,23 @@ myHeaders.append("Content-Type", "application/json");
 function Menu() {
   const [donutData, setDonutData] = useState<Array<any>>([]);
   const [orderData, setOrderData] = useState<Array<any>>([]);
+  const [donutQuantity, setDonutQuantity] = useState<Array<any>>([]);
+
+  const updateQuantityByKey = (key: number, value: string) => {
+    var num = parseInt(value);
+    if (isNaN(num) || num < 0) {
+      donutQuantity[key] = 0;
+    }
+    else {
+      donutQuantity[key] = num;
+    }
+    setDonutQuantity([...donutQuantity]);
+  }
 
    const fetchDonutData = async () => {
      const response = await fetch('/donuts').then(response => response.json())
-    .then(result => {console.log('hello', result); setDonutData(result)});
+    .then(result => {console.log('hello', result); setDonutData(result); 
+    setDonutQuantity(new Array<number>(donutData.length).fill(0))});
      return response;
   };
   const fetchOrderData = async () => {
@@ -24,26 +37,16 @@ function Menu() {
     fetchDonutData();
     fetchOrderData();
     }, []);
-  const [quantity, setQuantity] = useState<number>(0);
   return (
     <div>
       <Grid.Container gap={1} justify="center" height="100px">
       {donutData.map((data, key) => {
-
-        const updateQuantity = (value: string) => {
-          const num = parseInt(value)
-          if (isNaN(num) || num < 0) {
-            setQuantity(0);
-          }
-          else {
-            setQuantity(num);
-          }
-        }
-        const updateDatabaseQuantity = (order: string, value: string) => {
-          const currentOrder = orderData[0];
+        const updateDatabaseQuantity = () => {
+          //const currentOrder = orderData[0];
           const currentOrderId = orderData[0]._id;
-          const num = parseInt(value)
+          const num = donutQuantity[key];
           //iterate quantity using post operation
+          // data.id
           var raw = JSON.stringify({"donut_id":"621e88c90db3439bca66cbf2","quantity":num});
 
           fetch("/orders/add_item/" + currentOrderId, {
@@ -55,13 +58,6 @@ function Menu() {
             .then(response => response.text())
             .then(result => console.log(result))
             .catch(error => console.log('error', error));
-          
-          if (isNaN(num) || num < 0) {
-            setQuantity(0);
-          }
-          else {
-            setQuantity(num);
-          }
         }
           return (
             <div key={key}>
@@ -77,12 +73,12 @@ function Menu() {
                   <Text p b>
                     Price: {data.price}
                   </Text>
-                  {/* <Grid.Container gap={2} height="100px" justify="center">
-                    <Grid><Button auto type="secondary" onClick={() => updateQuantity((quantity-1).toString())}>-</Button></Grid>
-                    <Grid><FormControl width="50px" value={quantity} onChange={(event) => updateQuantity(event.target.value)}/></Grid>
-                    <Grid><Button auto type="secondary"onClick={() => updateQuantity((quantity+1).toString())}>+</Button></Grid>
-                  </Grid.Container> */}
-                  <Button auto type="success">Add to Cart</Button>
+                  <Grid.Container gap={2} height="100px" justify="center">
+                    <Grid><Button auto type="secondary" onClick={() => updateQuantityByKey(key, (donutQuantity[key]-1).toString())}>-</Button></Grid>
+                    <Grid><FormControl width="50px" value={donutQuantity[key]} onChange={(event) => updateQuantityByKey(key, event.target.value)}/></Grid>
+                    <Grid><Button auto type="secondary" onClick={() => updateQuantityByKey(key, (donutQuantity[key]+1).toString())}>+</Button></Grid>
+                  </Grid.Container>
+                  <Button auto type="success" onClick={() => updateDatabaseQuantity()}>Add to Cart</Button>
                 </Card>
                 <Spacer h={2}/>
                 </Grid>
