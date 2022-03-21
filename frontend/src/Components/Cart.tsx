@@ -8,6 +8,7 @@ function Cart() {
   const [orderData, setOrderData] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);
   const [total, setTotal] = useState<number>(0);
+  const [donutDict, setDonutMap] = useState<[]>([]);
 
 
   const fetchCartData = async () => {
@@ -21,16 +22,27 @@ function Cart() {
     setLoading(false);
   };
 
+  const fetchAllDonuts = async () => {
+    const response = await fetch('/donuts').then(response => response.json())
+    .then(result => {
+      let dictionary = Object.assign({}, ...result.map((v: any) => ({[v._id]: v.price})));
+      setDonutMap(dictionary);
+      fetchCartData();
+    }
+    );
+    return response;
+  }
+
   const updateTotalCost = () => {
     var quantity = 0;
     cartData.forEach(donut => {
-      quantity = quantity + donut.quantity*donut.price;
+      quantity = quantity + donut.quantity*donutDict[donut.donut_id];
     });
     setTotal(quantity);
   }
     
   useEffect(() => { 
-    fetchCartData();
+    fetchAllDonuts();
     }, []);
     
 
@@ -74,7 +86,7 @@ function Cart() {
                     beautiful donut
                   </Text>
                   <Text p>
-                    Price: $420.69
+                    Price: ${donutDict[data.donut_id]}
                   </Text>
                   <Text p>
                     Quantity: {data.quantity}
