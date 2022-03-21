@@ -25,7 +25,7 @@ function Cart() {
   const fetchAllDonuts = async () => {
     const response = await fetch('/donuts').then(response => response.json())
     .then(result => {
-      let dictionary = Object.assign({}, ...result.map((v: any) => ({[v._id]: v.price})));
+      let dictionary = Object.assign({}, ...result.map((v: any) => ({[v._id]: v})));
       setDonutMap(dictionary);
       fetchCartData();
     }
@@ -36,7 +36,7 @@ function Cart() {
   const updateTotalCost = () => {
     var quantity = 0;
     cartData.forEach(donut => {
-      quantity = quantity + donut.quantity*donutDict[donut.donut_id];
+      quantity = quantity + donut.quantity*donutDict[donut.donut_id]['price'];
     });
     setTotal(quantity);
   }
@@ -83,10 +83,10 @@ function Cart() {
                 <Card shadow width="800px" >
                   {/* <img src={require(`${data.image}`)} alt="Donut Pic" /> */}
                   <Text p b>
-                    beautiful donut
+                    {donutDict[data.donut_id]['name']}
                   </Text>
                   <Text p>
-                    Price: ${donutDict[data.donut_id]}
+                    Price: ${donutDict[data.donut_id]['price']}
                   </Text>
                   <Text p>
                     Quantity: {data.quantity}
