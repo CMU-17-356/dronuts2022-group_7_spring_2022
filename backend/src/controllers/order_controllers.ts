@@ -123,16 +123,13 @@ export let RemoveItemById = (req: Request, res: Response) => {
   });
 };
 
-
-
-
 export let createOrder = (req: Request, res: Response) => {
   let donut = new OrderModel(req.body);
   donut.save(async (err: any, result: any) => {
     if (err) {
       res.status(400).send(err);
     } else {
-      res.status(200).send("Successfully Created Order with _id "+ result._id );
+      res.status(200).send(result);
     }
   });
 };
