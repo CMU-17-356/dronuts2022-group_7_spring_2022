@@ -1,14 +1,35 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Dispatch, SetStateAction} from 'react';
 import {Grid, Card, Button, Text, Spacer, Input} from '@geist-ui/core'
 // import { donutData } from '../data/dummydata';
 import { FormControl } from 'react-bootstrap';
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
-function Menu() {
+interface IProps {
+  currentOrder: Array<any>;
+  setCurrentOrder?: Dispatch<SetStateAction<Array<any>>>;
+}
+
+function Menu(props:IProps){
+  
   const [donutData, setDonutData] = useState<Array<any>>([]);
   const [orderData, setOrderData] = useState<Array<any>>([]);
   const [donutQuantity, setDonutQuantity] = useState<Array<any>>([]);
+
+  var myHeaders = new Headers();
+  myHeaders.append("Content-Type", "application/json");
+
+  var raw = JSON.stringify({"donuts":[],"drone_id":"621e8936389a8da299c79fcb"});
+
+  fetch("http://localhost:3001/orders", {
+    method: 'PUT',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+  })
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
 
   const updateQuantityByKey = (key: number, value: string) => {
     var num = parseInt(value);
@@ -42,12 +63,12 @@ function Menu() {
       <Grid.Container gap={1} justify="center" height="100px">
       {donutData.map((data, key) => {
         const updateDatabaseQuantity = () => {
-          //const currentOrder = orderData[0];
+
           const currentOrderId = orderData[0]._id;
-          const num = donutQuantity[key];
-          //iterate quantity using post operation
-          // data.id
-          var raw = JSON.stringify({"donut_id":"621e88c90db3439bca66cbf2","quantity":num});
+          const num = donutQuantity[key]; 
+          const currentDonutId = donutData[key]._id;
+          
+          var raw = JSON.stringify({"donut_id":currentDonutId,"quantity":num});
 
           fetch("/orders/add_item/" + currentOrderId, {
             method: 'PUT',

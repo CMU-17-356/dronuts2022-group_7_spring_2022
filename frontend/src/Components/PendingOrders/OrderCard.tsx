@@ -10,9 +10,9 @@ function OrderCard() {
         <Divider />
         <div className="order-body">
           <ul>
-              <li><Text>Donut 1 - Quantity</Text></li>
-              <li><Text>Donut 2 - Quantity</Text></li>
-              <li><Text>Donut 3 - Quantity</Text></li>
+              <li><Text>Donut 1 - 1</Text></li>
+              <li><Text>Donut 2 - 4</Text></li>
+              <li><Text>Donut 3 - 2</Text></li>
           </ul>
         </div>
       </Card>

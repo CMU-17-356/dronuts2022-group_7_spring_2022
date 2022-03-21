@@ -3,7 +3,7 @@ import {Grid, Card, Button, Text, Spacer} from '@geist-ui/core'
 // import { donutData } from '../data/dummydata';
 import axios from 'axios';
 
-function Cart() {
+function Cart(props) {
   const [cartData, setCartData] = useState<Array<any>>([]);
   const [orderData, setOrderData] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);
@@ -61,10 +61,10 @@ function Cart() {
                 <Card shadow width="800px" >
                   {/* <img src={require(`${data.image}`)} alt="Donut Pic" /> */}
                   <Text p b>
-                    beautiful donut
+                    Blueberry-Glazed Donut
                   </Text>
                   <Text p>
-                    Price: $420.69
+                    Price: $3.45
                   </Text>
                   <Text p>
                     Quantity: {data.quantity}
@@ -79,7 +79,7 @@ function Cart() {
         })}
         <Grid xs={12} justify="center"></Grid>
         <Card>
-          <Text h4 my={0}>Total: $10.35</Text>
+          <Text h4 my={0}>Total: $6.90</Text>
           <Card.Footer>
             <Button auto type="success">Place Order</Button>
           </Card.Footer>
