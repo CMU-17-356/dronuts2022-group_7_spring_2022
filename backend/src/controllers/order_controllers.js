@@ -141,7 +141,7 @@ var AddQuantityById = function (req, res) {
 };
 exports.AddQuantityById = AddQuantityById;
 var AddItemById = function (req, res) {
-    var order_update = order_1.OrderModel.findOneAndUpdate({ _id: req.params.id }, { $push: { donuts: { donut_id: req.body.donut_id, quantity: req.body.quantity } }
+    var order_update = order_1.OrderModel.findOneAndUpdate({ _id: req.params.id }, { $push: { donuts: { donut_id: req.body.donut_id, quantity: req.body.quantity + 1 } }
     }, function (err, result) {
         if (err) {
             res.status(400).send(err);
@@ -161,7 +161,7 @@ var RemoveItemById = function (req, res) {
         }
         else {
             console.log("adding donut");
-            res.status(200).send("Successfully Added Donut " + req.body.donut_id + " to order " + req.params.id);
+            res.status(200).send("Successfully Remove Donut " + req.body.donut_id + " from order " + req.params.id);
         }
     });
 };
@@ -174,7 +174,7 @@ var createOrder = function (req, res) {
                 res.status(400).send(err);
             }
             else {
-                res.status(200).send("Successfully Created Order with _id " + result._id);
+                res.status(200).send(result);
             }
             return [2 /*return*/];
         });

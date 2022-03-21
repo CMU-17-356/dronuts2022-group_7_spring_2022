@@ -15,5 +15,5 @@
   "include": [
     "src/**/*.ts",
     "tests/**/*.ts"
-, "helpers.ts"  ] 
+, "helpers.ts", "src/data/seed.js", "src/data/seed.js"  ] 
 }
