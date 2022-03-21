@@ -161,7 +161,7 @@ var RemoveItemById = function (req, res) {
         }
         else {
             console.log("adding donut");
-            res.status(200).send("Successfully Added Donut " + req.body.donut_id + " to order " + req.params.id);
+            res.status(200).send("Successfully Remove Donut " + req.body.donut_id + " from order " + req.params.id);
         }
     });
 };
