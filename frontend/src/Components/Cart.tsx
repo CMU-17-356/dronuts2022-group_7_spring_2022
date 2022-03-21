@@ -15,7 +15,7 @@ function Cart() {
     await axios.get("/orders").then(response => {
       setCartData(response.data[0].donuts);
       setOrderData(response.data[0]);
-      updateTotalCost();
+      fetchAllDonuts();
       console.log(response.data);
     });
     
@@ -27,22 +27,23 @@ function Cart() {
     .then(result => {
       let dictionary = Object.assign({}, ...result.map((v: any) => ({[v._id]: v})));
       setDonutMap(dictionary);
-      fetchCartData();
     }
     );
     return response;
   }
 
   const updateTotalCost = () => {
-    var quantity = 0;
+    var newTotal = 0;
     cartData.forEach(donut => {
-      quantity = quantity + donut.quantity*donutDict[donut.donut_id]['price'];
+      newTotal = newTotal + donut.quantity*donutDict[donut.donut_id]['price'];
     });
-    setTotal(quantity);
+    if (total !== newTotal) {
+      setTotal(newTotal);
+    }
   }
     
   useEffect(() => { 
-    fetchAllDonuts();
+    fetchCartData();
     }, []);
     
 
@@ -72,10 +73,7 @@ function Cart() {
   return (
     <div>
       <Grid.Container gap={1} justify="center" height="300px" width="100%">
-        
-      {/* {console.log(orderData);
-       console.log(donutData);} */}
-      {/* {setDonutData(orderData[0].donuts)}; */}
+      {updateTotalCost()}
       {cartData.map((data, key) => {
           return (
             <div key={key}>
