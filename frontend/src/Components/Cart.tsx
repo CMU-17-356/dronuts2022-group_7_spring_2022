@@ -7,17 +7,27 @@ function Cart() {
   const [cartData, setCartData] = useState<Array<any>>([]);
   const [orderData, setOrderData] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);
+  const [total, setTotal] = useState<number>(0);
 
 
   const fetchCartData = async () => {
     await axios.get("/orders").then(response => {
       setCartData(response.data[0].donuts);
       setOrderData(response.data[0]);
+      updateTotalCost();
       console.log(response.data);
     });
     
     setLoading(false);
   };
+
+  const updateTotalCost = () => {
+    var quantity = 0;
+    cartData.forEach(donut => {
+      quantity = quantity + donut.quantity*donut.price;
+    });
+    setTotal(quantity);
+  }
     
   useEffect(() => { 
     fetchCartData();
@@ -79,7 +89,7 @@ function Cart() {
         })}
         <Grid xs={12} justify="center"></Grid>
         <Card>
-          <Text h4 my={0}>Total: $10.35</Text>
+          <Text h4 my={0}>Total: ${total}</Text>
           <Card.Footer>
             <Button auto type="success">Place Order</Button>
           </Card.Footer>
