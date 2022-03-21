@@ -1,34 +1,32 @@
 import React, {useState, useEffect} from 'react';
-import OrderCard from './OrderCard'
-import { FixedSizeList as List } from 'react-window';
-import {Grid, Text, Card, Divider, Collapse} from '@geist-ui/core'
-import './PendingOrderCard.css';
-import PastOrderCard from './PastOrderCard';
+import {Text, Card, Divider} from '@geist-ui/core'
+import './EmployeeOrderCard.css';
 
-import axios from 'axios';
-import { resourceLimits } from 'worker_threads';
-import { set } from 'mongoose';
-
-function PendingOrderCard() {
+function EmployeeOrderCard() {
   const [donutDict, setDonutMap] = useState<[]>([]);
   const [pastOrderData, setPastOrderData] = useState<Array<any>>([]);
   const [pendingOrderData, setPendingOrderData] = useState<Array<any>>([]);
 
   const fetchPendingOrderData = async () => {
     const response = await fetch('/orders/pending').then(response => response.json())
-    .then(result => {console.log('pending', result); setPendingOrderData(result)});
+    .then(result => {
+      setPendingOrderData(result)
+    });
     return response;
   }
   const fetchPastOrderData = async () => {
     const response = await fetch('/orders/past').then(response => response.json())
-    .then(result => {console.log('past', result); setPastOrderData(result)});
+    .then(result => {
+      setPastOrderData(result)}
+    );
     return response;
   }
   const fetchAllDonuts = async () => {
     const response = await fetch('/donuts').then(response => response.json())
-    .then(result => {console.log('past', result); 
-    let dictionary = Object.assign({}, ...result.map((v: any) => ({[v._id]: v.name})));
-    setDonutMap(dictionary)});
+    .then(result => {
+      let dictionary = Object.assign({}, ...result.map((v: any) => ({[v._id]: v.name})));
+      setDonutMap(dictionary)}
+    );
     return response;
   }
   
@@ -89,4 +87,4 @@ function PendingOrderCard() {
   );
 }
 
-export default PendingOrderCard;
+export default EmployeeOrderCard;
