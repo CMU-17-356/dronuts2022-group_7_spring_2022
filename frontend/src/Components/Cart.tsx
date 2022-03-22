@@ -4,8 +4,9 @@ import {Grid, Card, Button, Text, Spacer} from '@geist-ui/core'
 import axios from 'axios';
 
 interface OrderProps {
-  currentOrder: Array<any>;
+  currentOrderID: String;
 }
+
 
 function Cart(props:OrderProps) {
   const [cartData, setCartData] = useState<Array<any>>([]);
@@ -14,9 +15,10 @@ function Cart(props:OrderProps) {
 
 
   const fetchCartData = async () => {
-    await axios.get("/orders").then(response => {
-      setCartData(response.data[0].donuts);
-      setOrderData(response.data[0]);
+    console.log("fetching cart data curr ID:", props.currentOrderID);
+    await axios.get("http://localhost:3001/orders/by_id/" + props.currentOrderID).then(response => {
+      setCartData(response.data.donuts);
+      setOrderData(response.data);
       console.log(response.data);
     });
     

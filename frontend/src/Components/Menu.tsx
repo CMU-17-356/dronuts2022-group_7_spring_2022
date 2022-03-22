@@ -6,7 +6,7 @@ var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
 interface OrderProps {
-  currentOrder: Array<any>;
+  currentOrderID: String;
 }
 
 function Menu(props:OrderProps){
@@ -48,9 +48,11 @@ function Menu(props:OrderProps){
       {donutData.map((data, key) => {
         const updateDatabaseQuantity = () => {
 
-          const currentOrderId = orderData[0]._id;
+          const currentOrderId = props.currentOrderID;
           const num = donutQuantity[key]; 
           const currentDonutId = donutData[key]._id;
+
+          console.log('order ID', props.currentOrderID);
           
           var raw = JSON.stringify({"donut_id":currentDonutId,"quantity":num});
 

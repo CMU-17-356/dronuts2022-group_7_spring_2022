@@ -17,33 +17,45 @@ import DeliveryStatus from './Components/DeliveryStatus';
 // var permissions = ""
 
 function App() {
-  const [currentOrder, setCurrentOrder] = useState<Array<any>>([]);
+  const [currentOrderID, setCurrentOrderID] = useState<String>("");
+  const [isLoading, setLoading] = useState(true);
   //create a new order on render for this sessions
 
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
+  const createNewOrder = async () => {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+    // myHeaders.append("Access-Control-Allow-Origin", "*");
 
-  var raw = JSON.stringify({"donuts":[],"drone_id":"621e8936389a8da299c79fcb"});
+    var raw = JSON.stringify({"donuts":[],"drone_id":"621e8936389a8da299c79fcb"});
 
-  fetch("http://localhost:3001/orders", {
-    method: 'PUT',
-    headers: myHeaders,
-    body: raw,
-    redirect: 'follow'
-  })
-    .then(response => response.json())
-    .then(result => {console.log('new order', result); setCurrentOrder(result);})
-    .catch(error => console.log('error', error));
+    const response = await fetch("http://localhost:3001/orders")
+      .then(response => response.json())
+      .then(result => {console.log('new order', result); setCurrentOrderID(result[0]._id);})
+      .catch(error => console.log('error', error));
+
+      setLoading(false);
+    return response;
+  }
+
+    useEffect(() => {
+      if(currentOrderID == ""){
+        createNewOrder();
+      }
+      }, []);
+  if (isLoading) {
+    return <div className="App">Loading...</div>;
+  }
   return (
     <Router>
       <div>
         {/* <CustomNavbar permissions = {permissions}/> */}
         <CustomNavbar/>
       <Routes>
+          if()
           {/* {permissions == "Employee" ? <Route path="/pending" element= {<PendingOrderCard/>} /> : <Route path="/checkout" element= {<Cart/>} />} */}
           <Route path="/pending" element= {<EmployeeOrderCard/>} />
-          <Route path="/checkout" element= {<Cart currentOrder = {currentOrder}/>} />
-          <Route path="/" element= {<Menu currentOrder = {currentOrder}/>} />
+          <Route path="/checkout" element= {<Cart currentOrderID = {currentOrderID}/>} />
+          <Route path="/" element= {<Menu currentOrderID = {currentOrderID}/>} />
           <Route path="/delivery_status" element= {<DeliveryStatus/>} />
       </Routes> 
     </div>
