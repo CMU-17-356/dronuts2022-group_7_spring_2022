@@ -83,11 +83,12 @@ app.delete('/orders/remove_item/:id', order_controllers.RemoveItemById
 
 
 app.listen(port, () => {
-  console.log('Dronuts-App listening on localhost:{port}');
+  console.log('Dronuts-App listening on localhost:' + port);
 });
 
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://localhost:27017/test');
+  const uri = "mongodb+srv://ruitaol:3Q1T5l5ZK3gahNxe@cluster0.t124k.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+  await mongoose.connect(uri);
 }
