@@ -40,7 +40,9 @@ function Cart(props:OrderProps) {
   const updateTotalCost = () => {
     var newTotal = 0;
     cartData.forEach(donut => {
-      newTotal = newTotal + donut.quantity*donutDict[donut.donut_id]['price'];
+      if (null != donutDict[donut.donut_id] && null != donutDict[donut.donut_id]['price']) {
+        newTotal = newTotal + donut.quantity*donutDict[donut.donut_id]['price'];
+      }
     });
     if (total !== newTotal) {
       setTotal(newTotal);

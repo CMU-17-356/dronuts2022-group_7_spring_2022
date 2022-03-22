@@ -42,6 +42,9 @@ app.delete('/donuts', donut_controllers.deleteDonutByName
 app.get('/orders', order_controllers.listAllOrders
 );
 
+app.get('/orders/active', order_controllers.getActiveOrder
+);
+
 app.get('/orders/by_id/:id', order_controllers.getOrderById
 );
 
@@ -57,9 +60,11 @@ app.get('/orders/past', order_controllers.listPastOrders
 app.put('/orders/', order_controllers.createOrder
 );
 
+// Not necessarily deprecated but shouldn't use
 app.put('/orders/add_quantity/:id', order_controllers.AddQuantityById
 );
 
+// Not necessarily deprecated but shouldn't use
 app.put('/orders/add_item/:id', order_controllers.AddItemById
 );
 
@@ -67,9 +72,6 @@ app.post('/orders/', order_controllers.createOrder
 );
 
 app.put('/orders/:id', order_controllers.upsertOrderById
-);
-
-app.post('/orders/:id', order_controllers.upsertOrderById
 );
 
 app.post('/orders/:id', order_controllers.upsertOrderById
