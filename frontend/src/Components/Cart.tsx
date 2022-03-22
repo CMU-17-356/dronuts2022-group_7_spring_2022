@@ -12,18 +12,40 @@ function Cart(props:OrderProps) {
   const [cartData, setCartData] = useState<Array<any>>([]);
   const [orderData, setOrderData] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);
+  const [total, setTotal] = useState<number>(0);
+  const [donutDict, setDonutMap] = useState<[]>([]);
 
 
   const fetchCartData = async () => {
-    console.log("fetching cart data curr ID:", props.currentOrderID);
-    await axios.get("http://localhost:3001/orders/by_id/" + props.currentOrderID).then(response => {
-      setCartData(response.data.donuts);
-      setOrderData(response.data);
+    await axios.get("/orders").then(response => {
+      setCartData(response.data[0].donuts);
+      setOrderData(response.data[0]);
+      fetchAllDonuts();
       console.log(response.data);
     });
     
     setLoading(false);
   };
+
+  const fetchAllDonuts = async () => {
+    const response = await fetch('/donuts').then(response => response.json())
+    .then(result => {
+      let dictionary = Object.assign({}, ...result.map((v: any) => ({[v._id]: v})));
+      setDonutMap(dictionary);
+    }
+    );
+    return response;
+  }
+
+  const updateTotalCost = () => {
+    var newTotal = 0;
+    cartData.forEach(donut => {
+      newTotal = newTotal + donut.quantity*donutDict[donut.donut_id]['price'];
+    });
+    if (total !== newTotal) {
+      setTotal(newTotal);
+    }
+  }
     
   useEffect(() => { 
     fetchCartData();
@@ -56,10 +78,7 @@ function Cart(props:OrderProps) {
   return (
     <div>
       <Grid.Container gap={1} justify="center" height="300px" width="100%">
-        
-      {/* {console.log(orderData);
-       console.log(donutData);} */}
-      {/* {setDonutData(orderData[0].donuts)}; */}
+      {updateTotalCost()}
       {cartData.map((data, key) => {
           return (
             <div key={key}>
@@ -67,10 +86,10 @@ function Cart(props:OrderProps) {
                 <Card shadow width="800px" >
                   {/* <img src={require(`${data.image}`)} alt="Donut Pic" /> */}
                   <Text p b>
-                    Blueberry-Glazed Donut
+                    {donutDict[data.donut_id]['name']}
                   </Text>
                   <Text p>
-                    Price: $3.45
+                    Price: ${donutDict[data.donut_id]['price']}
                   </Text>
                   <Text p>
                     Quantity: {data.quantity}
@@ -85,7 +104,7 @@ function Cart(props:OrderProps) {
         })}
         <Grid xs={12} justify="center"></Grid>
         <Card>
-          <Text h4 my={0}>Total: $6.90</Text>
+          <Text h4 my={0}>Total: ${total}</Text>
           <Card.Footer>
             <Button auto type="success">Place Order</Button>
           </Card.Footer>
