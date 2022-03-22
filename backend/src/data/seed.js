@@ -16,14 +16,6 @@ mongoose.connect('mongodb://localhost:27017/test', {
 const seedProducts = [
     {
         'donuts': [
-            {
-                'donut_id' : "621e88a016dc040f2fee3183",
-                'quantity': 5
-            },
-            {
-                'donut_id' : "621e88c90db3439bca66cbf2",
-                'quantity': 2
-            }
             ],
             'drone_id': "621e8936389a8da299c79fcb",
             'cost': 40.1

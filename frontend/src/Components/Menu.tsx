@@ -5,31 +5,15 @@ import { FormControl } from 'react-bootstrap';
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
-interface IProps {
+interface OrderProps {
   currentOrder: Array<any>;
-  setCurrentOrder?: Dispatch<SetStateAction<Array<any>>>;
 }
 
-function Menu(props:IProps){
+function Menu(props:OrderProps){
   
   const [donutData, setDonutData] = useState<Array<any>>([]);
   const [orderData, setOrderData] = useState<Array<any>>([]);
   const [donutQuantity, setDonutQuantity] = useState<Array<any>>([]);
-
-  var myHeaders = new Headers();
-  myHeaders.append("Content-Type", "application/json");
-
-  var raw = JSON.stringify({"donuts":[],"drone_id":"621e8936389a8da299c79fcb"});
-
-  fetch("http://localhost:3001/orders", {
-    method: 'PUT',
-    headers: myHeaders,
-    body: raw,
-    redirect: 'follow'
-  })
-    .then(response => response.text())
-    .then(result => console.log(result))
-    .catch(error => console.log('error', error));
 
   const updateQuantityByKey = (key: number, value: string) => {
     var num = parseInt(value);

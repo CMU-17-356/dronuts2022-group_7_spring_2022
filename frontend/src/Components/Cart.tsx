@@ -3,7 +3,11 @@ import {Grid, Card, Button, Text, Spacer} from '@geist-ui/core'
 // import { donutData } from '../data/dummydata';
 import axios from 'axios';
 
-function Cart(props) {
+interface OrderProps {
+  currentOrder: Array<any>;
+}
+
+function Cart(props:OrderProps) {
   const [cartData, setCartData] = useState<Array<any>>([]);
   const [orderData, setOrderData] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);
