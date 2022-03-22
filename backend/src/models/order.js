@@ -32,6 +32,7 @@ var orderSchema = new mongoose_1.Schema({
     ],
     cost: Number,
     drone_id: { type: mongoose_1.Schema.Types.ObjectId, required: true, ref: 'Drone' },
+    active: { type: mongoose_1.Schema.Types.Boolean, default: true },
     time_placed: mongoose_1.Schema.Types.Date,
     time_picked: mongoose_1.Schema.Types.Date,
     time_delivered: mongoose_1.Schema.Types.Date,

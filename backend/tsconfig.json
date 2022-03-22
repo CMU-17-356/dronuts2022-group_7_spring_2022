@@ -14,6 +14,6 @@
   },
   "include": [
     "src/**/*.ts",
-    "tests/**/*.ts"
-, "helpers.ts", "src/data/seed.js", "src/data/seed.js"  ] 
+    "tests/**/*.ts",
+    "helpers.ts"] 
 }
