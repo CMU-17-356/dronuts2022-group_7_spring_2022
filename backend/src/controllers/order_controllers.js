@@ -141,7 +141,7 @@ var AddQuantityById = function (req, res) {
 };
 exports.AddQuantityById = AddQuantityById;
 var AddItemById = function (req, res) {
-    var order_update = order_1.OrderModel.findOneAndUpdate({ _id: req.params.id }, { $push: { donuts: { donut_id: req.body.donut_id, quantity: req.body.quantity + 1 } }
+    var order_update = order_1.OrderModel.findOneAndUpdate({ _id: req.params.id }, { $push: { donuts: { donut_id: req.body.donut_id, quantity: req.body.quantity } }
     }, function (err, result) {
         if (err) {
             res.status(400).send(err);

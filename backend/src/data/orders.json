@@ -9,6 +9,7 @@
         }
     ],
     "drone_id": 1,
-    "cost": 20.7
+    "cost": 20.7,
+    "active": false
 }
 ]
