@@ -30,7 +30,8 @@ const seedProducts = [
             }
             ],
             'drone_id': "621e8936389a8da299c79fcb",
-            'cost': 40.1
+            'cost': 40.1,
+            "active": false
     },
     {
         'donuts': [
@@ -45,7 +46,8 @@ const seedProducts = [
             ],
             'drone_id': "621e8936389a8da299c79fcb",
             'cost': 40.1,
-            'time_placed': new Date()
+            'time_placed': new Date(),
+            "active": false
     },
     {
         'donuts': [
@@ -60,7 +62,8 @@ const seedProducts = [
             ],
             'drone_id': "621e8936389a8da299c79fcb",
             'cost': 40.1,
-            'time_placed': new Date()
+            'time_placed': new Date(),
+            "active": false
     },
     {
         'donuts': [
@@ -77,7 +80,8 @@ const seedProducts = [
             'cost': 40.1,
             'time_placed': new Date(),
             'time_picked': new Date(),
-            'time_delivered': new Date()
+            'time_delivered': new Date(),
+            "active": false
     },
     {
         'donuts': [
@@ -94,11 +98,12 @@ const seedProducts = [
             'cost': 40.1,
             'time_placed': new Date(),
             'time_picked': new Date(),
-            'time_delivered': new Date()
+            'time_delivered': new Date(),
+            "active": false
     }
 ];
 
-const seedDrone = [
+const seedDrones = [
     {
         "_id": "621e8936389a8da299c79fcb",
         "orders": [],
@@ -107,8 +112,7 @@ const seedDrone = [
     }
     ]
 
-
-const seedDonut = [
+const seedDonuts = [
     {
         "_id" : "621e88a016dc040f2fee3183",
         "name": "Strawberry Glazed Donut",
@@ -135,13 +139,16 @@ const seedDonut = [
     }
 ]
 
+
+
 const seedDB = async () => {
     await OrderModel.deleteMany({});
     await OrderModel.insertMany(seedProducts);
     await DonutModel.deleteMany({});
-    await DonutModel.insertMany(seedDonut);
+    await DonutModel.insertMany(seedDonuts);
     await DroneModel.deleteMany({});
-    await DroneModel.insertMany(seedDrone);
+    await DroneModel.insertMany(seedDrones);
+
 };
 
 seedDB().then(() => {

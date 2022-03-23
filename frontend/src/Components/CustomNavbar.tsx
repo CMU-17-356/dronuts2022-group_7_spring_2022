@@ -8,7 +8,10 @@ import { useNavigate } from 'react-router-dom';
 
 
 function CustomNavbar() {
-  const [permission, editPermission] = useState<String>("Employee");
+  if (null == localStorage.getItem("Permission")) {
+    localStorage.setItem("Permission", "Employee")
+  }
+  const [permission, editPermission] = useState<String>(localStorage.getItem("Permission") || "Employee");
   const navigate = useNavigate();
   const updatePermission = (permission: string) => {
     editPermission(permission);
@@ -17,6 +20,7 @@ function CustomNavbar() {
     else {
       navigate("/");
     }
+    localStorage.setItem("Permission", permission)
   }
 
   var nav;
@@ -37,7 +41,7 @@ function CustomNavbar() {
   return (
     <Navbar bg="dark" variant="dark">
       <Container>
-        <Navbar.Brand href="#home">
+        <Navbar.Brand href="/">
          <img src={logo} alt="Logo" />
           Dronuts
         </Navbar.Brand>
