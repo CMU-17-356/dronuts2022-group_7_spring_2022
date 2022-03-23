@@ -1,6 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Text, Card, Divider, Grid, Button} from '@geist-ui/core';
 import { FormControl } from 'react-bootstrap';
+import Select from 'react-select'
 
 function SubmitModifiedOrder() {
     return true;
@@ -10,14 +11,21 @@ function ModifyEmployeeOrderCard() {
   const [donutDict, setDonutMap] = useState<[]>([]);
   const [curr_order, setCurrOrder] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);
+  const [donutOptions, setDonutOptions] = useState<any>([]);
+  const [selectedDonut, setSelectedDonut] = useState<any>({});
+
   var orderID: string = '';
 
   const fetchAllDonuts = async () => {
     const response = await fetch('/donuts').then(response => response.json())
     .then(result => {
       let dictionary = Object.assign({}, ...result.map((v: any) => ({[v._id]: v.name})));
-      setDonutMap(dictionary)}
+      populateDropdown(dictionary);
+      setDonutMap(dictionary);
+    }
     );
+    
+
     return response;
   }
 
@@ -34,9 +42,33 @@ function ModifyEmployeeOrderCard() {
     setLoading(false);
   }
 
+  const populateDropdown = (dictionary: any) => {
+    var dOptions: any[] = [];
+    
+    for (var [key, val] of Object.entries(dictionary)) {
+      let valString = val as string;
+      console.log(valString);
+      dOptions.push({ label: valString, value: key });
+    }
+    setDonutOptions(dOptions);
+    console.log("dOptions: " + dOptions);
+  }
+
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     console.log(handleSubmit);
   }  
+
+  const removeDonut  = (value: string) => {
+  }
+
+  const changeSelectedDonut = (selectedOption: any) => {
+    setSelectedDonut(selectedOption);
+  }
+
+  const addDonutToCart = () => {
+   
+    
+  }
   
   const updateQuantity = (value: string) => {
     const num = parseInt(value)
@@ -57,8 +89,6 @@ function ModifyEmployeeOrderCard() {
     if (isLoading) {
         return <div className="App">Loading...</div>;
     }
-    
-    console.log(curr_order.donuts.length);
 
   return (
     <div className="orders-page">
@@ -74,14 +104,20 @@ function ModifyEmployeeOrderCard() {
                 <ul>
                 {curr_order.donuts.map((donut: any, donutKey: any) => {
                     return(<li key={donutKey}>
-                        <Grid><Button auto type="secondary" onClick={() => updateQuantity((donut.quantity-1).toString())}>-</Button></Grid>
-                        <Grid><FormControl width="50px" value={donut.quantity} onChange={(event) => updateQuantity(event.target.value)}/></Grid>
-                        <Grid><Button auto type="secondary"onClick={() => updateQuantity((donut.quantity+1).toString())}>+</Button></Grid>
+                        <Grid.Container gap={1} justify="center" height="300px" width="100%">
+                          <Grid><Text>{donutDict[donut.donut_id]}</Text></Grid>
+                          <Grid><Button auto type="secondary" onClick={() => updateQuantity((donut.quantity-1).toString())}>-</Button></Grid>
+                          <Grid><FormControl width="50px" value={donut.quantity} onChange={(event) => updateQuantity(event.target.value)}/></Grid>
+                          <Grid><Button auto type="secondary"onClick={() => updateQuantity((donut.quantity+1).toString())}>+</Button></Grid>
+                          <Button auto type="error" onClick={() => removeDonut(donut.donut_id)}>Remove</Button>
+                        </Grid.Container>
                         </li>);
                 })}
-                    
+
                 </ul>
-              <input type="submit" value="Submit"></input>
+                <Select id={"selectedDonut"} options={donutOptions} onChange={(option) => changeSelectedDonut(option)}></Select>
+                <Button auto type="success" onClick={() => addDonutToCart()}>Add to Order</Button>
+                <input type="submit" value="Submit"></input>
               </form>
             </Card>
         </Card>
