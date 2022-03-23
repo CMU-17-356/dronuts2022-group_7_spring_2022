@@ -39,10 +39,8 @@ function App() {
 
     await fetch("https://dronutsgroup7backend.uk.r.appspot.com/orders/active")
       .then(async response => {
-        console.log("response", response)
         var bodyStream = await response.json();
         const isEmptyResponse = ((bodyStream) === "");
-        console.log("penis", isEmptyResponse)
         if(isEmptyResponse){
           createNewOrder();
           console.log("created new order");
