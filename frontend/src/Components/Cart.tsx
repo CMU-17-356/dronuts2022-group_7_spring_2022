@@ -17,7 +17,7 @@ function Cart(props:OrderProps) {
 
 
   const fetchCartData = async () => {
-    await axios.get("/orders").then(response => {
+    await axios.get("https://dronutsgroup7backend.uk.r.appspot.com/orders").then(response => {
       setCartData(response.data[0].donuts);
       setOrderData(response.data[0]);
       fetchAllDonuts();
@@ -28,7 +28,7 @@ function Cart(props:OrderProps) {
   };
 
   const fetchAllDonuts = async () => {
-    const response = await fetch('/donuts').then(response => response.json())
+    const response = await fetch('https://dronutsgroup7backend.uk.r.appspot.com/donuts').then(response => response.json())
     .then(result => {
       let dictionary = Object.assign({}, ...result.map((v: any) => ({[v._id]: v})));
       setDonutMap(dictionary);

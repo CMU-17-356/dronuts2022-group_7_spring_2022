@@ -19,28 +19,71 @@ import DeliveryStatus from './Components/DeliveryStatus';
 function App() {
   const [currentOrderID, setCurrentOrderID] = useState<String>("");
   const [isLoading, setLoading] = useState(true);
-  //create a new order on render for this sessions
 
-  const createNewOrder = async () => {
+  const findOrCreateNewOrder = async () => {
+
     var myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
-    // myHeaders.append("Access-Control-Allow-Origin", "*");
-
     var raw = JSON.stringify({"donuts":[],"drone_id":"621e8936389a8da299c79fcb"});
 
-    const response = await fetch("http://localhost:3001/orders")
-      .then(response => response.json())
-      .then(result => {console.log('new order', result); setCurrentOrderID(result[0]._id);})
+    const createNewOrder = async () => {
+      await fetch("https://dronutsgroup7backend.uk.r.appspot.com/orders", {
+        method: 'PUT',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+      }).then(response => response.json())
+      .then(result => {console.log('new order', result); setCurrentOrderID(result._id); setLoading(false);})
       .catch(error => console.log('error', error));
+    }
 
-      setLoading(false);
-    return response;
+    // var isJson = false;
+
+    await fetch("https://dronutsgroup7backend.uk.r.appspot.com/orders/active")
+      .then(async response => {
+        console.log("response", response)
+        const isEmptyResponse = ((await response.text()) === "");
+        console.log("penis", isEmptyResponse)
+        if(!isEmptyResponse){
+          return response.json();
+        }
+        else{
+          const error = response.status;
+          return Promise.reject(error);
+        }
+      })
+      .then(result => 
+        {
+          //if there is already an active order then assume that is the current session
+          console.log('current order', result); 
+          setCurrentOrderID(result._id);
+          setLoading(false);
+        })
+      .catch(error => {
+        console.log("creating new order");
+        //create a new order on render if there is not already an active order
+        createNewOrder();
+      }
+      );
+
+
+    // var raw = JSON.stringify({"donuts":[],"drone_id":"621e8936389a8da299c79fcb"});
+
+    // const response2 = await fetch("https://dronutsgroup7backend.uk.r.appspot.com/orders")
+    //   .then(response => response.json())
+    //   .then(result => {console.log('new order', result); setCurrentOrderID(result[0]._id);})
+    //   .catch(error => console.log('error', error));
+
+    //   setLoading(false);
+
+    
+    // return response;
   }
 
     useEffect(() => {
-      if(currentOrderID == ""){
-        createNewOrder();
-      }
+      // if(currentOrderID == ""){
+      findOrCreateNewOrder();
+      // }
       }, []);
   if (isLoading) {
     return <div className="App">Loading...</div>;
