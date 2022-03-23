@@ -18,7 +18,8 @@ const seedProducts = [
         'donuts': [
             ],
             'drone_id': "621e8936389a8da299c79fcb",
-            'cost': 40.1
+            'cost': 40.1,
+            'active': false
     },
     {
         'donuts': [
@@ -33,7 +34,8 @@ const seedProducts = [
             ],
             'drone_id': "621e8936389a8da299c79fcb",
             'cost': 40.1,
-            'time_placed': new Date()
+            'time_placed': new Date(),
+            'active': false
     },
     {
         'donuts': [
@@ -48,7 +50,8 @@ const seedProducts = [
             ],
             'drone_id': "621e8936389a8da299c79fcb",
             'cost': 40.1,
-            'time_placed': new Date()
+            'time_placed': new Date(),
+            'active': false
     },
     {
         'donuts': [
@@ -65,7 +68,8 @@ const seedProducts = [
             'cost': 40.1,
             'time_placed': new Date(),
             'time_picked': new Date(),
-            'time_delivered': new Date()
+            'time_delivered': new Date(),
+            'active': false
     },
     {
         'donuts': [
@@ -82,7 +86,8 @@ const seedProducts = [
             'cost': 40.1,
             'time_placed': new Date(),
             'time_picked': new Date(),
-            'time_delivered': new Date()
+            'time_delivered': new Date(),
+            'active': false
     }
 ];
 
