@@ -37,8 +37,6 @@ function App() {
       .catch(error => console.log('error', error));
     }
 
-    // var isJson = false;
-
     await fetch("https://dronutsgroup7backend.uk.r.appspot.com/orders/active")
       .then(async response => {
         console.log("response", response)
@@ -64,24 +62,10 @@ function App() {
         })
       .catch(error => console.log('error', error));
 
-
-    // var raw = JSON.stringify({"donuts":[],"drone_id":"621e8936389a8da299c79fcb"});
-
-    // const response2 = await fetch("https://dronutsgroup7backend.uk.r.appspot.com/orders")
-    //   .then(response => response.json())
-    //   .then(result => {console.log('new order', result); setCurrentOrderID(result[0]._id);})
-    //   .catch(error => console.log('error', error));
-
-    //   setLoading(false);
-
-    
-    // return response;
   }
 
     useEffect(() => {
-      // if(currentOrderID == ""){
       findOrCreateNewOrder();
-      // }
       }, []);
   if (isLoading) {
     return <div className="App">Loading...</div>;
