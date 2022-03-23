@@ -3,7 +3,12 @@ import {Grid, Card, Button, Text, Spacer} from '@geist-ui/core'
 // import { donutData } from '../data/dummydata';
 import axios from 'axios';
 
-function Cart() {
+interface OrderProps {
+  currentOrderID: String;
+}
+
+
+function Cart(props:OrderProps) {
   const [cartData, setCartData] = useState<Array<any>>([]);
   const [orderData, setOrderData] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);
@@ -12,9 +17,9 @@ function Cart() {
 
 
   const fetchCartData = async () => {
-    await axios.get("/orders").then(response => {
-      setCartData(response.data[0].donuts);
-      setOrderData(response.data[0]);
+    await axios.get("https://dronutsgroup7backend.uk.r.appspot.com/orders/by_id/" + props.currentOrderID).then(response => {
+      setCartData(response.data.donuts);
+      setOrderData(response.data);
       fetchAllDonuts();
       console.log(response.data);
     });
@@ -23,7 +28,7 @@ function Cart() {
   };
 
   const fetchAllDonuts = async () => {
-    const response = await fetch('/donuts').then(response => response.json())
+    const response = await fetch('https://dronutsgroup7backend.uk.r.appspot.com/donuts').then(response => response.json())
     .then(result => {
       let dictionary = Object.assign({}, ...result.map((v: any) => ({[v._id]: v})));
       setDonutMap(dictionary);

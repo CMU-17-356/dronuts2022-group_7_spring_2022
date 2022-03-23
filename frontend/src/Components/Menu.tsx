@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Dispatch, SetStateAction} from 'react';
 import {Grid, Card, Button, Text, Spacer, Input} from '@geist-ui/core'
 // import { donutData } from '../data/dummydata';
 import { FormControl } from 'react-bootstrap';
 var myHeaders = new Headers();
 myHeaders.append("Content-Type", "application/json");
 
-function Menu() {
+interface OrderProps {
+  currentOrderID: String;
+}
+
+function Menu(props:OrderProps){
+  
   const [donutData, setDonutData] = useState<Array<any>>([]);
   const [orderData, setOrderData] = useState<Array<any>>([]);
   const [donutQuantity, setDonutQuantity] = useState<Array<any>>([]);
@@ -42,12 +47,14 @@ function Menu() {
       <Grid.Container gap={1} justify="center" height="100px">
       {donutData.map((data, key) => {
         const updateDatabaseQuantity = () => {
-          //const currentOrder = orderData[0];
-          const currentOrderId = orderData[0]._id;
-          const num = donutQuantity[key];
-          //iterate quantity using post operation
-          // data.id
-          var raw = JSON.stringify({"donut_id":"621e88c90db3439bca66cbf2","quantity":num});
+
+          const currentOrderId = props.currentOrderID;
+          const num = donutQuantity[key]; 
+          const currentDonutId = donutData[key]._id;
+
+          console.log('order ID', props.currentOrderID);
+          
+          var raw = JSON.stringify({"donut_id":currentDonutId,"quantity":num});
 
           fetch("/orders/add_item/" + currentOrderId, {
             method: 'PUT',
