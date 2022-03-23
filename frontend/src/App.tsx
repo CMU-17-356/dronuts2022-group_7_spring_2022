@@ -42,14 +42,17 @@ function App() {
     await fetch("https://dronutsgroup7backend.uk.r.appspot.com/orders/active")
       .then(async response => {
         console.log("response", response)
-        const isEmptyResponse = ((await response.text()) === "");
+        var bodyStream = await response.json();
+        const isEmptyResponse = ((bodyStream) === "");
         console.log("penis", isEmptyResponse)
-        if(!isEmptyResponse){
-          return response.json();
-        }
-        else{
+        if(isEmptyResponse){
+          createNewOrder();
+          console.log("created new order");
           const error = response.status;
           return Promise.reject(error);
+        }
+        else{
+          return bodyStream;
         }
       })
       .then(result => 
@@ -59,12 +62,7 @@ function App() {
           setCurrentOrderID(result._id);
           setLoading(false);
         })
-      .catch(error => {
-        console.log("creating new order");
-        //create a new order on render if there is not already an active order
-        createNewOrder();
-      }
-      );
+      .catch(error => console.log('error', error));
 
 
     // var raw = JSON.stringify({"donuts":[],"drone_id":"621e8936389a8da299c79fcb"});

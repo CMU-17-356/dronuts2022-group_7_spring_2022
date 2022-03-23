@@ -17,9 +17,9 @@ function Cart(props:OrderProps) {
 
 
   const fetchCartData = async () => {
-    await axios.get("https://dronutsgroup7backend.uk.r.appspot.com/orders").then(response => {
-      setCartData(response.data[0].donuts);
-      setOrderData(response.data[0]);
+    await axios.get("https://dronutsgroup7backend.uk.r.appspot.com/orders/by_id/" + props.currentOrderID).then(response => {
+      setCartData(response.data.donuts);
+      setOrderData(response.data);
       fetchAllDonuts();
       console.log(response.data);
     });
@@ -31,7 +31,9 @@ function Cart(props:OrderProps) {
     const response = await fetch('https://dronutsgroup7backend.uk.r.appspot.com/donuts').then(response => response.json())
     .then(result => {
       let dictionary = Object.assign({}, ...result.map((v: any) => ({[v._id]: v})));
+      console.log(dictionary);
       setDonutMap(dictionary);
+      console.log("cart donut data", result);
     }
     );
     return response;
@@ -88,6 +90,7 @@ function Cart(props:OrderProps) {
                 <Card shadow width="800px" >
                   {/* <img src={require(`${data.image}`)} alt="Donut Pic" /> */}
                   <Text p b>
+                    {console.log("donutdict", donutDict)}
                     {donutDict[data.donut_id]['name']}
                   </Text>
                   <Text p>
