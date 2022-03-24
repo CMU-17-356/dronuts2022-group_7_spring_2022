@@ -1,11 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {Text, Card, Divider, Grid, Button} from '@geist-ui/core';
-import { FormControl } from 'react-bootstrap';
-import Select from 'react-select'
-
-function SubmitModifiedOrder() {
-    return true;
-}
+import { FormControl, FormControlProps } from 'react-bootstrap';
+import Select from 'react-select';
 
 function ModifyEmployeeOrderCard() {
   const [donutDict, setDonutMap] = useState<[]>([]);
@@ -15,6 +11,8 @@ function ModifyEmployeeOrderCard() {
   const [selectedDonut, setSelectedDonut] = useState<any>({});
 
   var orderID: string = '';
+
+  const DEFAULT_OBJ_ID = '623cce86518980626692660a';
 
   const fetchAllDonuts = async () => {
     const response = await fetch('https://dronutsgroup7backend.uk.r.appspot.com/donuts/').then(response => response.json())
@@ -31,6 +29,7 @@ function ModifyEmployeeOrderCard() {
   const determineOrderID = () => {
     var baseUrl = (window.location)
     orderID = String(baseUrl.href.split('/').pop());
+    console.log("ORDER ID is")
   }
 
   const fetchOrderByID = async () => {
@@ -69,25 +68,16 @@ function ModifyEmployeeOrderCard() {
 
     var upsertHeader = new Headers();
     upsertHeader.append("Content-Type", "application/json");
-    //upsertHeader.append("Access-Control-Request-Methods", "PUT");
-    //upsertHeader.append("Access-Control-Request-Headers", "Content-Type");
-    console.log(upsertHeader.toString());
-    
     let raw = JSON.stringify(curr_order);
-    console.log("raw upsert:" + raw);
-    console.log("Stringified upsert:" + JSON.stringify(raw));
 
-    await fetch('https://dronutsgroup7backend.uk.r.appspot.com/orders/', {
+    await fetch('https://dronutsgroup7backend.uk.r.appspot.com/orders/'+curr_order._id, {
       method: 'PUT',
       headers: {
         'Content-type': 'application/json'
       },
-      body: JSON.stringify(raw)
-    })
-      .then(response => response.json())
-      .then(result => setCurrOrder(result))
-      .then(result => console.log(result))
-      .catch(error => console.log('error', error));
+      body: raw
+    });
+    setLoading(true);
   }
 
   const addDonutToCart = async () => {
@@ -96,21 +86,21 @@ function ModifyEmployeeOrderCard() {
     var containsDonut = false;
     curr_order.donuts.map((donut: any, donutKey: any) => {
       if(!containsDonut && donutKey == selectedDonut) {
-        updateQuantity((donut.quantity+1).toString());
+        updateQuantity(donut.quantity, 1);
         containsDonut = true;
       }
     });
-    if (!containsDonut) curr_order.donuts.push({'donut_id': selectedDonut.value, 'quantity':1, '_id':-1});
+    var new_id = DEFAULT_OBJ_ID;
+    if (!containsDonut) curr_order.donuts.push({'donut_id': selectedDonut.value, 'quantity':1, '_id': new_id});
   }
   
-  const updateQuantity = (value: string) => {
-    const num = parseInt(value)
+  const updateQuantity = (donut: any, modifier: number) => {
+    var num = donut.quantity + modifier;
     if (isNaN(num) || num < 0) {
-        console.log("new quantity: ", 0);
+        num = 0;
     }
-    else {
-        console.log("new quantity: ", num);
-    }
+    donut.quantity = num;
+    console.log(JSON.stringify(curr_order));
   }
   
   
@@ -118,8 +108,9 @@ function ModifyEmployeeOrderCard() {
     determineOrderID();
     fetchAllDonuts();
     if (orderID !== '') fetchOrderByID();
-    }, []);
+    }, [isLoading]);
 
+    console.log(isLoading);
     if (isLoading) {
         return <div className="App">Loading...</div>;
     }
@@ -139,18 +130,18 @@ function ModifyEmployeeOrderCard() {
                     return(<li key={donutKey}>
                         <Grid.Container gap={1} justify="center" height="300px" width="100%">
                           <Grid><Text>{donutDict[donut.donut_id]}</Text></Grid>
-                          <Grid><Button auto type="secondary" onClick={() => updateQuantity((donut.quantity-1).toString())}>-</Button></Grid>
-                          <Grid><FormControl width="50px" value={donut.quantity} onChange={(event) => updateQuantity(event.target.value)}/></Grid>
-                          <Grid><Button auto type="secondary"onClick={() => updateQuantity((donut.quantity+1).toString())}>+</Button></Grid>
+                          <Grid><Button auto type="secondary" onClick={() => updateQuantity(donut, -1)}>-</Button></Grid>
+                          <Grid><FormControl width="50px" value={donut.quantity} onChange={(event) => updateQuantity(donut, (event.target as any).value)}/></Grid>
+                          <Grid><Button auto type="secondary"onClick={() => updateQuantity(donut, +1)}>+</Button></Grid>
                           <Button auto type="error" onClick={() => removeDonut(donut.donut_id)}>Remove</Button>
                         </Grid.Container>
                         </li>);
                 })}
 
                 </ul>
-                <Select id={"selectedDonut"} options={donutOptions} onChange={(option) => changeSelectedDonut(option)}></Select>
+                <Select id={"selectedDonut"} options={donutOptions} onChange={(option: any) => changeSelectedDonut(option)}></Select>
                 <Button auto type="success" onClick={() => addDonutToCart()}>Add to Order</Button>
-                <Button type="success" onClick={() => upsertOrder()}></Button>
+                <Button type="success" onClick={() => upsertOrder()}>Submit Changes</Button>
             </Card>
         </Card>
     </div>
