@@ -6,7 +6,7 @@ import * as donut_controllers from './controllers/donut_controllers';
 import * as order_controllers from './controllers/order_controllers';
 
 const app = express();
-const port = 3001;
+const port = 8080;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -42,6 +42,9 @@ app.delete('/donuts', donut_controllers.deleteDonutByName
 app.get('/orders', order_controllers.listAllOrders
 );
 
+app.get('/orders/active', order_controllers.getActiveOrder
+);
+
 app.get('/orders/by_id/:id', order_controllers.getOrderById
 );
 
@@ -57,19 +60,21 @@ app.get('/orders/past', order_controllers.listPastOrders
 app.put('/orders/', order_controllers.createOrder
 );
 
+// Not necessarily deprecated but shouldn't use
 app.put('/orders/add_quantity/:id', order_controllers.AddQuantityById
 );
 
+// Not necessarily deprecated but shouldn't use
 app.put('/orders/add_item/:id', order_controllers.AddItemById
+);
+
+app.post('/orders/add_donuts/:id', order_controllers.AddDonutList
 );
 
 app.post('/orders/', order_controllers.createOrder
 );
 
 app.put('/orders/:id', order_controllers.upsertOrderById
-);
-
-app.post('/orders/:id', order_controllers.upsertOrderById
 );
 
 app.post('/orders/:id', order_controllers.upsertOrderById
@@ -83,11 +88,12 @@ app.delete('/orders/remove_item/:id', order_controllers.RemoveItemById
 
 
 app.listen(port, () => {
-  console.log('Dronuts-App listening on localhost:{port}');
+  console.log('Dronuts-App listening on localhost:' + port);
 });
 
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://localhost:27017/test');
+  const uri = "mongodb+srv://ruitaol:3Q1T5l5ZK3gahNxe@cluster0.t124k.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+  await mongoose.connect(uri);
 }

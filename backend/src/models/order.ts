@@ -11,6 +11,7 @@ export interface OrderInterface extends Document{
     donuts : Array<order_count>;
     cost : number; 
     drone_id: Types.ObjectId;
+    active: Boolean;
     time_placed: Date;
     time_picked: Date;
     time_delivered: Date;
@@ -27,6 +28,7 @@ const orderSchema = new Schema<OrderInterface>(
         ],
         cost : Number,
         drone_id : {type: Schema.Types.ObjectId, required: true, ref: 'Drone'},
+        active : {type: Schema.Types.Boolean, default: true},
         time_placed :  Schema.Types.Date,
         time_picked : Schema.Types.Date,
         time_delivered : Schema.Types.Date,

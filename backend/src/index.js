@@ -1,7 +1,11 @@
 "use strict";
 var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
-    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+    var desc = Object.getOwnPropertyDescriptor(m, k);
+    if (!desc || ("get" in desc ? !m.__esModule : desc.writable || desc.configurable)) {
+      desc = { enumerable: true, get: function() { return m[k]; } };
+    }
+    Object.defineProperty(o, k2, desc);
 }) : (function(o, m, k, k2) {
     if (k2 === undefined) k2 = k;
     o[k2] = m[k];
@@ -64,7 +68,7 @@ var mongoose_1 = __importDefault(require("mongoose"));
 var donut_controllers = __importStar(require("./controllers/donut_controllers"));
 var order_controllers = __importStar(require("./controllers/order_controllers"));
 var app = (0, express_1.default)();
-var port = 3001;
+var port = 8080;
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(body_parser_1.default.json());
 // Donut Controllers
@@ -79,28 +83,34 @@ app.delete('/donuts', donut_controllers.deleteDonutByName);
 // Employee Controllers
 // Orders
 app.get('/orders', order_controllers.listAllOrders);
+app.get('/orders/active', order_controllers.getActiveOrder);
 app.get('/orders/by_id/:id', order_controllers.getOrderById);
 app.get('/orders/incomplete', order_controllers.listIncompleteOrders);
 app.get('/orders/pending', order_controllers.listPendingOrders);
 app.get('/orders/past', order_controllers.listPastOrders);
 app.put('/orders/', order_controllers.createOrder);
+// Not necessarily deprecated but shouldn't use
 app.put('/orders/add_quantity/:id', order_controllers.AddQuantityById);
+// Not necessarily deprecated but shouldn't use
 app.put('/orders/add_item/:id', order_controllers.AddItemById);
+app.post('/orders/add_donuts/:id', order_controllers.AddDonutList);
 app.post('/orders/', order_controllers.createOrder);
 app.put('/orders/:id', order_controllers.upsertOrderById);
-app.post('/orders/:id', order_controllers.upsertOrderById);
 app.post('/orders/:id', order_controllers.upsertOrderById);
 app.delete('/orders/:id', order_controllers.deleteOrderById);
 app.delete('/orders/remove_item/:id', order_controllers.RemoveItemById);
 app.listen(port, function () {
-    console.log('Dronuts-App listening on localhost:{port}');
+    console.log('Dronuts-App listening on localhost:' + port);
 });
 main().catch(function (err) { return console.log(err); });
 function main() {
     return __awaiter(this, void 0, void 0, function () {
+        var uri;
         return __generator(this, function (_a) {
             switch (_a.label) {
-                case 0: return [4 /*yield*/, mongoose_1.default.connect('mongodb://localhost:27017/test')];
+                case 0:
+                    uri = "mongodb+srv://ruitaol:3Q1T5l5ZK3gahNxe@cluster0.t124k.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+                    return [4 /*yield*/, mongoose_1.default.connect(uri)];
                 case 1:
                     _a.sent();
                     return [2 /*return*/];

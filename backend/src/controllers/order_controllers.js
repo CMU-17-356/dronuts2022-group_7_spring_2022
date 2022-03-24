@@ -36,7 +36,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteOrderById = exports.createOrder = exports.RemoveItemById = exports.AddItemById = exports.AddQuantityById = exports.upsertOrderById = exports.listPastOrders = exports.listPendingOrders = exports.listIncompleteOrders = exports.getOrderById = exports.listAllOrders = void 0;
+exports.deleteOrderById = exports.createOrder = exports.RemoveItemById = exports.AddItemById = exports.AddQuantityById = exports.AddDonutList = exports.upsertOrderById = exports.listPastOrders = exports.listPendingOrders = exports.listIncompleteOrders = exports.getActiveOrder = exports.getOrderById = exports.listAllOrders = void 0;
 var order_1 = require("../models/order");
 var listAllOrders = function (req, res) {
     var orders = order_1.OrderModel.find({}, function (err, result) {
@@ -60,6 +60,17 @@ var getOrderById = function (req, res) {
     });
 };
 exports.getOrderById = getOrderById;
+var getActiveOrder = function (req, res) {
+    var donut = order_1.OrderModel.findOne({ active: true }, function (err, result) {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).send(result);
+        }
+    });
+};
+exports.getActiveOrder = getActiveOrder;
 var listIncompleteOrders = function (req, res) {
     var orders = order_1.OrderModel.find({ time_picked: null, time_delivered: null, time_placed: null }, function (err, result) {
         if (err) {
@@ -107,13 +118,24 @@ var upsertOrderById = function (req, res) {
     });
 };
 exports.upsertOrderById = upsertOrderById;
+var AddDonutList = function (req, res) {
+    var order_update = order_1.OrderModel.findOneAndUpdate({ _id: req.params.id }, { $set: { donuts: req.body.donuts } }, function (err, result) {
+        if (err) {
+            res.status(400).send(err);
+        }
+        else {
+            res.status(200).send("Successfully Replaced " + req.body.donuts + " in order " + req.params.id);
+        }
+    });
+};
+exports.AddDonutList = AddDonutList;
 var AddQuantityById = function (req, res) {
     var order_update = order_1.OrderModel.findOneAndUpdate({ _id: req.params.id, "donuts.donut_id": req.body.donut_id }, { $inc: { 'donuts.$.quantity': req.body.quantity } }, function (err, result) {
         if (err) {
             res.status(400).send(err);
         }
         else {
-            res.status(200).send("Successfully Added" + req.body.quantity + " to Donut " + req.body.donut_id + "  in order " + req.params.id);
+            res.status(200).send("Successfully Added " + req.body.quantity + " to Donut " + req.body.donut_id + "  in order " + req.params.id);
         }
     });
     // let updated_object = await OrderModel.findOne({ _id:req.params.id});
@@ -141,7 +163,7 @@ var AddQuantityById = function (req, res) {
 };
 exports.AddQuantityById = AddQuantityById;
 var AddItemById = function (req, res) {
-    var order_update = order_1.OrderModel.findOneAndUpdate({ _id: req.params.id }, { $push: { donuts: { donut_id: req.body.donut_id, quantity: req.body.quantity + 1 } }
+    var order_update = order_1.OrderModel.findOneAndUpdate({ _id: req.params.id }, { $push: { donuts: { donut_id: req.body.donut_id, quantity: req.body.quantity } }
     }, function (err, result) {
         if (err) {
             res.status(400).send(err);

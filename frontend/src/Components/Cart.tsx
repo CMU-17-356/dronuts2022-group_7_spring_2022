@@ -3,21 +3,51 @@ import {Grid, Card, Button, Text, Spacer} from '@geist-ui/core'
 // import { donutData } from '../data/dummydata';
 import axios from 'axios';
 
-function Cart() {
+interface OrderProps {
+  currentOrderID: String;
+}
+
+
+function Cart(props:OrderProps) {
   const [cartData, setCartData] = useState<Array<any>>([]);
   const [orderData, setOrderData] = useState<any>([]);
   const [isLoading, setLoading] = useState(true);
+  const [total, setTotal] = useState<number>(0);
+  const [donutDict, setDonutMap] = useState<[]>([]);
 
 
   const fetchCartData = async () => {
-    await axios.get("/orders").then(response => {
-      setCartData(response.data[0].donuts);
-      setOrderData(response.data[0]);
+    await axios.get("https://dronutsgroup7backend.uk.r.appspot.com/orders/by_id/" + props.currentOrderID).then(response => {
+      setCartData(response.data.donuts);
+      setOrderData(response.data);
+      fetchAllDonuts();
       console.log(response.data);
     });
     
     setLoading(false);
   };
+
+  const fetchAllDonuts = async () => {
+    const response = await fetch('https://dronutsgroup7backend.uk.r.appspot.com/donuts').then(response => response.json())
+    .then(result => {
+      let dictionary = Object.assign({}, ...result.map((v: any) => ({[v._id]: v})));
+      setDonutMap(dictionary);
+    }
+    );
+    return response;
+  }
+
+  const updateTotalCost = () => {
+    var newTotal = 0;
+    cartData.forEach(donut => {
+      if (null != donutDict[donut.donut_id] && null != donutDict[donut.donut_id]['price']) {
+        newTotal = newTotal + donut.quantity*donutDict[donut.donut_id]['price'];
+      }
+    });
+    if (total !== newTotal) {
+      setTotal(newTotal);
+    }
+  }
     
   useEffect(() => { 
     fetchCartData();
@@ -50,10 +80,7 @@ function Cart() {
   return (
     <div>
       <Grid.Container gap={1} justify="center" height="300px" width="100%">
-        
-      {/* {console.log(orderData);
-       console.log(donutData);} */}
-      {/* {setDonutData(orderData[0].donuts)}; */}
+      {updateTotalCost()}
       {cartData.map((data, key) => {
           return (
             <div key={key}>
@@ -61,10 +88,10 @@ function Cart() {
                 <Card shadow width="800px" >
                   {/* <img src={require(`${data.image}`)} alt="Donut Pic" /> */}
                   <Text p b>
-                    beautiful donut
+                    {donutDict[data.donut_id]['name']}
                   </Text>
                   <Text p>
-                    Price: $420.69
+                    Price: ${donutDict[data.donut_id]['price']}
                   </Text>
                   <Text p>
                     Quantity: {data.quantity}
@@ -79,7 +106,7 @@ function Cart() {
         })}
         <Grid xs={12} justify="center"></Grid>
         <Card>
-          <Text h4 my={0}>Total: $10.35</Text>
+          <Text h4 my={0}>Total: ${total}</Text>
           <Card.Footer>
             <Button auto type="success">Place Order</Button>
           </Card.Footer>

@@ -1,16 +1,22 @@
-FROM node:alpine3.11
-MAINTAINER <GROUP_NAME_HERE>
+FROM gcr.io/google-appengine/nodejs
+
+RUN mkdir -p /app
+
+RUN npm install -g typescript
 
 # Change working directory
-WORKDIR /usr/src/app
+WORKDIR /app
 
 # Install App Dependencies
-COPY package*.json ./
+
 RUN npm install
 
 # Copy App Source
-COPY . .
+COPY ./ ./
 #TODO Run any build scripts here
 
-EXPOSE 80
+RUN npm run build
+
+EXPOSE 8080
+
 CMD [ "npm", "start" ]
