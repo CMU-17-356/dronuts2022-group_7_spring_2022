@@ -1,9 +1,20 @@
 version: '3'
 services:
-
-  your_app:
-    container_name: your_app
-    build: ./
+  frontend:
+    build: frontend
+    image: frontend:latest
+    # environment:
+    #   PORT: 3000
     ports:
-      - "80:80"
-    restart: always
+      - "3000:3000"
+    depends_on:
+      - backend
+  backend:
+    build: backend
+    image: backend:latest
+    # environment:
+    #   PORT: 3001
+    expose:
+      - 3001
+    ports:
+      - "3001:3001"
