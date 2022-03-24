@@ -39,15 +39,18 @@ function App() {
 
     await fetch("https://dronutsgroup7backend.uk.r.appspot.com/orders/active")
       .then(async response => {
+        // console.log(await response.json());
         var bodyStream = await response.json();
         const isEmptyResponse = ((bodyStream) === "");
         if(isEmptyResponse){
           createNewOrder();
           console.log("created new order");
           const error = response.status;
+          setLoading(false);
           return Promise.reject(error);
         }
         else{
+          setLoading(false);
           return bodyStream;
         }
       })
@@ -58,7 +61,9 @@ function App() {
           setCurrentOrderID(result._id);
           setLoading(false);
         })
-      .catch(error => console.log('error', error));
+      .catch(
+        error => console.log('error', error)
+      );
 
   }
 
