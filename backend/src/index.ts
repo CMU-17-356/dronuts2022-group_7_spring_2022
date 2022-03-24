@@ -68,6 +68,9 @@ app.put('/orders/add_quantity/:id', order_controllers.AddQuantityById
 app.put('/orders/add_item/:id', order_controllers.AddItemById
 );
 
+app.post('/orders/add_donuts/:id', order_controllers.AddDonutList
+);
+
 app.post('/orders/', order_controllers.createOrder
 );
 

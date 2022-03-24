@@ -93,6 +93,7 @@ app.put('/orders/', order_controllers.createOrder);
 app.put('/orders/add_quantity/:id', order_controllers.AddQuantityById);
 // Not necessarily deprecated but shouldn't use
 app.put('/orders/add_item/:id', order_controllers.AddItemById);
+app.post('/orders/add_donuts/:id', order_controllers.AddDonutList);
 app.post('/orders/', order_controllers.createOrder);
 app.put('/orders/:id', order_controllers.upsertOrderById);
 app.post('/orders/:id', order_controllers.upsertOrderById);

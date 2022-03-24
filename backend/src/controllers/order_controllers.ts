@@ -75,13 +75,24 @@ export let upsertOrderById = (req: Request, res: Response) => {
   });
 };
 
+export let AddDonutList = (req: Request, res: Response) => {
+  let order_update = OrderModel.findOneAndUpdate({ _id:req.params.id}, { $set : { donuts : req.body.donuts }}, 
+    (err: any, result: any) => {
+    if (err) {
+      res.status(400).send(err);
+    } else {
+      res.status(200).send("Successfully Replaced " + req.body.donuts + " in order " + req.params.id);
+    }
+  });
+};
+
 export let AddQuantityById = (req: Request, res: Response) => {
   let order_update = OrderModel.findOneAndUpdate({ _id:req.params.id, "donuts.donut_id": req.body.donut_id},  { $inc : 
     { 'donuts.$.quantity' : req.body.quantity }}, (err: any, result: any) => {
     if (err) {
       res.status(400).send(err);
     } else {
-      res.status(200).send("Successfully Added" + req.body.quantity + " to Donut " + req.body.donut_id + "  in order " + req.params.id);
+      res.status(200).send("Successfully Added " + req.body.quantity + " to Donut " + req.body.donut_id + "  in order " + req.params.id);
     }
   });
    
