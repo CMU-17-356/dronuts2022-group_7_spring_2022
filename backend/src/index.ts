@@ -5,8 +5,9 @@ import { DonutModel, DonutInterface } from './models/donut';
 import * as donut_controllers from './controllers/donut_controllers';
 import * as order_controllers from './controllers/order_controllers';
 
+const uri = "mongodb+srv://ruitaol:3Q1T5l5ZK3gahNxe@cluster0.t124k.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const app = express();
-const port = 3001;
+const port = 8080;
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
@@ -91,5 +92,5 @@ app.listen(port, () => {
 main().catch(err => console.log(err));
 
 async function main() {
-  await mongoose.connect('mongodb://localhost:27017/test');
+  await mongoose.connect(uri);
 }
