@@ -17,13 +17,12 @@ function ModifyEmployeeOrderCard() {
   var orderID: string = '';
 
   const fetchAllDonuts = async () => {
-    const response = await fetch('/donuts').then(response => response.json())
+    const response = await fetch('https://dronutsgroup7backend.uk.r.appspot.com/donuts/').then(response => response.json())
     .then(result => {
       let dictionary = Object.assign({}, ...result.map((v: any) => ({[v._id]: v.name})));
       populateDropdown(dictionary);
       setDonutMap(dictionary);
-    }
-    );
+    });
     
 
     return response;
@@ -34,10 +33,11 @@ function ModifyEmployeeOrderCard() {
     orderID = String(baseUrl.href.split('/').pop());
   }
 
-  const fetchOrderByID = async (oID: string) => {
-    await fetch(`/orders/by_id/${oID}`)
+  const fetchOrderByID = async () => {
+    await fetch('https://dronutsgroup7backend.uk.r.appspot.com/orders/by_id/' + orderID)
       .then(response => response.json())
       .then(result => setCurrOrder(result))
+      .then(result => console.log(result))
       .catch(error => console.log('error', error));
     setLoading(false);
   }
@@ -65,9 +65,42 @@ function ModifyEmployeeOrderCard() {
     setSelectedDonut(selectedOption);
   }
 
-  const addDonutToCart = () => {
-   
+  const upsertOrder = async () => {
+
+    var upsertHeader = new Headers();
+    upsertHeader.append("Content-Type", "application/json");
+    //upsertHeader.append("Access-Control-Request-Methods", "PUT");
+    //upsertHeader.append("Access-Control-Request-Headers", "Content-Type");
+    console.log(upsertHeader.toString());
     
+    let raw = JSON.stringify(curr_order);
+    console.log("raw upsert:" + raw);
+    console.log("Stringified upsert:" + JSON.stringify(raw));
+
+    await fetch('https://dronutsgroup7backend.uk.r.appspot.com/orders/', {
+      method: 'PUT',
+      headers: {
+        'Content-type': 'application/json'
+      },
+      body: JSON.stringify(raw)
+    })
+      .then(response => response.json())
+      .then(result => setCurrOrder(result))
+      .then(result => console.log(result))
+      .catch(error => console.log('error', error));
+  }
+
+  const addDonutToCart = async () => {
+    //Check if curr_order has donut, if so add one more donut
+    //If not, append new donut to curr_order list.
+    var containsDonut = false;
+    curr_order.donuts.map((donut: any, donutKey: any) => {
+      if(!containsDonut && donutKey == selectedDonut) {
+        updateQuantity((donut.quantity+1).toString());
+        containsDonut = true;
+      }
+    });
+    if (!containsDonut) curr_order.donuts.push({'donut_id': selectedDonut.value, 'quantity':1, '_id':-1});
   }
   
   const updateQuantity = (value: string) => {
@@ -80,10 +113,11 @@ function ModifyEmployeeOrderCard() {
     }
   }
   
+  
   useEffect(() => { 
     determineOrderID();
     fetchAllDonuts();
-    if (orderID !== '') fetchOrderByID(orderID);
+    if (orderID !== '') fetchOrderByID();
     }, []);
 
     if (isLoading) {
@@ -96,7 +130,6 @@ function ModifyEmployeeOrderCard() {
         <Text h4>Modify Pending Order #{curr_order._id}</Text>
         <Divider />
             <Card shadow>
-              <form action="/orders/by_id/{oID}" method="put" onSubmit={handleSubmit}>
                 <Text h5 className="order-card-title">Placed at: {curr_order.time_placed}.</Text>
                 <Text h6 className="order-card-drone mb-2 text-muted">Drone #{curr_order.drone_id}</Text>
                 <Text h6 className="order-card-drone mb-2 text-muted">Cost: ${curr_order.cost}</Text>
@@ -117,8 +150,7 @@ function ModifyEmployeeOrderCard() {
                 </ul>
                 <Select id={"selectedDonut"} options={donutOptions} onChange={(option) => changeSelectedDonut(option)}></Select>
                 <Button auto type="success" onClick={() => addDonutToCart()}>Add to Order</Button>
-                <input type="submit" value="Submit"></input>
-              </form>
+                <Button type="success" onClick={() => upsertOrder()}></Button>
             </Card>
         </Card>
     </div>
