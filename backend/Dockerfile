@@ -9,14 +9,14 @@ RUN npm install -g typescript
 WORKDIR /app
 
 # Copy the app package and package-lock.json file
-COPY ./ ./
+COPY . /app
 
 # Install node packages
 RUN npm install
 
-# run script to build react app
-RUN npm run build
+EXPOSE 3001
 
-EXPOSE 3000
+# run script to compile ts files
+RUN tsc -p .
 
-CMD ["npm", "start"]
+CMD ["node", "src/index.js"]

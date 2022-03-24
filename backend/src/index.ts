@@ -5,7 +5,6 @@ import { DonutModel, DonutInterface } from './models/donut';
 import * as donut_controllers from './controllers/donut_controllers';
 import * as order_controllers from './controllers/order_controllers';
 
-const uri = "mongodb+srv://ruitaol:3Q1T5l5ZK3gahNxe@cluster0.t124k.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
 const app = express();
 const port = 8080;
 
@@ -86,11 +85,12 @@ app.delete('/orders/remove_item/:id', order_controllers.RemoveItemById
 
 
 app.listen(port, () => {
-  console.log('Dronuts-App listening on localhost:{port}');
+  console.log('Dronuts-App listening on localhost:' + port);
 });
 
 main().catch(err => console.log(err));
 
 async function main() {
+  const uri = "mongodb+srv://ruitaol:3Q1T5l5ZK3gahNxe@cluster0.t124k.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
   await mongoose.connect(uri);
 }
