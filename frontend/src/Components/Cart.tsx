@@ -88,10 +88,10 @@ function Cart(props:OrderProps) {
                 <Card shadow width="800px" >
                   {/* <img src={require(`${data.image}`)} alt="Donut Pic" /> */}
                   <Text p b>
-                    {donutDict[data.donut_id]['name']}
+                    {donutDict[data.donut_id]?donutDict[data.donut_id]['name']:''}
                   </Text>
                   <Text p>
-                    Price: ${donutDict[data.donut_id]['price']}
+                    Price: ${donutDict[data.donut_id]?donutDict[data.donut_id]['price']:''}
                   </Text>
                   <Text p>
                     Quantity: {data.quantity}
