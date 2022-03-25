@@ -67,18 +67,19 @@ var body_parser_1 = __importDefault(require("body-parser"));
 var mongoose_1 = __importDefault(require("mongoose"));
 var donut_controllers = __importStar(require("./controllers/donut_controllers"));
 var order_controllers = __importStar(require("./controllers/order_controllers"));
+var cors_1 = __importDefault(require("cors"));
 var app = (0, express_1.default)();
 var port = 8080;
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(body_parser_1.default.json());
 // Donut Controllers
-app.get('/donuts', donut_controllers.listAllDonuts);
-app.get('/donuts/:id', donut_controllers.getDonutById);
-app.put('/donuts/', donut_controllers.createDonut);
-app.post('/donuts/', donut_controllers.createDonut);
-app.put('/donuts/:id', donut_controllers.upsertDonutById);
-app.delete('/donuts/:id', donut_controllers.deleteDonutById);
-app.delete('/donuts', donut_controllers.deleteDonutByName);
+app.get('/donuts', (0, cors_1.default)(), donut_controllers.listAllDonuts);
+app.get('/donuts/:id', (0, cors_1.default)(), donut_controllers.getDonutById);
+app.put('/donuts/', (0, cors_1.default)(), donut_controllers.createDonut);
+app.post('/donuts/', (0, cors_1.default)(), donut_controllers.createDonut);
+app.put('/donuts/:id', (0, cors_1.default)(), donut_controllers.upsertDonutById);
+app.delete('/donuts/:id', (0, cors_1.default)(), donut_controllers.deleteDonutById);
+app.delete('/donuts', (0, cors_1.default)(), donut_controllers.deleteDonutByName);
 // Customer Controllers
 // Employee Controllers
 // Orders

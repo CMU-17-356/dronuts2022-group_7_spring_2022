@@ -10,7 +10,6 @@ interface OrderProps {
 }
 
 function Menu(props:OrderProps){
-  
   const [donutData, setDonutData] = useState<Array<any>>([]);
   const [orderData, setOrderData] = useState<Array<any>>([]);
   const [donutQuantity, setDonutQuantity] = useState<Array<any>>([]);
@@ -28,8 +27,11 @@ function Menu(props:OrderProps){
 
    const fetchDonutData = async () => {
      const response = await fetch('https://dronutsgroup7backend.uk.r.appspot.com/donuts').then(response => response.json())
-    .then(result => {console.log('hello', result); setDonutData(result); 
-    setDonutQuantity(new Array<number>(donutData.length).fill(0))});
+    .then(result => {
+      console.log('hello', result); 
+      setDonutQuantity(newArray(result.length));
+      setDonutData(result);
+    });
      return response;
   };
   const fetchOrderData = async () => {
@@ -37,6 +39,14 @@ function Menu(props:OrderProps){
    .then(result => {console.log('orders', result); setOrderData(result)});
     return response;
  };
+
+ const newArray = (size: number) => {
+  var arr = new Array<number>();
+  for (var i = 0; i < size; i++) {
+    arr.push(0);
+  }
+  return arr;
+ }
  
   useEffect(() => {
     fetchDonutData();
@@ -47,7 +57,6 @@ function Menu(props:OrderProps){
       <Grid.Container gap={1} justify="center" height="100px">
       {donutData.map((data, key) => {
         const updateDatabaseQuantity = () => {
-
           const currentOrderId = props.currentOrderID;
           const num = donutQuantity[key]; 
           const currentDonutId = donutData[key]._id;
@@ -55,16 +64,17 @@ function Menu(props:OrderProps){
           console.log('order ID', props.currentOrderID);
           
           var raw = JSON.stringify({"donut_id":currentDonutId,"quantity":num});
-
-          fetch("/orders/add_item/" + currentOrderId, {
-            method: 'PUT',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-          })
-            .then(response => response.text())
-            .then(result => console.log(result))
-            .catch(error => console.log('error', error));
+          if (!isNaN(num)) {
+            fetch("/orders/add_item/" + currentOrderId, {
+              method: 'PUT',
+              headers: myHeaders,
+              body: raw,
+              redirect: 'follow'
+            })
+              .then(response => response.text())
+              .then(result => console.log(result))
+              .catch(error => console.log('error', error));
+          }
         }
           return (
             <div key={key}>
