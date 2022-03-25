@@ -2,6 +2,7 @@
 In order to get ready to write productive code, complete the following steps during Sprint 0:
 
 Deployed backend Domain: https://dronutsgroup7backend.uk.r.appspot.com/orders/active
+
 Deployed frontend Domain: https://dronutgroup7frontend.ue.r.appspot.com/
 
 ### Back-End Setup
