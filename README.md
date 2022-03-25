@@ -1,4 +1,4 @@
-# Note:
+# Note for TAs:
 Modify order link broke at the last minute, but the code is there @: frontend/src/Components/PendingOrders/ModifyEmployeeOrder.tsx.
 
 # dronut group 7
