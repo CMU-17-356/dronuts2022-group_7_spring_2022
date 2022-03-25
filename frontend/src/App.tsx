@@ -33,24 +33,27 @@ function App() {
         body: raw,
         redirect: 'follow'
       }).then(response => response.json())
-      .then(result => {console.log('new order', result); setCurrentOrderID(result._id); setLoading(false);})
+      .then(result => {console.log('new order', result); setCurrentOrderID(result._id);})
       .catch(error => console.log('error', error));
+      console.log("created new order worked");
     }
 
     await fetch("https://dronutsgroup7backend.uk.r.appspot.com/orders/active")
       .then(async response => {
         // console.log(await response.json());
         var bodyStream = await response.json();
-        const isEmptyResponse = ((bodyStream) === "");
+        console.log("bodySteam", bodyStream);
+        const isEmptyResponse = ((bodyStream.length === 0));
+        console.log(isEmptyResponse);
         if(isEmptyResponse){
-          createNewOrder();
+          await createNewOrder();
           console.log("created new order");
           const error = response.status;
-          setLoading(false);
+          // setLoading(false);
           return Promise.reject(error);
         }
         else{
-          setLoading(false);
+          // setLoading(false);
           return bodyStream;
         }
       })
@@ -58,13 +61,15 @@ function App() {
         {
           //if there is already an active order then assume that is the current session
           console.log('current order', result); 
-          setCurrentOrderID(result._id);
-          setLoading(false);
+          setCurrentOrderID(result[0]._id);
+          console.log("ID line 62", currentOrderID);
+          // setLoading(false);
         })
       .catch(
         error => console.log('error', error)
       );
-
+      setLoading(false);
+      
   }
 
     useEffect(() => {
@@ -73,22 +78,24 @@ function App() {
   if (isLoading) {
     return <div className="App">Loading...</div>;
   }
-  return (
-    <Router>
-      <div>
-        {/* <CustomNavbar permissions = {permissions}/> */}
-        <CustomNavbar/>
-      <Routes>
-          if()
-          {/* {permissions == "Employee" ? <Route path="/pending" element= {<PendingOrderCard/>} /> : <Route path="/checkout" element= {<Cart/>} />} */}
-          <Route path="/pending" element= {<EmployeeOrderCard/>} />
-          <Route path="/checkout" element= {<Cart currentOrderID = {currentOrderID}/>} />
-          <Route path="/" element= {<Menu currentOrderID = {currentOrderID}/>} />
-          <Route path="/delivery_status" element= {<DeliveryStatus/>} />
-      </Routes> 
-    </div>
-    </Router>
-  );
+  else{
+    return (
+      <Router>
+        <div>
+          {/* <CustomNavbar permissions = {permissions}/> */}
+          <CustomNavbar/>
+        <Routes>
+            {console.log("currentOrderID before passing", currentOrderID)}
+            {/* {permissions == "Employee" ? <Route path="/pending" element= {<PendingOrderCard/>} /> : <Route path="/checkout" element= {<Cart/>} />} */}
+            <Route path="/pending" element= {<EmployeeOrderCard/>} />
+            <Route path="/checkout" element= {<Cart currentOrderID = {currentOrderID}/>} />
+            <Route path="/" element= {<Menu currentOrderID = {currentOrderID}/>} />
+            <Route path="/delivery_status" element= {<DeliveryStatus/>} />
+        </Routes> 
+      </div>
+      </Router>
+    );
+  }
 }
 
 export default App;

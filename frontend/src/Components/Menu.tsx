@@ -57,7 +57,6 @@ function Menu(props:OrderProps){
       <Grid.Container gap={1} justify="center" height="100px">
       {donutData.map((data, key) => {
         const updateDatabaseQuantity = () => {
-
           const currentOrderId = props.currentOrderID;
           const num = donutQuantity[key]; 
           const currentDonutId = donutData[key]._id;
