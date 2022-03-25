@@ -8,14 +8,14 @@ function EmployeeOrderCard() {
   const [pendingOrderData, setPendingOrderData] = useState<Array<any>>([]);
 
   const fetchPendingOrderData = async () => {
-    const response = await fetch('/orders/pending').then(response => response.json())
+    const response = await fetch('https://dronutgroup7frontend.ue.r.appspot.com/orders/pending').then(response => response.json())
     .then(result => {
       setPendingOrderData(result)
     });
     return response;
   }
   const fetchPastOrderData = async () => {
-    const response = await fetch('/orders/past').then(response => response.json())
+    const response = await fetch('https://dronutsgroup7backend.uk.r.appspot.com/orders/past').then(response => response.json())
     .then(result => {
       setPastOrderData(result)}
     );

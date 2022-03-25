@@ -27,13 +27,13 @@ function Menu(props:OrderProps){
   }
 
    const fetchDonutData = async () => {
-     const response = await fetch('/donuts').then(response => response.json())
+     const response = await fetch('https://dronutsgroup7backend.uk.r.appspot.com/donuts').then(response => response.json())
     .then(result => {console.log('hello', result); setDonutData(result); 
     setDonutQuantity(new Array<number>(donutData.length).fill(0))});
      return response;
   };
   const fetchOrderData = async () => {
-    const response = await fetch('/orders').then(response => response.json())
+    const response = await fetch('https://dronutsgroup7backend.uk.r.appspot.com/orders').then(response => response.json())
    .then(result => {console.log('orders', result); setOrderData(result)});
     return response;
  };
