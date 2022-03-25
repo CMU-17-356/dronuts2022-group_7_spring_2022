@@ -35,13 +35,16 @@ function App() {
       }).then(response => response.json())
       .then(result => {console.log('new order', result); setCurrentOrderID(result._id);})
       .catch(error => console.log('error', error));
+      console.log("created new order worked");
     }
 
     await fetch("https://dronutsgroup7backend.uk.r.appspot.com/orders/active")
       .then(async response => {
         // console.log(await response.json());
         var bodyStream = await response.json();
-        const isEmptyResponse = ((bodyStream) === "");
+        console.log("bodySteam", bodyStream);
+        const isEmptyResponse = ((bodyStream.length === 0));
+        console.log(isEmptyResponse);
         if(isEmptyResponse){
           await createNewOrder();
           console.log("created new order");
@@ -58,13 +61,15 @@ function App() {
         {
           //if there is already an active order then assume that is the current session
           console.log('current order', result); 
-          setCurrentOrderID(result._id);
+          setCurrentOrderID(result[0]._id);
+          console.log("ID line 62", currentOrderID);
           // setLoading(false);
         })
       .catch(
         error => console.log('error', error)
       );
       setLoading(false);
+      
   }
 
     useEffect(() => {

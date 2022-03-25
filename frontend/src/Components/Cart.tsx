@@ -2,11 +2,11 @@ import React, { useState, useEffect } from 'react';
 import {Grid, Card, Button, Text, Spacer} from '@geist-ui/core'
 // import { donutData } from '../data/dummydata';
 import axios from 'axios';
+import SelectOption from '@geist-ui/core/esm/select/select-option';
 
 interface OrderProps {
   currentOrderID: String;
 }
-
 
 function Cart(props:OrderProps) {
   const [cartData, setCartData] = useState<Array<any>>([]);
@@ -24,7 +24,6 @@ function Cart(props:OrderProps) {
       fetchAllDonuts();
       console.log(response.data);
     });
-    
     setLoading(false);
   };
 
@@ -33,12 +32,13 @@ function Cart(props:OrderProps) {
     .then(result => {
       let dictionary = Object.assign({}, ...result.map((v: any) => ({[v._id]: v})));
       setDonutMap(dictionary);
-    }
-    );
+      console.log("1");
+      console.log(donutDict);
+    });
     return response;
   }
 
-  const updateTotalCost = () => {
+  const updateTotalCost = async () => {
     var newTotal = 0;
     cartData.forEach(donut => {
       console.log("for each loop line 42");
@@ -49,12 +49,13 @@ function Cart(props:OrderProps) {
     if (total !== newTotal) {
       setTotal(newTotal);
     }
+    console.log(newTotal);
+    setLoading(false);
   }
     
   useEffect(() => { 
-    fetchCartData();
+    fetchCartData()
     }, []);
-    
 
   if (isLoading) {
     return <div className="App">Loading...</div>;
@@ -109,10 +110,7 @@ function Cart(props:OrderProps) {
         })}
         <Grid xs={12} justify="center"></Grid>
         <Card>
-          <Text h4 my={0}>Total: ${total}</Text>
-          <Card.Footer>
             <Button auto type="success">Place Order</Button>
-          </Card.Footer>
         </Card>
     </Grid.Container>
     </div>   
