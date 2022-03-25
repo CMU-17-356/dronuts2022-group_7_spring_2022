@@ -14,6 +14,7 @@ node src/index.js
 ### Front - End Setup
 ```
 npm install
+npm i --save react-select
 npm start
 ```
 
