@@ -82,7 +82,7 @@ function Cart(props:OrderProps) {
   return (
     <div>
       <Grid.Container gap={1} justify="center" height="300px" width="100%">
-      {updateTotalCost()}
+      {/* {updateTotalCost()} */}
       {cartData.map((data, key) => {
           console.log("");
           return (
