@@ -1,3 +1,6 @@
+# Note:
+Modify order link broke at the last minute, but the code is there @: frontend/src/Components/PendingOrders/ModifyEmployeeOrder.tsx.
+
 # dronut group 7
 In order to get ready to write productive code, complete the following steps during Sprint 0:
 
