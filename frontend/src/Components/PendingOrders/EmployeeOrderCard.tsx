@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {Text, Card, Divider} from '@geist-ui/core'
+import {Nav} from 'react-bootstrap';
 import './EmployeeOrderCard.css';
 
 function EmployeeOrderCard() {
@@ -8,14 +9,14 @@ function EmployeeOrderCard() {
   const [pendingOrderData, setPendingOrderData] = useState<Array<any>>([]);
 
   const fetchPendingOrderData = async () => {
-    const response = await fetch('/orders/pending').then(response => response.json())
+    const response = await fetch('https://dronutsgroup7backend.uk.r.appspot.com/orders/pending').then(response => response.json())
     .then(result => {
       setPendingOrderData(result)
     });
     return response;
   }
   const fetchPastOrderData = async () => {
-    const response = await fetch('/orders/past').then(response => response.json())
+    const response = await fetch('https://dronutsgroup7backend.uk.r.appspot.com/orders/past').then(response => response.json())
     .then(result => {
       setPastOrderData(result)}
     );
@@ -37,16 +38,18 @@ function EmployeeOrderCard() {
     }, []);
   
   return (
-    
     <div className="orders-page">
       <Card shadow width="100%">
         <Text h4>Pending Orders</Text>
         <Divider />
         <div className="orders-list">
           {pendingOrderData.map((data, key) => {
+           let link = "/orders/"+data._id;
+
            return(<div key={key}>
             <Card shadow>
               <Text h5 className="order-card-title">Order #{data._id} — Placed at: {data.time_placed}.</Text>
+              <Nav.Link href={link} className="modify-order-button">Modify</Nav.Link>
               <Text h6 className="order-card-drone mb-2 text-muted">Drone #{data.drone_id}</Text>
               <Text h6 className="order-card-drone mb-2 text-muted">Cost: ${data.cost}</Text>
               <Divider />
