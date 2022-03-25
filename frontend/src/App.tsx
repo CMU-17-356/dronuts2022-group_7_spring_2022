@@ -76,7 +76,7 @@ function App() {
       findOrCreateNewOrder();
       }, []);
   if (isLoading) {
-    return <div className="App">Loading...</div>;
+    return <div className="App">Customer Loading...</div>;
   }
   else{
     return (
