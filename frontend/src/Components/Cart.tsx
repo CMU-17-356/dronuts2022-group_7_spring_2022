@@ -17,6 +17,7 @@ function Cart(props:OrderProps) {
 
 
   const fetchCartData = async () => {
+    console.log("currentorderDI:", props.currentOrderID);
     await axios.get("https://dronutsgroup7backend.uk.r.appspot.com/orders/by_id/" + props.currentOrderID).then(response => {
       setCartData(response.data.donuts);
       setOrderData(response.data);
@@ -40,6 +41,7 @@ function Cart(props:OrderProps) {
   const updateTotalCost = () => {
     var newTotal = 0;
     cartData.forEach(donut => {
+      console.log("for each loop line 42");
       if (null != donutDict[donut.donut_id] && null != donutDict[donut.donut_id]['price']) {
         newTotal = newTotal + donut.quantity*donutDict[donut.donut_id]['price'];
       }
@@ -82,6 +84,7 @@ function Cart(props:OrderProps) {
       <Grid.Container gap={1} justify="center" height="300px" width="100%">
       {updateTotalCost()}
       {cartData.map((data, key) => {
+          console.log("");
           return (
             <div key={key}>
                 <Grid md={24}>
